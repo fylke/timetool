@@ -10,6 +10,7 @@ import java.io.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.joda.time.DurationFieldType;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -130,8 +131,9 @@ public class PersistencyHandler {
                     actInfo.getStartTime().toString("kk:mm") + "\" end=\"" + 
                     actInfo.getEndTime().toString("kk:mm") + "\"/>\n");
           if (actInfo.includeLunch) {
-            // TODO Fetch lunch setting from somewhere
-            sb.append(indent + "<includeLunch/>\n");
+            sb.append(indent + "<includeLunch duration=\"" + 
+                      actInfo.getLunchLenght().get(DurationFieldType.minutes()) + 
+                      "\"/>\n");
           }
           
           indent = xmlUtils.decIndent(indent);

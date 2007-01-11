@@ -6,9 +6,12 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.DurationFieldType;
 import org.joda.time.LocalTime;
+import org.joda.time.PeriodType;
 import org.joda.time.ReadableDateTime;
 import org.joda.time.ReadableDuration;
+import org.joda.time.ReadablePeriod;
 
 import persistency.XmlUtils;
 
@@ -119,14 +122,17 @@ public class WorkDay {
     return activities.values();
   }
   
-  public ReadableDuration getDayBalance() {
+  public ReadablePeriod getDayBalance() {
     Duration dayBalance = new Duration(Duration.ZERO);
     for (final ActivityInfo actInfo : activities.values()) {
       dayBalance.plus(new Duration(actInfo.getStartTime(), 
-                                   actInfo.getEndTime())); 
+                                   actInfo.getEndTime()));
+      if (actInfo.includeLunch) {
+        dayBalance.plus(actInfo.getLunchLenght().get(DurationFieldType.minutes()));
+      }
     }
     
-    return dayBalance;
+    return dayBalance.toPeriod(PeriodType.minutes());
   }
   
   /* (non-Javadoc)
