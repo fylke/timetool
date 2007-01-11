@@ -1,7 +1,9 @@
 package persistency.year;
 
+import org.joda.time.DurationFieldType;
 import org.joda.time.LocalTime;
 import org.joda.time.ReadableDateTime;
+import org.joda.time.ReadablePeriod;
 
 import persistency.XmlUtils;
 
@@ -11,6 +13,7 @@ public class ActivityInfo {
   private final int id;
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
+  private ReadablePeriod lunchLenght;
 
   private final transient XmlUtils xmlUtils;
 
@@ -60,11 +63,27 @@ public class ActivityInfo {
     objRep.append("id: " + id + "\n");
     objRep.append("startTime: " + startTime.toString("kk:mm") + "\n");
     objRep.append("endTime: " + endTime.toString("kk:mm") + "\n");
-    objRep.append("includeLunch: " + includeLunch);
+    objRep.append("includeLunch: " + includeLunch + "\n");
+    objRep.append("lunchLength: " + 
+                  lunchLenght.get(DurationFieldType.minutes()) + "\n");
     
     return objRep.toString();
   }
 
+  /**
+   * @return the lunchLenght
+   */
+  public ReadablePeriod getLunchLenght() {
+    return lunchLenght;
+  }
+
+  /**
+   * @param lunchLenght the lunchLenght to set
+   */
+  public void setLunchLenght(ReadablePeriod lunchLenght) {
+    this.lunchLenght = lunchLenght;
+  }
+  
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */

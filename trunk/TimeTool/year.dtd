@@ -14,6 +14,6 @@
 			<!ELEMENT duration EMPTY>
 			<!ATTLIST duration start CDATA #REQUIRED>
 			<!ATTLIST duration end CDATA #REQUIRED>
-			<!ELEMENT lunchBreak EMPTY>
-			<!ATTLIST lunchBreak duration CDATA #REQUIRED>
+			<!ELEMENT includeLunch EMPTY>
+			<!ATTLIST includeLunch duration CDATA #REQUIRED>
 	
