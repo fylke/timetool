@@ -1,0 +1,19 @@
+<!ELEMENT year (month+)>
+<!ATTLIST year id CDATA #REQUIRED>
+	<!ELEMENT month (workDay+)>
+	<!ATTLIST month id CDATA #REQUIRED>
+		<!ELEMENT workDay (duration, isReported?, journalWritten?, activity+)>
+		<!ATTLIST workDay date CDATA #REQUIRED>
+		<!ELEMENT duration EMPTY>
+		<!ATTLIST duration start CDATA #REQUIRED>
+		<!ATTLIST duration end CDATA #REQUIRED>
+		<!ELEMENT isReported EMPTY>
+		<!ELEMENT journalWritten EMPTY>
+		<!ELEMENT activity (duration, lunchBreak?)>
+		<!ATTLIST activity id CDATA #REQUIRED>
+			<!ELEMENT duration EMPTY>
+			<!ATTLIST duration start CDATA #REQUIRED>
+			<!ATTLIST duration end CDATA #REQUIRED>
+			<!ELEMENT lunchBreak EMPTY>
+			<!ATTLIST lunchBreak duration CDATA #REQUIRED>
+	

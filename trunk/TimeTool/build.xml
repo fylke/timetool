@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TimeTool" default="test" basedir=".">
+  <description>
+  	Build file for TimeTool
+  </description> 
+	
+  <property name="sourceDir"     location="src"/>
+  <property name="buildDir"      location="classes"/>
+  <property name="testDir"       location="test"/>
+  <property name="resourceDir"   location="resources"/>
+  <property name="deploymentDir" location="deployment"/>
+  <property name="3ppJars"       location="D:\jonmag docs\Magnus\Java\3ppJars"/>  
+ 
+  <property name="vendor.name"  value="Magnus Falk"/>
+  <property name="prod.name"    value="TimeTool"/>
+  <property name="prod.version" value="0"/>
+  <property name="prod.revision" value=".1"/>
+ 
+  <property name="jarfile" value="${deploymentDir}/${prod.name}.jar"/>
+  <property name="jnlpfile" value="${resourceDir}/${prod.name}.jnlp"/>
+
+  <path id="project.class.path">
+    <pathelement location="${3ppJars}\joda-time-1.3.jar"/>
+    <pathelement location="${3ppJars}\zoneLayout-1.0b2.jar"/>
+  </path>
+  
+  <target name="prepare">
+    <tstamp/>
+    <mkdir dir="${buildDir}"/>
+    <property name="echo.classpath" refid="project.class.path"/>
+    <!--echo message="Classpath = ${echo.classpath}"/--> 
+  </target>
+
+  <target name="compile" depends="prepare">
+    <javac srcdir="${sourceDir}" destdir="${buildDir}">  
+      <classpath refid="project.class.path"/>
+    </javac> 
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${deploymentDir}"/>
+    
+    <manifest file="${buildDir}/manifest.mf">
+      <attribute name="Specification-Title" value="${prod.name}"/>
+      <attribute name="Specification-Vendor" value="${vendor.name}"/>
+      <attribute name="Specification-Version" value="${prod.version}"/>
+      <attribute name="Implementation-Title" value="${prod.name}"/>
+      <attribute name="Implementation-Vendor" value="${vendor.name}"/>
+      <attribute name="Implementation-Version" value="${prod.revision}"/> 
+    </manifest>
+
+    <copy todir="${buildDir}">
+      <fileset dir="resources/jar">
+        <filename name="*.*"/>
+      </fileset> 
+    </copy> 
+   
+    <jar jarfile="${jarfile}" 
+         basedir="${buildDir}" 
+         manifest="${buildDir}/manifest.mf"/>
+  </target>
+	
+  <target name="jar:sign" depends="jar">
+    <property name="keystore.file"      location="../codeSigningKeystore"/> 
+    <property name="keystore.alias"     value="mykey"/>
+    <property name="keystore.storepass" value="darkl00ba"/>
+    <property name="keystore.keypass"   value="${keystore.storepass}"/>
+    
+    <signjar jar="${jarfile}" 
+             alias="${keystore.alias}"   storepass="${keystore.storepass}"
+             keystore="${keystore.file}" keypass="${keystore.keypass}" />
+   </target>
+  
+	<target name="javadoc">
+  </target>
+	
+  <target name="test" depends="compile">
+  </target>
+
+	<target name="deploy" depends="jar" 
+          description="Creates a Webstart application and deploys it at a web server.">
+    <property name="private.key"     location="../../DSA_MagnusFalk.ppk"/> 
+    <property name="private.keypass" value="${keystore.storepass}"/>    
+    
+    <property name="server" value="www.team286.org"/> 
+    <property name="server.username" value="fylke"/> 
+    <property name="server.password" value="8Cogling0"/>
+        
+    <scp file="${jnlpfile}"
+         todir="${server.username}:${server.password}@${server}:/home/fylke/public_html"
+         trust="true"> 
+    </scp>
+   
+    <scp todir="${server.username}:${server.password}@${server}:/home/fylke/public_html/TimeTool"
+         trust="true"> 
+      <fileset dir="${deploymentDir}">
+        <include name="*.*"/>
+      </fileset>
+    </scp>       
+  </target>
+		
+  <target name="clean">
+    <delete dir="${buildDir}"/>
+  </target>
+</project>
