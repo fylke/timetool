@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt:projects 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:SchemaLocation="http://fylke.team286.org/TimeTool
+                      http://fylke.team286.org/TimeTool/project.xsd"
+  xmlns:tt="http://fylke.team286.org/TimeTool/">
+  
+  <tt:company id="1">
+  	<tt:name>Ericsson</tt:name>
+  	<tt:project id="1.1">
+  		<tt:name>R4</tt:name>
+ 		 	<tt:project id="1.11"> 		
+ 		 		<tt:name>R4 Execution</tt:name>
+		 		<tt:shortName>R4 Exec.</tt:shortName>
+		 		<tt:code></tt:code>
+		 	</tt:project>
+		 	<tt:project id="1.12"> 		
+ 		 		<tt:name>R4 Maintenance</tt:name>
+		 		<tt:shortName>R4 Maint.</tt:shortName>
+		 		<tt:code></tt:code>
+		 	</tt:project>
+  	</tt:project>
+  	
+  	<tt:project id="1.2">
+	 		<tt:name>R5</tt:name>
+  	 	<tt:project id="1.21"> 		
+ 	 			<tt:name>R5 Execution</tt:name>
+	 			<tt:shortName>R4 Exec.</tt:shortName>
+	 			<tt:code></tt:code>
+		 	</tt:project>
+		 	<tt:project id="1.22">
+ 		 		<tt:name>R5 Feasability</tt:name>
+		 		<tt:shortName>R5 Feas.</tt:shortName>
+		 		<tt:code></tt:code>
+		 	</tt:project>
+		 	<tt:project id="1.23">
+ 		 		<tt:name>R5 Maintenance</tt:name>
+		 		<tt:shortName>R5 Maint.</tt:shortName>
+		 		<tt:code></tt:code>
+		 	</tt:project>
+  	</tt:project>
+  	
+  	<tt:company id="2">
+  	<tt:name>Combitech</tt:name>
+  	<tt:project id="2.1">
+  		<tt:name>Ericsson OMSec</tt:name>
+ 		 	<tt:project id="2.11"> 		
+ 		 		<tt:name></tt:name>
+		 		<tt:shortName></tt:shortName>
+		 		<tt:code></tt:code>
+		 	</tt:project>
+  	</tt:project>
+</tt:projects>

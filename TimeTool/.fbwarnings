@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="1.0.0" sequence="0" timestamp="-1" analysisTimestamp="1167857342949" release="">
+  <Project filename="&lt;&lt;unnamed project&gt;&gt;">
+    <AuxClasspathEntry>D:\jonmag docs\Magnus\Java\TimeTool\classes</AuxClasspathEntry>
+    <AuxClasspathEntry>D:\jonmag docs\Magnus\Java\3ppJars\zoneLayout-1.0b2.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>C:\Program Files\Eclipse 3.2\eclipse\plugins\org.junit4_4.1.0\junit-4.1.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>D:\jonmag docs\Magnus\Java\3ppJars\joda-time-1.4.jar</AuxClasspathEntry>
+  </Project>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.ActivityPanel">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Class>
+    <Field classname="gui.ActivityPanel" name="layout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.ActivityPanel">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Class>
+    <Field classname="gui.ActivityPanel" name="layoutLowerLeft" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.ActivityPanel">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Class>
+    <Field classname="gui.ActivityPanel" name="layoutLowerRight" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.ActivityPanel">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Class>
+    <Field classname="gui.ActivityPanel" name="layoutUpper" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.ActivityPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SIC_INNER_SHOULD_BE_STATIC_ANON" priority="3" abbrev="SIC" category="PERFORMANCE">
+    <Class classname="gui.ActivityPanel$1">
+      <SourceLine classname="gui.ActivityPanel$1" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ActivityPanel.java" sourcepath="gui/ActivityPanel.java"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateActivityFrame">
+      <SourceLine classname="gui.CreateActivityFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateActivityFrame" name="basePanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateActivityFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateActivityFrame">
+      <SourceLine classname="gui.CreateActivityFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateActivityFrame" name="lowerPanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateActivityFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateActivityFrame">
+      <SourceLine classname="gui.CreateActivityFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateActivityFrame" name="upperPanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateActivityFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SIC_INNER_SHOULD_BE_STATIC_ANON" priority="3" abbrev="SIC" category="PERFORMANCE">
+    <Class classname="gui.CreateActivityFrame$1">
+      <SourceLine classname="gui.CreateActivityFrame$1" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="SIC_INNER_SHOULD_BE_STATIC_ANON" priority="3" abbrev="SIC" category="PERFORMANCE">
+    <Class classname="gui.CreateActivityFrame$2">
+      <SourceLine classname="gui.CreateActivityFrame$2" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateActivityFrame.java" sourcepath="gui/CreateActivityFrame.java"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateCompanyFrame">
+      <SourceLine classname="gui.CreateCompanyFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateCompanyFrame.java" sourcepath="gui/CreateCompanyFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateCompanyFrame" name="basePanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateCompanyFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateCompanyFrame.java" sourcepath="gui/CreateCompanyFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateCompanyFrame">
+      <SourceLine classname="gui.CreateCompanyFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateCompanyFrame.java" sourcepath="gui/CreateCompanyFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateCompanyFrame" name="lowerPanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateCompanyFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateCompanyFrame.java" sourcepath="gui/CreateCompanyFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateCompanyFrame">
+      <SourceLine classname="gui.CreateCompanyFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateCompanyFrame.java" sourcepath="gui/CreateCompanyFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateCompanyFrame" name="upperPanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateCompanyFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateCompanyFrame.java" sourcepath="gui/CreateCompanyFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateProjectFrame">
+      <SourceLine classname="gui.CreateProjectFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateProjectFrame.java" sourcepath="gui/CreateProjectFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateProjectFrame" name="basePanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateProjectFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateProjectFrame.java" sourcepath="gui/CreateProjectFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateProjectFrame">
+      <SourceLine classname="gui.CreateProjectFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateProjectFrame.java" sourcepath="gui/CreateProjectFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateProjectFrame" name="lowerPanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateProjectFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateProjectFrame.java" sourcepath="gui/CreateProjectFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.CreateProjectFrame">
+      <SourceLine classname="gui.CreateProjectFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateProjectFrame.java" sourcepath="gui/CreateProjectFrame.java"/>
+    </Class>
+    <Field classname="gui.CreateProjectFrame" name="upperPanelLayout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.CreateProjectFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CreateProjectFrame.java" sourcepath="gui/CreateProjectFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.DayViewPanel">
+      <SourceLine classname="gui.DayViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Class>
+    <Field classname="gui.DayViewPanel" name="commonSettingsLayoutLP" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.DayViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.DayViewPanel">
+      <SourceLine classname="gui.DayViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Class>
+    <Field classname="gui.DayViewPanel" name="commonSettingsLayoutRP" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.DayViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.DayViewPanel">
+      <SourceLine classname="gui.DayViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Class>
+    <Field classname="gui.DayViewPanel" name="layout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.DayViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SIC_INNER_SHOULD_BE_STATIC_ANON" priority="3" abbrev="SIC" category="PERFORMANCE">
+    <Class classname="gui.DayViewPanel$1">
+      <SourceLine classname="gui.DayViewPanel$1" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="DayViewPanel.java" sourcepath="gui/DayViewPanel.java"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.JournalFrame">
+      <SourceLine classname="gui.JournalFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="JournalFrame.java" sourcepath="gui/JournalFrame.java"/>
+    </Class>
+    <Field classname="gui.JournalFrame" name="layout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.JournalFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="JournalFrame.java" sourcepath="gui/JournalFrame.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UPM_UNCALLED_PRIVATE_METHOD" priority="3" abbrev="UPM" category="PERFORMANCE">
+    <Class classname="gui.JournalFrame">
+      <SourceLine classname="gui.JournalFrame" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="JournalFrame.java" sourcepath="gui/JournalFrame.java"/>
+    </Class>
+    <Method classname="gui.JournalFrame" name="initComponents" signature="()V" isStatic="false">
+      <SourceLine classname="gui.JournalFrame" start="85" end="85" startBytecode="0" endBytecode="9" sourcefile="JournalFrame.java" sourcepath="gui/JournalFrame.java"/>
+    </Method>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.TimePanel">
+      <SourceLine classname="gui.TimePanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TimePanel.java" sourcepath="gui/TimePanel.java"/>
+    </Class>
+    <Field classname="gui.TimePanel" name="layout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.TimePanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TimePanel.java" sourcepath="gui/TimePanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.TimePanel">
+      <SourceLine classname="gui.TimePanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TimePanel.java" sourcepath="gui/TimePanel.java"/>
+    </Class>
+    <Field classname="gui.TimePanel" name="layoutLower" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.TimePanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TimePanel.java" sourcepath="gui/TimePanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.TimePanel">
+      <SourceLine classname="gui.TimePanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TimePanel.java" sourcepath="gui/TimePanel.java"/>
+    </Class>
+    <Field classname="gui.TimePanel" name="layoutUpper" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.TimePanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TimePanel.java" sourcepath="gui/TimePanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="CORRECTNESS">
+    <Class classname="gui.WeekViewPanel">
+      <SourceLine classname="gui.WeekViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="WeekViewPanel.java" sourcepath="gui/WeekViewPanel.java"/>
+    </Class>
+    <Field classname="gui.WeekViewPanel" name="layout" signature="Lcom/atticlabs/zonelayout/swing/ZoneLayout;" isStatic="false">
+      <SourceLine classname="gui.WeekViewPanel" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="WeekViewPanel.java" sourcepath="gui/WeekViewPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="RI_REDUNDANT_INTERFACES" priority="3" abbrev="RI" category="STYLE">
+    <Class classname="persistency.CompanyHandler">
+      <SourceLine classname="persistency.CompanyHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="CompanyHandler.java" sourcepath="persistency/CompanyHandler.java"/>
+    </Class>
+    <Class classname="org.xml.sax.ContentHandler" role="INTERFACE_TYPE">
+      <SourceLine classname="org.xml.sax.ContentHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="NP_UNWRITTEN_FIELD" priority="2" abbrev="NP" category="CORRECTNESS">
+    <Class classname="persistency.Day">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Class>
+    <Method classname="persistency.Day" name="addActivity" signature="(Lpersistency/Activity;)V" isStatic="false">
+      <SourceLine classname="persistency.Day" start="15" end="16" startBytecode="0" endBytecode="11" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Method>
+    <SourceLine classname="persistency.Day" start="15" end="15" startBytecode="5" endBytecode="5" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+  </BugInstance>
+  <BugInstance type="UUF_UNUSED_FIELD" priority="2" abbrev="UuF" category="PERFORMANCE">
+    <Class classname="persistency.Day">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Class>
+    <Field classname="persistency.Day" name="dayBalance" signature="Lorg/joda/time/Duration;" isStatic="false">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_UNWRITTEN_FIELD" priority="2" abbrev="UwF" category="CORRECTNESS">
+    <Class classname="persistency.Day">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Class>
+    <Field classname="persistency.Day" name="activities" signature="Ljava/util/List;" isStatic="false">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_UNWRITTEN_FIELD" priority="2" abbrev="UwF" category="CORRECTNESS">
+    <Class classname="persistency.Day">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Class>
+    <Field classname="persistency.Day" name="flexBalance" signature="Lorg/joda/time/Duration;" isStatic="false">
+      <SourceLine classname="persistency.Day" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Day.java" sourcepath="persistency/Day.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="NP_NULL_ON_SOME_PATH_EXCEPTION" priority="3" abbrev="NP" category="CORRECTNESS">
+    <Class classname="persistency.PersistencyHandler">
+      <SourceLine classname="persistency.PersistencyHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="PersistencyHandler.java" sourcepath="persistency/PersistencyHandler.java"/>
+    </Class>
+    <Method classname="persistency.PersistencyHandler" name="readProjects" signature="(Ljava/io/InputStream;)Lpersistency/Projects;" isStatic="false">
+      <SourceLine classname="persistency.PersistencyHandler" start="23" end="53" startBytecode="0" endBytecode="66" sourcefile="PersistencyHandler.java" sourcepath="persistency/PersistencyHandler.java"/>
+    </Method>
+    <SourceLine classname="persistency.PersistencyHandler" start="48" end="48" startBytecode="116" endBytecode="116" sourcefile="PersistencyHandler.java" sourcepath="persistency/PersistencyHandler.java"/>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.PersistencyHandlerTest">
+      <SourceLine classname="persistency.PersistencyHandlerTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="PersistencyHandlerTest.java" sourcepath="persistency/PersistencyHandlerTest.java"/>
+    </Class>
+    <Field classname="persistency.PersistencyHandlerTest" name="tpf" signature="Lpersistency/TestProjectsFactory;" isStatic="false">
+      <SourceLine classname="persistency.PersistencyHandlerTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="PersistencyHandlerTest.java" sourcepath="persistency/PersistencyHandlerTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.PersistencyHandlerTest">
+      <SourceLine classname="persistency.PersistencyHandlerTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="PersistencyHandlerTest.java" sourcepath="persistency/PersistencyHandlerTest.java"/>
+    </Class>
+    <Field classname="persistency.PersistencyHandlerTest" name="tpxf" signature="Lpersistency/TestProjectsXmlFactory;" isStatic="false">
+      <SourceLine classname="persistency.PersistencyHandlerTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="PersistencyHandlerTest.java" sourcepath="persistency/PersistencyHandlerTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="RI_REDUNDANT_INTERFACES" priority="3" abbrev="RI" category="STYLE">
+    <Class classname="persistency.ProjectHandler">
+      <SourceLine classname="persistency.ProjectHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectHandler.java" sourcepath="persistency/ProjectHandler.java"/>
+    </Class>
+    <Class classname="org.xml.sax.ContentHandler" role="INTERFACE_TYPE">
+      <SourceLine classname="org.xml.sax.ContentHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.Projects">
+      <SourceLine classname="persistency.Projects" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Projects.java" sourcepath="persistency/Projects.java"/>
+    </Class>
+    <Field classname="persistency.Projects" name="companies" signature="Ljava/util/List;" isStatic="false">
+      <SourceLine classname="persistency.Projects" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="Projects.java" sourcepath="persistency/Projects.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="RI_REDUNDANT_INTERFACES" priority="3" abbrev="RI" category="STYLE">
+    <Class classname="persistency.ProjectsParser">
+      <SourceLine classname="persistency.ProjectsParser" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParser.java" sourcepath="persistency/ProjectsParser.java"/>
+    </Class>
+    <Class classname="org.xml.sax.ContentHandler" role="INTERFACE_TYPE">
+      <SourceLine classname="org.xml.sax.ContentHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1"/>
+    </Class>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.ProjectsParserTest">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Class>
+    <Field classname="persistency.ProjectsParserTest" name="projectInput" signature="Ljava/io/Reader;" isStatic="false">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.ProjectsParserTest">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Class>
+    <Field classname="persistency.ProjectsParserTest" name="reader" signature="Lorg/xml/sax/XMLReader;" isStatic="false">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.ProjectsParserTest">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Class>
+    <Field classname="persistency.ProjectsParserTest" name="testHandler" signature="Lpersistency/ProjectsParserTest$TestHandler;" isStatic="false">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.ProjectsParserTest">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Class>
+    <Field classname="persistency.ProjectsParserTest" name="testProject" signature="Lpersistency/Project;" isStatic="false">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" priority="3" abbrev="UwF" category="STYLE">
+    <Class classname="persistency.ProjectsParserTest">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Class>
+    <Field classname="persistency.ProjectsParserTest" name="tpxf" signature="Lpersistency/TestProjectsXmlFactory;" isStatic="false">
+      <SourceLine classname="persistency.ProjectsParserTest" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SIC_INNER_SHOULD_BE_STATIC" priority="2" abbrev="SIC" category="PERFORMANCE">
+    <Class classname="persistency.ProjectsParserTest$TestHandler">
+      <SourceLine classname="persistency.ProjectsParserTest$TestHandler" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="ProjectsParserTest.java" sourcepath="persistency/ProjectsParserTest.java"/>
+    </Class>
+    <SourceLine classname="persistency.ProjectsParserTest$TestHandler" start="178" end="178" startBytecode="0" endBytecode="0" sourcefile="D:\jonmag docs\Magnus\Java\TimeTool\test\persistency\ProjectsParserTest.java" sourcepath="persistency/D:\jonmag docs\Magnus\Java\TimeTool\test\persistency\ProjectsParserTest.java"/>
+  </BugInstance>
+  <BugInstance type="UPM_UNCALLED_PRIVATE_METHOD" priority="3" abbrev="UPM" category="PERFORMANCE">
+    <Class classname="persistency.TestProjectsXmlFactory">
+      <SourceLine classname="persistency.TestProjectsXmlFactory" start="-1" end="-1" startBytecode="-1" endBytecode="-1" sourcefile="TestProjectsXmlFactory.java" sourcepath="persistency/TestProjectsXmlFactory.java"/>
+    </Class>
+    <Method classname="persistency.TestProjectsXmlFactory" name="xmlify" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="persistency.TestProjectsXmlFactory" start="106" end="106" startBytecode="0" endBytecode="36" sourcefile="TestProjectsXmlFactory.java" sourcepath="persistency/TestProjectsXmlFactory.java"/>
+    </Method>
+  </BugInstance>
+  <Errors></Errors>
+  <FindBugsSummary timestamp="Wed, 3 Jan 2007 21:49:02 +0100" total_classes="0" total_bugs="0" total_size="0" num_packages="0" cpu_seconds="26.72" clock_seconds="205.18" peak_mbytes="106.85" gc_seconds="3.36"></FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History></History>
+</BugCollection>
