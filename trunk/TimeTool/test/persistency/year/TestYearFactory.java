@@ -11,6 +11,10 @@ import persistency.XmlUtils;
 
 
 public class TestYearFactory {
+  public static transient final String startTime = "9:00";
+  public static transient final String endTime = "17:00";
+  public static transient final int lunchLength = 40;
+  
   private static TestYearFactory factoryInstance;
   private transient XmlUtils xmlUtils;
   
