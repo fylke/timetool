@@ -2,8 +2,8 @@ package persistency.year;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Month {
   private final short id;
@@ -14,6 +14,7 @@ public class Month {
     super();
     this.id = id;
     this.enclosingYear = enclosingYear;
+    workDays = new TreeMap<Integer, WorkDay>();
   }
 
   /**
@@ -24,7 +25,7 @@ public class Month {
   }
 
   /**
-   * @return the enclosingYear
+   * @return the enclosing year
    */
   public int getEnclosingYear() {
     return enclosingYear;
@@ -42,9 +43,9 @@ public class Month {
    * @return the indicated work days
    */
   public Collection<WorkDay> getWorkDays(final Collection<Short> workDayIds) {
-    ArrayList<WorkDay> workDays = new ArrayList<WorkDay>();
+    Collection<WorkDay> workDays = new ArrayList<WorkDay>();
     for (Short workDayId : workDayIds) {
-      workDays.add(workDays.get(workDayId));
+      workDays.add(this.workDays.get(workDayId));
     }
     
     return workDays;
@@ -55,16 +56,10 @@ public class Month {
   }
   
   public void addWorkDay(WorkDay workDay) {
-    if (workDays == null) {
-      workDays = new HashMap<Integer, WorkDay>();
-    }
     workDays.put(workDay.getDate().getDayOfMonth(), workDay);
   }
   
   public void addWorkDays(Collection<WorkDay> workDays) {
-    if (this.workDays == null) {
-      this.workDays = new HashMap<Integer, WorkDay>();
-    }
     for (WorkDay workDay : workDays) {
       this.workDays.put(workDay.getDate().getDayOfMonth(), workDay);
     }
@@ -81,10 +76,10 @@ public class Month {
     
     for (WorkDay workDay : workDays.values()) {
       objRep.append("WorkDays:\n");
-      objRep.append(workDay.toString() + "\n");
+      objRep.append(workDay.toString());
     }
     
-    return objRep.toString();
+    return objRep.toString().trim();
   }
 
   /* (non-Javadoc)
