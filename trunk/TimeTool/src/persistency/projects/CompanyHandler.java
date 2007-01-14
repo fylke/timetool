@@ -9,7 +9,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-public class CompanyHandler extends DefaultHandler implements ContentHandler {
+public class CompanyHandler extends DefaultHandler {
   private CharArrayWriter text;
   private final transient XMLReader reader;
   private final transient ContentHandler parentHandler;

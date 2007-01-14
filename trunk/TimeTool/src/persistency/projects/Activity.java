@@ -52,11 +52,11 @@ public class Activity {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder(); 
-    objRep.append("id: " + id + "\n");
+    objRep.append("actId: " + id + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName);
     
-    return objRep.toString().trim();
+    return objRep.toString();
   }
 
   /* (non-Javadoc)
