@@ -9,7 +9,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-public class ProjectHandler extends DefaultHandler implements ContentHandler {
+public class ProjectHandler extends DefaultHandler {
   private CharArrayWriter text;
   private transient final XMLReader reader;
   private transient final ContentHandler parentHandler;
@@ -32,7 +32,17 @@ public class ProjectHandler extends DefaultHandler implements ContentHandler {
       throws SAXException {
     text.reset();
  
-    if ("project".equals(qName)) {
+    if ("activity".equals(qName)) {
+      assert(currentProject != null);
+      final Activity activity = 
+        new Activity(Integer.parseInt(attributes.getValue("id")));
+      currentProject.addActivity(activity);
+      
+      final ContentHandler activityHandler = 
+        new ActivityHandler(attributes, reader, this, activity);
+      
+      reader.setContentHandler(activityHandler);
+    } else if ("project".equals(qName)) {
       assert(currentProject != null);
       final Project subProject = new Project();
       subProject.setId(Integer.parseInt(attributes.getValue("id")));
@@ -42,7 +52,7 @@ public class ProjectHandler extends DefaultHandler implements ContentHandler {
         new ProjectHandler(attributes, reader, this, subProject);
       
       reader.setContentHandler(subProjectHandler);
-    }
+    } 
   }
 
   @Override
