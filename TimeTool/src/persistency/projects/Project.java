@@ -80,19 +80,19 @@ public class Project {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder();
-    objRep.append("id: " + id + "\n");
+    objRep.append("projId: " + id + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("code: " + code + "\n");
         
     for (Project subProject : subProjects.values()) {
-      objRep.append("Subprojects:\n");
-      objRep.append(subProject.toString());
+      objRep.append("Subprojects for " + id + ":\n");
+      objRep.append(subProject.toString() + "\n");
     }
 
     for (Activity activity : activities.values()) {
-      objRep.append("Activities:\n");
-      objRep.append(activity.toString());
+      objRep.append("Activities for " + id + ":\n");
+      objRep.append(activity.toString() + "\n");
     }
     
     return objRep.toString().trim();
