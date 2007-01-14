@@ -1,8 +1,10 @@
 package persistency.year;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
+
+import logic.Settings.OvertimeType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -23,6 +25,7 @@ public class WorkDay {
   private ReadableDateTime date;
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
+  private OvertimeType treatOvertimeAs;
   
   private final transient XmlUtils xmlUtils;
   
@@ -30,6 +33,7 @@ public class WorkDay {
     super();
     this.date = new DateTime(year, month, dateInMonth, 0, 0, 0, 0);
     xmlUtils = XmlUtils.getInstance();
+    activities = new TreeMap<Integer, ActivityInfo>();
   }
 
   /**
@@ -103,14 +107,32 @@ public class WorkDay {
   }
 
   /**
+   * @return the treatOvertimeAs
+   */
+  public OvertimeType getTreatOvertimeAs() {
+    return treatOvertimeAs;
+  }
+
+  /**
+   * @param treatOvertimeAs the treatOvertimeAs to set
+   */
+  public void setTreatOvertimeAs(OvertimeType treatOvertimeAs) {
+    this.treatOvertimeAs = treatOvertimeAs;
+  }
+
+  /**
+   * @param treatOvertimeAs the treatOvertimeAs to set
+   */
+  public void setTreatOvertimeAs(String treatOvertimeAs) {
+    this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
+  }
+  
+  /**
    * Adds an activity to this work day, assumes that the activity is already 
    * properly defined.
    * @param actId
    */
   public void addActivity(final ActivityInfo actInfo) {
-    if (activities == null) {
-      activities = new HashMap<Integer, ActivityInfo>();
-    }
     activities.put(actInfo.getId(), actInfo);
   }
 
@@ -144,6 +166,7 @@ public class WorkDay {
     objRep.append("date: " + date.toString("d/M") + "\n");
     objRep.append("startTime: " + startTime.toString("kk:mm") + "\n");
     objRep.append("endTime: " + endTime.toString("kk:mm") + "\n");
+    objRep.append("treatOvertimeAs: " + treatOvertimeAs + "\n");
     objRep.append("isReported: " + isReported + "\n");
     objRep.append("journalWritten: " + journalWritten + "\n");
     
@@ -154,7 +177,7 @@ public class WorkDay {
     
     return objRep.toString();
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */
@@ -168,6 +191,7 @@ public class WorkDay {
     result = PRIME * result + (isReported ? 1231 : 1237);
     result = PRIME * result + (journalWritten ? 1231 : 1237);
     result = PRIME * result + ((startTime == null) ? 0 : startTime.hashCode());
+    result = PRIME * result + ((treatOvertimeAs == null) ? 0 : treatOvertimeAs.hashCode());
     return result;
   }
 
@@ -206,6 +230,11 @@ public class WorkDay {
       if (other.startTime != null)
         return false;
     } else if (!startTime.equals(other.startTime))
+      return false;
+    if (treatOvertimeAs == null) {
+      if (other.treatOvertimeAs != null)
+        return false;
+    } else if (!treatOvertimeAs.equals(other.treatOvertimeAs))
       return false;
     return true;
   }
