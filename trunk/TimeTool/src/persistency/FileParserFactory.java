@@ -11,7 +11,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import persistency.projects.ProjectsParser;
+import persistency.projects.ProjectSetParser;
 import persistency.year.YearParser;
 
 public class FileParserFactory {
@@ -34,8 +34,8 @@ public class FileParserFactory {
 
     DefaultHandler handler = null;
     
-    if (kind.equalsIgnoreCase("projects")) {
-      handler = new ProjectsParser(reader);
+    if (kind.equalsIgnoreCase("projectSet")) {
+      handler = new ProjectSetParser(reader);
     } else if (kind.equalsIgnoreCase("year")) {
       handler = new YearParser(reader);
     } else {
@@ -49,9 +49,9 @@ public class FileParserFactory {
   private static final class JarResolver implements EntityResolver {
     public InputSource resolveEntity(final String publicId, 
                                      final String systemId) {
-      if ("projects.dtd".equals(systemId)) {
+      if ("projectSet.dtd".equals(systemId)) {
         final InputStream is = 
-          getClass().getResourceAsStream("projects.dtd");
+          getClass().getResourceAsStream("projectSet.dtd");
         return new InputSource(is);
       } else if ("year.dtd".equals(systemId)) {
         final InputStream is = 
