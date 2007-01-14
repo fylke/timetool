@@ -5,6 +5,8 @@ import logic.Settings.OvertimeType;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalTime;
+import org.joda.time.Period;
+import org.joda.time.PeriodType;
 import org.joda.time.ReadableDuration;
 
 import persistency.XmlUtils;
@@ -12,7 +14,11 @@ import persistency.XmlUtils;
 
 public class TestYearFactory {
   public static transient final String startTime = "9:00";
+  public static transient final int startHour = 9;
+  public static transient final int startMinute = 0;
   public static transient final String endTime = "17:00";
+  public static transient final int endHour = 17;
+  public static transient final int endMinute = 0;
   public static transient final int lunchLength = 40;
   
   private static TestYearFactory factoryInstance;
@@ -55,8 +61,8 @@ public class TestYearFactory {
                             final short dateInMonth) {  
     WorkDay workDay = new WorkDay(yearConfig.year, month, dateInMonth);
     
-    workDay.setStartTime(new LocalTime(9, 0));
-    workDay.setEndTime(new LocalTime(17, 0));
+    workDay.setStartTime(new LocalTime(startHour, startMinute));
+    workDay.setEndTime(new LocalTime(endHour, endMinute));
     ReadableDuration actLength = 
       new Duration(workDay.getDuration().getMillis() / 
                    yearConfig.nrOfActsEachDay);
@@ -74,6 +80,9 @@ public class TestYearFactory {
                                    actStartTime.toLocalTime());
       actInfo.setActivityEndTime(workDay.getDate(), 
                                  actEndTime.toLocalTime());
+      actInfo.includeLunch = true;
+      actInfo.setLunchLenght(new Period(lunchLength * 60 * 1000, 
+                                        PeriodType.minutes()));
       workDay.addActivity(actInfo);
       
       actStartTime = actEndTime;
@@ -117,8 +126,8 @@ public class TestYearFactory {
     String indent = xmlUtils.indent(2);
     WorkDay workDay = new WorkDay(yearConfig.year, month, dateInMonth);
     
-    workDay.setStartTime(new LocalTime(9, 0));
-    workDay.setEndTime(new LocalTime(17, 0));
+    workDay.setStartTime(new LocalTime(startHour, startMinute));
+    workDay.setEndTime(new LocalTime(endHour, endMinute));
     ReadableDuration actLength = 
       new Duration(workDay.getDuration().getMillis() / 
                    yearConfig.nrOfActsEachDay);
@@ -144,7 +153,8 @@ public class TestYearFactory {
                   
       sb.append(indent + "<duration start=\"" + actStartTime.toString("kk:mm") + 
                                   "\" end=\"" + actEndTime.toString("kk:mm") + 
-                                  "\"/>\n");     
+                                  "\"/>\n");
+      sb.append(indent + "<includeLunch duration=\"" + lunchLength + "\"/>\n");
       indent = xmlUtils.decIndent(indent);
       sb.append(indent + "</activity>\n");
       
