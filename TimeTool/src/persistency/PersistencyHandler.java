@@ -213,6 +213,7 @@ public class PersistencyHandler {
         pb.append(indent + "<shortName>" + activity.getShortName() + 
                            "</shortName>\n");
         indent = xmlUtils.decIndent(indent);
+        pb.append(indent + "</activity>\n");
       }
     }
     
