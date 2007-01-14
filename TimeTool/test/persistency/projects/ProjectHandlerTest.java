@@ -59,13 +59,21 @@ public class ProjectHandlerTest {
 
   @Test
   public final void testProjectHandlerSimple() throws Exception {
-    final int projNestingDepth = 0;
+    final int projSetId = 1; // These first three aren't relevant in this test.
+    final int nrOfComps = 1;
+    final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
+    final int projDepth = 0;
+    final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
+                                                          nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
+                                                          projDepth);
     StringBuilder sb = new StringBuilder();
         
     final String simpleTestProject = 
-      tpf.getXmlProject(testProjId, projNestingDepth, sb);
+      tpf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
     final Project simpleProjectKey = 
-      tpf.getProject(testProjId, projNestingDepth);
+      tpf.getProject(testProjId, projDepth, projSetConfig);
     
     projectInput = new StringReader(simpleTestProject); 
     
@@ -79,40 +87,56 @@ public class ProjectHandlerTest {
   
   @Test
   public final void testProjectHandlerNested() throws Exception {
-    final int projNestingDepth = 1;
+    final int projSetId = 1; // These first three aren't relevant in this test.
+    final int nrOfComps = 1;
+    final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
+    final int projDepth = 1;
+    final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
+                                                          nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
+                                                          projDepth);
     StringBuilder sb = new StringBuilder();
-        
-    final String nestedTestProject = 
-      tpf.getXmlProject(testProjId, projNestingDepth, sb);
-    final Project nestedProjectKey = 
-      tpf.getProject(testProjId, projNestingDepth);
-   
-    projectInput = new StringReader(nestedTestProject);
 
+    final String nestedTestProject = 
+      tpf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
+    final Project nestedProjectKey = 
+      tpf.getProject(testProjId, projDepth, projSetConfig);
+    
+    projectInput = new StringReader(nestedTestProject); 
+    
     testHandler.setHandlerToTest(projectHandler);
     
     reader.parse(new InputSource(projectInput));
-    
+
     assertEquals("Generated test object and key not equal!", 
                  nestedProjectKey, testProject); 
   }
   
   @Test
   public final void testProjectHandlerDeeplyNested() throws Exception {
-    final int projNestingDepth = 3;
+    final int projSetId = 1; // These first three aren't relevant in this test.
+    final int nrOfComps = 1;
+    final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
+    final int projDepth = 3;
+    final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
+                                                          nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
+                                                          projDepth);
     StringBuilder sb = new StringBuilder();
         
     final String nestedTestProject = 
-      tpf.getXmlProject(testProjId, projNestingDepth, sb);
+      tpf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
     final Project nestedProjectKey = 
-      tpf.getProject(testProjId, projNestingDepth);
-   
-    projectInput = new StringReader(nestedTestProject);
-
+      tpf.getProject(testProjId, projDepth, projSetConfig);
+    
+    projectInput = new StringReader(nestedTestProject); 
+    
     testHandler.setHandlerToTest(projectHandler);
     
     reader.parse(new InputSource(projectInput));
-    
+
     assertEquals("Generated test object and key not equal!", 
                  nestedProjectKey, testProject); 
   }
