@@ -2,12 +2,21 @@ package persistency.year;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class Year {
   private int id;
   private Map<Short, Month> months;
+  
+  public Year() {
+    super();
+    /* All Maps stored in XML files are made TreeMaps as they automatically
+     * sort themselves, if not, you cannot count on the being in the same order 
+     * when comparing for testing purposes as they are only viewed as 
+     * collections then. */
+    months = new TreeMap<Short, Month>();
+  }
   
   public void setId(final int id) {
     this.id = id;
@@ -28,9 +37,9 @@ public class Year {
    * @return the indicated months
    */
   public Collection<Month> getMonths(final Collection<Integer> monthIds) {
-    ArrayList<Month> months = new ArrayList<Month>();
+    Collection<Month> months = new ArrayList<Month>();
     for (Integer monthId : monthIds) {
-      months.add(months.get(monthId));
+      months.add(this.months.get(monthId));
     }
     
     return months;
@@ -41,16 +50,10 @@ public class Year {
   }
 
   public void addMonth(final Month month) {
-    if (months == null) {
-      months = new HashMap<Short, Month>();
-    }
     months.put(month.getId(), month);
   }
   
   public void addMonth(final Collection<Month> months) {
-    if (this.months == null) {
-      this.months = new HashMap<Short, Month>();
-    }
     for (Month month : months) {
       this.months.put(month.getId(), month);
     }
