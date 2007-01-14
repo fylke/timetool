@@ -1,11 +1,11 @@
 package persistency.year;
 
+import logic.Settings.OvertimeType;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalTime;
-import org.joda.time.Period;
 import org.joda.time.ReadableDuration;
-import org.joda.time.ReadablePeriod;
 
 import persistency.XmlUtils;
 
@@ -53,21 +53,27 @@ public class TestYearFactory {
     
     workDay.setStartTime(new LocalTime(9, 0));
     workDay.setEndTime(new LocalTime(17, 0));
-    ReadablePeriod actLength = 
-      new Period(workDay.getDuration().getMillis() / 
-                 yearConfig.nrOfActsEachDay);
-    LocalTime actStartTime = new LocalTime(workDay.getStartTime().getMillis());
+    ReadableDuration actLength = 
+      new Duration(workDay.getDuration().getMillis() / 
+                   yearConfig.nrOfActsEachDay);
+    DateTime actStartTime = workDay.getStartTime().toDateTime();
+    DateTime actEndTime = actStartTime.plus(actLength);
     
+    workDay.setTreatOvertimeAs(OvertimeType.FLEX);
     workDay.isReported = true;
     workDay.journalWritten = true;
     
     ActivityInfo actInfo;
     for (int i = 0; i < yearConfig.nrOfActsEachDay; i++) {
       actInfo = new ActivityInfo(i);
-      actInfo.setActivityStartTime(workDay.getDate(), actStartTime);
+      actInfo.setActivityStartTime(workDay.getDate(), 
+                                   actStartTime.toLocalTime());
       actInfo.setActivityEndTime(workDay.getDate(), 
-                                 actStartTime.plus(actLength));
+                                 actEndTime.toLocalTime());
       workDay.addActivity(actInfo);
+      
+      actStartTime = actEndTime;
+      actEndTime = actStartTime.plus(actLength);
     }
     
     return workDay;
@@ -121,23 +127,25 @@ public class TestYearFactory {
     
     sb.append(indent + "<duration start=\"" + workStartTime + 
                                 "\" end=\"" + workEndTime + "\"/>\n");
+    sb.append(indent + "<overtime treatAs=\"flex\"/>\n");
     sb.append(indent + "<isReported/>\n");
     sb.append(indent + "<journalWritten/>\n");
     
     DateTime actStartTime = workDay.getStartTime().toDateTime();
-    DateTime actEndTime;
+    DateTime actEndTime = actStartTime.plus(actLength);
     
     for (int i = 0; i < yearConfig.nrOfActsEachDay; i++) {
       sb.append(indent + "<activity id=\"" + i + "\">\n");
       indent = xmlUtils.incIndent(indent);
-      
-      actEndTime = actStartTime.plus(actLength);
-      
+                  
       sb.append(indent + "<duration start=\"" + actStartTime.toString("kk:mm") + 
                                   "\" end=\"" + actEndTime.toString("kk:mm") + 
-                                  "\"/>\n");
+                                  "\"/>\n");     
       indent = xmlUtils.decIndent(indent);
       sb.append(indent + "</activity>\n");
+      
+      actStartTime = actEndTime;
+      actEndTime = actStartTime.plus(actLength);
     }
     
     indent = xmlUtils.decIndent(indent);
