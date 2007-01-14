@@ -6,6 +6,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import persistency.projects.ActivityHandler;
+
 
 public class WorkDayHandler extends DefaultHandler implements ContentHandler {
   private transient final XMLReader reader;
@@ -39,6 +41,8 @@ public class WorkDayHandler extends DefaultHandler implements ContentHandler {
     } else if ("duration".equals(qName)) {
       currentWorkDay.setStartTime(attributes.getValue("start"));
       currentWorkDay.setEndTime(attributes.getValue("end"));
+    } else if ("overtime".equals(qName)) {
+      currentWorkDay.setTreatOvertimeAs(attributes.getValue("treatAs"));
     }
   }
 
