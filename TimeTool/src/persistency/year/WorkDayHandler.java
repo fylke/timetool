@@ -6,10 +6,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import persistency.projects.ActivityHandler;
 
 
-public class WorkDayHandler extends DefaultHandler implements ContentHandler {
+public class WorkDayHandler extends DefaultHandler {
   private transient final XMLReader reader;
   private transient final ContentHandler parentHandler;
   private transient final WorkDay currentWorkDay;
@@ -34,7 +33,7 @@ public class WorkDayHandler extends DefaultHandler implements ContentHandler {
       currentWorkDay.addActivity(actInfo);
       
       final ContentHandler activityHandler = 
-        new ActivityHandler(attributes, reader, this, currentWorkDay.getDate(), 
+        new ActivityInfoHandler(attributes, reader, this, currentWorkDay.getDate(), 
                             actInfo);
       
       reader.setContentHandler(activityHandler);
