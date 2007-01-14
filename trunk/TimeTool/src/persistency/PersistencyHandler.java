@@ -15,11 +15,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import persistency.projects.Activity;
 import persistency.projects.Company;
 import persistency.projects.Project;
-import persistency.projects.Projects;
-import persistency.projects.ProjectsParser;
-import persistency.year.Activity;
+import persistency.projects.ProjectSet;
+import persistency.projects.ProjectSetParser;
 import persistency.year.ActivityInfo;
 import persistency.year.Month;
 import persistency.year.WorkDay;
@@ -63,18 +63,19 @@ public class PersistencyHandler {
     return year;
   }
   
-  public Projects readProjects(final InputStream projectsStream) 
+  public ProjectSet readProjectSet(final InputStream projectsStream) 
       throws PersistencyException {
     Reader br = null;
-    Projects projects = new Projects();
+    ProjectSet projectSet = new ProjectSet();
     try {
-      final XMLReader projectsParser = FileParserFactory.getParser("projects");
+      final XMLReader projectsParser = 
+        FileParserFactory.getParser("projectSet");
       br = new BufferedReader(new InputStreamReader(projectsStream));
       
       // Sending in the object we want to contain the result of the parsing.
-      final ProjectsParser pp = 
-        ((ProjectsParser) projectsParser.getContentHandler());
-      pp.setTargetObject(projects);
+      final ProjectSetParser pp = 
+        ((ProjectSetParser) projectsParser.getContentHandler());
+      pp.setTargetObject(projectSet);
       
       projectsParser.parse(new InputSource(br));
     } catch (final SAXException e) {
@@ -94,7 +95,7 @@ public class PersistencyHandler {
         // We don't care if closing fails...
       }
     }
-    return projects;
+    return projectSet;
   }
   
   public void writeYear(final Year year, final OutputStream yearStream) 
@@ -110,12 +111,16 @@ public class PersistencyHandler {
 
       for (WorkDay workDay : month.getAllWorkDays()) {
         sb.append(indent + "<workDay date=\"" + 
-                  workDay.getDate().toString("M") + "\">\n");
+                  workDay.getDate().toString("d") + "\">\n");
         indent = xmlUtils.incIndent(indent);
       
         sb.append(indent + "<duration start=\"" + 
                   workDay.getStartTime().toString("kk:mm") + "\" end=\"" + 
                   workDay.getEndTime().toString("kk:mm") + "\"/>\n");
+        
+        sb.append(indent + "<overtime treatAs=\"" + 
+                           workDay.getTreatOvertimeAs() + "\"/>\n");
+        
         if (workDay.isReported) {
           sb.append(indent + "<isReported/>\n");
         }
@@ -154,14 +159,15 @@ public class PersistencyHandler {
     writer.flush();
   }
   
-  public void writeProjects(final Projects projects, 
-                            final OutputStream projectsStream) 
+  public void writeProjectSet(final ProjectSet projectSet, 
+                              final OutputStream projectsStream) 
   {
     String indent = xmlUtils.indent(0);
-    StringBuilder pb = xmlUtils.getHeader("projects");
+    StringBuilder pb = xmlUtils.getHeader("projectSet", 
+                                          "id=\"" + projectSet.getId() + "\"");
     indent = xmlUtils.incIndent(indent);
 
-    for (Company company : projects.getCompanies()) {
+    for (Company company : projectSet.getCompanies()) {
       pb.append(indent + "<company id=\"" + company.getId() + "\">\n");
       indent = xmlUtils.incIndent(indent);
       pb.append(indent + "<name>" + company.getName() + "</name>\n");
@@ -179,7 +185,7 @@ public class PersistencyHandler {
       pb.append(indent + "</company>\n");
     }
     
-    pb.append("</projects>");
+    pb.append("</projectSet>");
     PrintWriter writer = new PrintWriter(projectsStream);
     writer.print(pb);
     writer.flush();
