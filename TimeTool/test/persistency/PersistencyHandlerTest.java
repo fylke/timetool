@@ -40,9 +40,11 @@ public class PersistencyHandlerTest {
     final int projSetId = 1;
     final int nrOfComps = 1;
     final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
     final int projDepth = 0;
     final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
                                                           nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
                                                           projDepth);
     final String projSetString = tpf.getXmlProjSetWithConfig(projSetConfig);
     final ProjectSet projSetKey = tpf.getProjSetWithConfig(projSetConfig);
@@ -59,9 +61,11 @@ public class PersistencyHandlerTest {
     final int projSetId = 1;
     final int nrOfComps = 4;
     final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
     final int projDepth = 0;
     final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
                                                           nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
                                                           projDepth);
     final String projSetString = tpf.getXmlProjSetWithConfig(projSetConfig);
     final ProjectSet projSetKey = tpf.getProjSetWithConfig(projSetConfig);
@@ -78,16 +82,20 @@ public class PersistencyHandlerTest {
     final int projSetId = 1;
     final int nrOfComps = 1;
     final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
     final int projDepth = 0;
     final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
                                                           nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
                                                           projDepth);
     final ProjectSet projSetInput = tpf.getProjSetWithConfig(projSetConfig);
     final String projSetKey = tpf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
+
     
-    assertEquals(projSetKey, baos.toString());
+    assertEquals("Generated test string and key string not equal!", 
+                 projSetKey, baos.toString());
   }
   
   @Test
@@ -95,32 +103,38 @@ public class PersistencyHandlerTest {
     final int projSetId = 1;
     final int nrOfComps = 3;
     final int nrOfProjsPerComp = 1;
+    final int nrOfActsPerProj = 1;
     final int projDepth = 0;
     final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
                                                           nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
                                                           projDepth);
     final ProjectSet projSetInput = tpf.getProjSetWithConfig(projSetConfig);
     final String projSetKey = tpf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
     
-    assertEquals(projSetKey, baos.toString());
+    assertEquals("Generated test string and key string not equal!", 
+                 projSetKey, baos.toString());
   }
-
+  
   @Test
   public final void testWriteProjectSetWithDeepNesting() throws Exception {
     final int projSetId = 1;
     final int nrOfComps = 7;
-    final int nrOfProjsPerComp = 2;
+    final int nrOfProjsPerComp = 5;
+    final int nrOfActsPerProj = 4;
     final int projDepth = 3;
     final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
                                                           nrOfProjsPerComp,
+                                                          nrOfActsPerProj,
                                                           projDepth);
     final ProjectSet projSetInput = tpf.getProjSetWithConfig(projSetConfig);
     final String projSetKey = tpf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
-    assertEquals(projSetKey, baos.toString());
+    assertEquals("Generated test string and key string not equal!", 
+                 projSetKey, baos.toString());
   }
   
   @Test
