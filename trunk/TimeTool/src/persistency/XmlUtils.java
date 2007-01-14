@@ -59,11 +59,16 @@ public class XmlUtils {
     return sb;
   }
   
-  public StringBuilder getHeader(final String type, final String attr) {
+  public StringBuilder getHeader(final String type, final String... attrs) {
     final StringBuilder sb = new StringBuilder();
     sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n");
     sb.append("<!DOCTYPE " + type + " SYSTEM \"" + type + ".dtd\">\n");
-    sb.append("<" + type + " " + attr + ">\n");
+    
+    sb.append("<" + type);
+    for (int i = 0; i < attrs.length; i++) {
+      sb.append(" " + attrs[i]);
+    }
+    sb.append(">\n");
     
     return sb;
   }
