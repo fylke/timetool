@@ -2,8 +2,10 @@ package persistency.year;
 
 import org.joda.time.DurationFieldType;
 import org.joda.time.LocalTime;
+import org.joda.time.PeriodType;
 import org.joda.time.ReadableDateTime;
 import org.joda.time.ReadablePeriod;
+import org.joda.time.Period;
 
 import persistency.XmlUtils;
 
@@ -20,6 +22,8 @@ public class ActivityInfo {
   ActivityInfo(final int id) {
     this.id = id;
     xmlUtils = XmlUtils.getInstance();
+    //FIXME How to fetch the default from Settings?
+    lunchLenght = new Period(40 * 60 * 1000, PeriodType.minutes());
   }
     
   public int getId() {
