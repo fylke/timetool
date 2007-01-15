@@ -212,6 +212,8 @@ public class PersistencyHandler {
         pb.append(indent + "<name>" + activity.getName() + "</name>\n");
         pb.append(indent + "<shortName>" + activity.getShortName() + 
                            "</shortName>\n");
+        pb.append(indent + "<reportCode>" + activity.getReportCode() + 
+                           "</reportCode>\n");
         indent = xmlUtils.decIndent(indent);
         pb.append(indent + "</activity>\n");
       }

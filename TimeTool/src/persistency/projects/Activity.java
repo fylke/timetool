@@ -5,6 +5,7 @@ public class Activity {
   private final int id;
   private String name;
   private String shortName;
+  private String reportCode;
   
   public Activity(final int id) {
     super();
@@ -33,6 +34,20 @@ public class Activity {
   }
   
   /**
+   * @return the reportCode
+   */
+  public String getReportCode() {
+    return reportCode;
+  }
+
+  /**
+   * @param reportCode the reportCode to set
+   */
+  public void setReportCode(final String reportCode) {
+    this.reportCode = reportCode;
+  }
+
+  /**
    * @param the name of the activity to set
    */
   public void setName(final String name) {
@@ -54,7 +69,8 @@ public class Activity {
     StringBuilder objRep = new StringBuilder(); 
     objRep.append("actId: " + id + "\n");
     objRep.append("name: " + name + "\n");
-    objRep.append("shortName: " + shortName);
+    objRep.append("shortName: " + shortName + "\n");
+    objRep.append("reportCode: " + reportCode);
     
     return objRep.toString();
   }
