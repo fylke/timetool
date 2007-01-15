@@ -12,6 +12,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import persistency.projects.ProjectSetParser;
+import persistency.settings.SettingsParser;
 import persistency.year.YearParser;
 
 public class FileParserFactory {
@@ -38,6 +39,8 @@ public class FileParserFactory {
       handler = new ProjectSetParser(reader);
     } else if (kind.equalsIgnoreCase("year")) {
       handler = new YearParser(reader);
+    } else if (kind.equalsIgnoreCase("settings")) {
+      handler = new SettingsParser(reader);
     } else {
       throw new ParserConfigurationException("Unknown parser type requested!");
     }
@@ -56,6 +59,10 @@ public class FileParserFactory {
       } else if ("year.dtd".equals(systemId)) {
         final InputStream is = 
           getClass().getResourceAsStream("year.dtd");
+        return new InputSource(is);
+      } else if ("settings.dtd".equals(systemId)) {
+        final InputStream is = 
+          getClass().getResourceAsStream("settings.dtd");
         return new InputSource(is);
       }
       return null;

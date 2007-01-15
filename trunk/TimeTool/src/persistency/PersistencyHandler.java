@@ -10,6 +10,8 @@ import java.io.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import logic.Settings;
+
 import org.joda.time.DurationFieldType;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -20,6 +22,7 @@ import persistency.projects.Company;
 import persistency.projects.Project;
 import persistency.projects.ProjectSet;
 import persistency.projects.ProjectSetParser;
+import persistency.settings.SettingsParser;
 import persistency.year.ActivityInfo;
 import persistency.year.Month;
 import persistency.year.WorkDay;
@@ -29,6 +32,66 @@ import persistency.year.YearParser;
 public class PersistencyHandler {
   private transient XmlUtils xmlUtils = XmlUtils.getInstance();
 
+  public Settings readSettings(final InputStream settingsStream) 
+  throws PersistencyException {
+    Reader br = null;
+    Settings settings = new Settings();
+    try {
+      final XMLReader settingsParser = FileParserFactory.getParser("settings");
+      br = new BufferedReader(new InputStreamReader(settingsStream));
+
+      // Sending in the object we want to contain the result of the parsing.
+      final SettingsParser sp = 
+        ((SettingsParser) settingsParser.getContentHandler());
+      sp.setTargetObject(settings);
+
+      settingsParser.parse(new InputSource(br));
+    } catch (final SAXException e) {
+      throw new PersistencyException("There was a parser problem when " +
+                                     "reading the settings file.", e);
+    } catch (final IOException e) {
+      throw new PersistencyException("There was an I/O problem when " +
+                                     "reading the settings file.", e);
+    } catch (final ParserConfigurationException e) {
+      throw new PersistencyException("There was a problem initializing " +
+                                     "a parser while reading the settings " +
+                                     "file.", e);
+    } finally {
+      try {
+        br.close();
+      } catch (final IOException e) {
+        // We don't care if closing fails...
+      }
+    }
+    return settings;
+  }
+  
+  public void writeSettings(final Settings settings, 
+                            final OutputStream settingsStream) 
+  {
+    String indent = xmlUtils.indent(0);
+    StringBuilder sb = xmlUtils.getHeader("settings");
+    indent = xmlUtils.incIndent(indent);
+
+    sb.append(indent + "<userName first=\"" + settings.getUserFirstName() + 
+                               "\" last=\"" + settings.getUserLastName() +
+                               "\"/>\n");
+    sb.append(indent + "<employedAt id=\"" + settings.getEmployerId() + 
+                       "\"/>\n");
+    sb.append(indent + "<projectSet id=\"" + settings.getProjectSetId() + 
+                       "\"/>\n");
+    sb.append(indent + "<lunchBreak duration=\"" + settings.getLunchBreak() + 
+                       "\"/>\n");
+    sb.append(indent + "<overtime treatAs=\"" + settings.getTreatOvertimeAs() + 
+                       "\"/>\n");
+    
+    indent = xmlUtils.decIndent(indent);   
+    sb.append("</settings>");
+    PrintWriter writer = new PrintWriter(settingsStream);
+    writer.print(sb);
+    writer.flush();
+  }
+  
   public Year readYear(final InputStream yearStream) 
       throws PersistencyException {
     Reader br = null;
