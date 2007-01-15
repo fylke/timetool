@@ -25,6 +25,7 @@ import persistency.projects.ProjectSetParser;
 import persistency.settings.SettingsParser;
 import persistency.year.ActivityInfo;
 import persistency.year.Month;
+import persistency.year.SearchControl;
 import persistency.year.WorkDay;
 import persistency.year.Year;
 import persistency.year.YearParser;
