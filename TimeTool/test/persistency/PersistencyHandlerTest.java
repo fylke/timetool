@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import logic.Settings;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.junit.Test;
 import persistency.projects.ProjSetConfig;
 import persistency.projects.ProjectSet;
 import persistency.projects.TestProjectsFactory;
+import persistency.settings.TestSettingsFactory;
 import persistency.year.TestYearFactory;
 import persistency.year.Year;
 import persistency.year.YearConfig;
@@ -19,6 +22,7 @@ import persistency.year.YearConfig;
 public class PersistencyHandlerTest {
   private transient TestProjectsFactory tpf;
   private transient TestYearFactory tyf;
+  private transient TestSettingsFactory tsf;
   private transient PersistencyHandler ph;
   private transient ByteArrayInputStream bais;
   private transient ByteArrayOutputStream baos;
@@ -27,6 +31,7 @@ public class PersistencyHandlerTest {
   public void setUp() throws Exception {
     tpf = TestProjectsFactory.getInstance();
     tyf = TestYearFactory.getInstance();
+    tsf = TestSettingsFactory.getInstance();
     ph = new PersistencyHandler();
     baos = new ByteArrayOutputStream();
   }
@@ -35,6 +40,29 @@ public class PersistencyHandlerTest {
   public void tearDown() throws Exception {
   }
 
+  @Test
+  public final void testReadSettings() throws Exception {
+    final String settingsString = tsf.getXmlSettings();
+    final Settings settingsKey = tsf.getSettings();
+    
+    bais = new ByteArrayInputStream(settingsString.getBytes("UTF-8"));
+    final Settings testSettings = ph.readSettings(bais);
+  
+    assertEquals("Generated test stream and output key not equal!", 
+                 testSettings, settingsKey);
+  }
+  
+  @Test
+  public final void testWriteSettings() throws Exception {
+    final Settings settingsInput = tsf.getSettings();
+    final String settingsKey = tsf.getXmlSettings();
+
+    ph.writeSettings(settingsInput, baos);
+    
+    assertEquals("Generated test string and key string not equal!", 
+                 settingsKey, baos.toString());
+  }
+  
   @Test
   public final void testReadProjSetSingleCompany() throws Exception {
     final int projSetId = 1;
@@ -93,7 +121,6 @@ public class PersistencyHandlerTest {
 
     ph.writeProjectSet(projSetInput, baos);
 
-    
     assertEquals("Generated test string and key string not equal!", 
                  projSetKey, baos.toString());
   }
