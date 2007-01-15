@@ -2,6 +2,7 @@ package logic;
 
 import persistency.projects.Company;
 import persistency.projects.ProjectSet;
+import static java.lang.Integer.parseInt;
 
 public class Settings {
   public enum OvertimeType {
@@ -37,8 +38,10 @@ public class Settings {
     }
   }
   
-  private String userName;
+  private String userFirstName;
+  private String userLastName;
   private int employedAt;
+  private int projectSetId;
   private ProjectSet projectSet;
   private int lunchBreak;
   private OvertimeType treatOvertimeAs;
@@ -49,8 +52,32 @@ public class Settings {
     treatOvertimeAs = OvertimeType.FLEX;
   }
     
-  public String getUserName() {
-    return userName;
+  /**
+   * @return the userFirstName
+   */
+  public String getUserFirstName() {
+    return userFirstName;
+  }
+
+  /**
+   * @return the userLastName
+   */
+  public String getUserLastName() {
+    return userLastName;
+  }
+
+  /**
+   * @param userFirstName the userFirstName to set
+   */
+  public void setUserFirstName(final String userFirstName) {
+    this.userFirstName = userFirstName;
+  }
+
+  /**
+   * @param userLastName the userLastName to set
+   */
+  public void setUserLastName(final String userLastName) {
+    this.userLastName = userLastName;
   }
 
   /**
@@ -89,10 +116,45 @@ public class Settings {
   }
 
   /**
+   * @return the default way of treating overtime
+   */
+  public void setTreatOvertimeAs(String treatOvertimeAs) {
+    this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
+  }
+
+  /**
+   * @return the projectSetId
+   */
+  public int getProjectSetId() {
+    return projectSetId;
+  }
+
+  /**
+   * @param projectSetId the projectSetId to set
+   */
+  public void setProjectSetId(final int projectSetId) {
+    this.projectSetId = projectSetId;
+  }
+  
+  /**
+   * @param projectSetId the projectSetId to set
+   */
+  public void setProjectSetId(final String projectSetId) {
+    this.projectSetId = parseInt(projectSetId);
+  }
+
+  /**
    * @param lunchBreak the new default lunch break length
    */
-  public void setLunchBreak(int lunchBreak) {
+  public void setLunchBreak(final int lunchBreak) {
     this.lunchBreak = lunchBreak;
+  }
+  
+  /**
+   * @param lunchBreak the new default lunch break length
+   */
+  public void setLunchBreak(final String lunchBreak) {
+    this.lunchBreak = parseInt(lunchBreak);
   }
 
   /**
@@ -115,9 +177,28 @@ public class Settings {
   public void setEmployedAt(final int employedAt) {
     this.employedAt = employedAt;
   }
+  
+  /**
+   * @param employedAt the company id of this user's employer 
+   */
+  public void setEmployedAt(final String employedAt) {
+    this.employedAt = parseInt(employedAt);
+  }
 
-  public void setUserName(final String userName) {
-    this.userName = userName;
+  /* (non-Javadoc)
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    StringBuilder objRep = new StringBuilder();
+    objRep.append("userFirstName: " + userFirstName + "\n");
+    objRep.append("userLastName: " + userLastName + "\n");
+    objRep.append("employedAt: " + employedAt + "\n");
+    objRep.append("projectSetId: " + projectSetId + "\n");
+    objRep.append("lunchBreak: " + lunchBreak + "\n");
+    objRep.append("ProjectSet:\n" + projectSet);
+    
+    return objRep.toString().trim();
   }
 
   /* (non-Javadoc)
@@ -130,8 +211,10 @@ public class Settings {
     result = PRIME * result + employedAt;
     result = PRIME * result + lunchBreak;
     result = PRIME * result + ((projectSet == null) ? 0 : projectSet.hashCode());
+    result = PRIME * result + projectSetId;
     result = PRIME * result + ((treatOvertimeAs == null) ? 0 : treatOvertimeAs.hashCode());
-    result = PRIME * result + ((userName == null) ? 0 : userName.hashCode());
+    result = PRIME * result + ((userFirstName == null) ? 0 : userFirstName.hashCode());
+    result = PRIME * result + ((userLastName == null) ? 0 : userLastName.hashCode());
     return result;
   }
 
@@ -156,15 +239,22 @@ public class Settings {
         return false;
     } else if (!projectSet.equals(other.projectSet))
       return false;
+    if (projectSetId != other.projectSetId)
+      return false;
     if (treatOvertimeAs == null) {
       if (other.treatOvertimeAs != null)
         return false;
     } else if (!treatOvertimeAs.equals(other.treatOvertimeAs))
       return false;
-    if (userName == null) {
-      if (other.userName != null)
+    if (userFirstName == null) {
+      if (other.userFirstName != null)
         return false;
-    } else if (!userName.equals(other.userName))
+    } else if (!userFirstName.equals(other.userFirstName))
+      return false;
+    if (userLastName == null) {
+      if (other.userLastName != null)
+        return false;
+    } else if (!userLastName.equals(other.userLastName))
       return false;
     return true;
   }
