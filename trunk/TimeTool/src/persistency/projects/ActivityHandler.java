@@ -40,6 +40,8 @@ public class ActivityHandler extends DefaultHandler {
       currentActivity.setName(getText());
     } else if ("shortName".equals(qName)) {
       currentActivity.setShortName(getText());
+    } else if ("reportCode".equals(qName)) {
+      currentActivity.setReportCode(getText());
     } else if ("activity".equals(qName)) {
       reader.setContentHandler(parentHandler);
     } 
