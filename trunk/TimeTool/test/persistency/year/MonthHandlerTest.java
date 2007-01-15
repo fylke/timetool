@@ -22,7 +22,9 @@ public class MonthHandlerTest {
   private transient XMLReader reader;
   private transient TestHandler testHandler;
   private transient Month testMonth;
-  private transient MonthHandler monthHandler;  
+  private transient MonthHandler monthHandler;
+  // We won't bother with SearchControl in these tests
+  private transient SearchControl searchControl = null;
 
   @Before
   public void setUp() throws Exception {
@@ -51,9 +53,9 @@ public class MonthHandlerTest {
     testHandler = new TestHandler(reader);
     testMonth = new Month(testMonthId, testYearId);
     
-    reader.setContentHandler(testHandler);
-    
-    monthHandler = new MonthHandler(attr, reader, testHandler, testMonth);
+    reader.setContentHandler(testHandler); 
+    monthHandler = 
+      new MonthHandler(attr, reader, testHandler, testMonth, searchControl);
   }
 
   @After
@@ -68,7 +70,7 @@ public class MonthHandlerTest {
     short nrOfDaysEachMonth = 1;
     int nrOfActsEachDay = 1; 
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
-                                           nrOfActsEachDay);
+                                           nrOfActsEachDay, searchControl);
     
     final short testMonthIdKey = 1;
     Month testMonthKey = tyf.getMonth(testMonthIdKey, yearConfig);
@@ -91,7 +93,7 @@ public class MonthHandlerTest {
     short nrOfDaysEachMonth = 6;
     int nrOfActsEachDay = 6; 
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
-                                           nrOfActsEachDay);
+                                           nrOfActsEachDay, searchControl);
     
     final short testMonthIdKey = 1;
     Month testMonthKey = tyf.getMonth(testMonthIdKey, yearConfig);

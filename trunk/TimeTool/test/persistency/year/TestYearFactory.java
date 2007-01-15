@@ -21,6 +21,11 @@ public class TestYearFactory {
   public static transient final int endMinute = 0;
   public static transient final int lunchLength = 40;
   
+  private static transient final int hours = 0;
+  private static transient final int minutes = 0;
+  private static transient final int seconds = 0;
+  private static transient final int millis = 0;
+  
   private static TestYearFactory factoryInstance;
   private transient XmlUtils xmlUtils;
   
@@ -50,8 +55,14 @@ public class TestYearFactory {
   public Month getMonth(final short month, final YearConfig yearConfig) {
     Month myMonth = new Month(month, yearConfig.year);
     
-    for (short i = 1; i <= yearConfig.nrOfDaysEachMonth; i++) {
-      myMonth.addWorkDay(getWorkDay(yearConfig, month, i));
+    for (short day = 1; day <= yearConfig.nrOfDaysEachMonth; day++) {
+      if (yearConfig.searchControl == null ||
+          (yearConfig.searchControl != null &&
+          yearConfig.searchControl.isHit(new DateTime(yearConfig.year, month,
+                                                      day, hours, minutes,
+                                                      seconds, millis)))) {
+        myMonth.addWorkDay(getWorkDay(yearConfig, month, day));
+      }
     }
     
     return myMonth;
@@ -63,9 +74,14 @@ public class TestYearFactory {
     
     workDay.setStartTime(new LocalTime(startHour, startMinute));
     workDay.setEndTime(new LocalTime(endHour, endMinute));
-    ReadableDuration actLength = 
-      new Duration(workDay.getDuration().getMillis() / 
-                   yearConfig.nrOfActsEachDay);
+    
+    ReadableDuration actLength = null;
+    if (yearConfig.nrOfActsEachDay > 0) {
+      actLength = new Duration(workDay.getDuration().getMillis() / 
+                               yearConfig.nrOfActsEachDay);
+    } else {
+      actLength = new Duration(workDay.getStartTime(), workDay.getEndTime());
+    }
     DateTime actStartTime = workDay.getStartTime().toDateTime();
     DateTime actEndTime = actStartTime.plus(actLength);
     
@@ -128,9 +144,14 @@ public class TestYearFactory {
     
     workDay.setStartTime(new LocalTime(startHour, startMinute));
     workDay.setEndTime(new LocalTime(endHour, endMinute));
-    ReadableDuration actLength = 
-      new Duration(workDay.getDuration().getMillis() / 
-                   yearConfig.nrOfActsEachDay);
+    
+    ReadableDuration actLength = null;
+    if (yearConfig.nrOfActsEachDay > 0) {
+      actLength = new Duration(workDay.getDuration().getMillis() / 
+                               yearConfig.nrOfActsEachDay);
+    } else {
+      actLength = new Duration(workDay.getStartTime(), workDay.getEndTime());
+    }
 
     sb.append(indent + "<workDay date=\"" + dateInMonth + "\">\n");
     indent = xmlUtils.incIndent(indent);
