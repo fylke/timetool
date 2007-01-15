@@ -92,7 +92,7 @@ public class PersistencyHandler {
     writer.flush();
   }
   
-  public Year readYear(final InputStream yearStream) 
+  public Year readYear(final InputStream yearStream, SearchControl wanted) 
       throws PersistencyException {
     Reader br = null;
     Year year = new Year();
@@ -104,6 +104,7 @@ public class PersistencyHandler {
       final YearParser pp = 
         ((YearParser) yearParser.getContentHandler());
       pp.setTargetObject(year);
+      pp.setSearchControl(wanted);
       
       yearParser.parse(new InputSource(br));
     } catch (final SAXException e) {
