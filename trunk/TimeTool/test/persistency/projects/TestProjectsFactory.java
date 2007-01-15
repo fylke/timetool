@@ -11,6 +11,7 @@ public class TestProjectsFactory {
   public static transient final String projCode = "testCode";
   public static transient final String actName = "activityName";
   public static transient final String actShortName = "actName";
+  public static transient final String actRepCode = "actRepCode";
   
   
   private static TestProjectsFactory factoryInstance;
@@ -77,6 +78,7 @@ public class TestProjectsFactory {
     Activity act = new Activity(id);
     act.setName(actName + id);
     act.setShortName(actShortName + id);
+    act.setReportCode(actRepCode + id);
     
     return act;
   }
@@ -142,6 +144,7 @@ public class TestProjectsFactory {
     indent = xmlUtils.incIndent(indent);
     sb.append(indent + "<name>" + actName + id + "</name>\n");
     sb.append(indent + "<shortName>" + actShortName + id + "</shortName>\n");
+    sb.append(indent + "<reportCode>" + actRepCode + id + "</reportCode>\n");
     indent = xmlUtils.decIndent(indent);
     sb.append(indent + "</activity>\n");
     
