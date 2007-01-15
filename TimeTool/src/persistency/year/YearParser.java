@@ -12,9 +12,11 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 
+
 public class YearParser extends DefaultHandler implements ContentHandler {
   private XMLReader reader;
   private Year year;
+  private SearchControl wanted;
   
   public YearParser(final XMLReader reader) {
     this.reader = reader;
@@ -22,6 +24,10 @@ public class YearParser extends DefaultHandler implements ContentHandler {
   
   public void setTargetObject(final Year year) {
     this.year = year;
+  }
+  
+  public void setSearchControl(final SearchControl wanted) {
+    this.wanted = wanted;
   }
 
   public Year parse(final InputSource is) throws SAXException, IOException, 
@@ -46,7 +52,7 @@ public class YearParser extends DefaultHandler implements ContentHandler {
       year.addMonth(month);
            
       final ContentHandler monthHandler = 
-        new MonthHandler(attributes, reader, this, month);
+        new MonthHandler(attributes, reader, this, month, wanted);
       reader.setContentHandler(monthHandler);
     }
   }
