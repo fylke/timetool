@@ -1,17 +1,15 @@
 package persistency.settings;
 
-import logic.Settings;
-import logic.Settings.OvertimeType;
 import persistency.XmlUtils;
 
 public class TestSettingsFactory {
-  public static transient final String userFirstName = "testUserFirstName";
-  public static transient final String userLastName = "testUserLastName";
-  public static transient final int employedAt = 1;
-  public static transient final int projectSetId = 1;
-  public static transient final int lunchBreak = 40;
-  public static transient final OvertimeType treatOvertimeAs = 
-    OvertimeType.FLEX;
+  private static transient final String userFirstName = "testUserFirstName";
+  private static transient final String userLastName = "testUserLastName";
+  private static transient final int employedAt = 1;
+  private static transient final int projectSetId = 1;
+  private static transient final int lunchBreak = 40;
+  private static transient final String overtime = "flex";
+  private static transient final String ns = "";
   
   private static TestSettingsFactory factoryInstance;
   private transient XmlUtils xmlUtils;
@@ -36,24 +34,26 @@ public class TestSettingsFactory {
     settings.setEmployedAt(employedAt);
     settings.setProjectSetId(projectSetId);
     settings.setLunchBreak(lunchBreak);
-    settings.setTreatOvertimeAs(treatOvertimeAs);
+    settings.setTreatOvertimeAs(overtime);
     
     return settings;
   }
   
   public String getXmlSettings() {
-    final StringBuilder sb = xmlUtils.getHeader("settings");
+    final StringBuilder sb = xmlUtils.getHeader(ns + "settings");
     String indent = xmlUtils.indent(1);
     
-    sb.append(indent + "<userName first=\"" + userFirstName + 
-                               "\" last=\"" + userLastName + "\"/>\n");
-    sb.append(indent + "<employedAt id=\"" + employedAt + "\"/>\n");
-    sb.append(indent + "<projectSet id=\"" + projectSetId + "\"/>\n");
-    sb.append(indent + "<lunchBreak duration=\"" + lunchBreak  + "\"/>\n");
-    sb.append(indent + "<overtime treatAs=\"" + treatOvertimeAs  + "\"/>\n");
+    sb.append(indent + "<" + ns + "userName first=\"" + userFirstName + 
+                                        "\" last=\"" + userLastName + "\"/>\n");
+    sb.append(indent + "<" + ns + "employedAt id=\"" + employedAt + "\"/>\n");
+    sb.append(indent + "<" + ns + "projectSet id=\"" + projectSetId + "\"/>\n");
+    sb.append(indent + "<" + ns + "lunchBreak duration=\"" + lunchBreak  + 
+              "\"/>\n");
+    sb.append(indent + "<" + ns + "overtime treatAs=\"" + overtime  + "\"/>\n");
+    
     indent = xmlUtils.decIndent(indent);
     
-    sb.append(indent + "</settings>");
+    sb.append(indent + "</" + ns + "settings>");
     return sb.toString();
   }
 }

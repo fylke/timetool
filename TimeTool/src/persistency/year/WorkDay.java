@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import logic.Settings.OvertimeType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -16,6 +15,7 @@ import org.joda.time.ReadableDuration;
 import org.joda.time.ReadablePeriod;
 
 import persistency.XmlUtils;
+import persistency.settings.Settings.OvertimeType;
 
 public class WorkDay {
   public boolean isReported;

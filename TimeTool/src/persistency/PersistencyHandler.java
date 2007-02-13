@@ -5,34 +5,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.Reader;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import logic.Settings;
 
-import org.joda.time.DurationFieldType;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import persistency.projects.Activity;
-import persistency.projects.Company;
-import persistency.projects.Project;
 import persistency.projects.ProjectSet;
 import persistency.projects.ProjectSetParser;
+import persistency.projects.ProjectSetWriter;
+import persistency.settings.Settings;
 import persistency.settings.SettingsParser;
-import persistency.year.ActivityInfo;
-import persistency.year.Month;
+import persistency.settings.SettingsWriter;
 import persistency.year.SearchControl;
-import persistency.year.WorkDay;
 import persistency.year.Year;
 import persistency.year.YearParser;
+import persistency.year.YearWriter;
 
 public class PersistencyHandler {
-  private transient XmlUtils xmlUtils = XmlUtils.getInstance();
-
   public Settings readSettings(final InputStream settingsStream) 
   throws PersistencyException {
     Reader br = null;
@@ -65,32 +58,6 @@ public class PersistencyHandler {
       }
     }
     return settings;
-  }
-  
-  public void writeSettings(final Settings settings, 
-                            final OutputStream settingsStream) 
-  {
-    String indent = xmlUtils.indent(0);
-    StringBuilder sb = xmlUtils.getHeader("settings");
-    indent = xmlUtils.incIndent(indent);
-
-    sb.append(indent + "<userName first=\"" + settings.getUserFirstName() + 
-                               "\" last=\"" + settings.getUserLastName() +
-                               "\"/>\n");
-    sb.append(indent + "<employedAt id=\"" + settings.getEmployerId() + 
-                       "\"/>\n");
-    sb.append(indent + "<projectSet id=\"" + settings.getProjectSetId() + 
-                       "\"/>\n");
-    sb.append(indent + "<lunchBreak duration=\"" + settings.getLunchBreak() + 
-                       "\"/>\n");
-    sb.append(indent + "<overtime treatAs=\"" + settings.getTreatOvertimeAs() + 
-                       "\"/>\n");
-    
-    indent = xmlUtils.decIndent(indent);   
-    sb.append("</settings>");
-    PrintWriter writer = new PrintWriter(settingsStream);
-    writer.print(sb);
-    writer.flush();
   }
   
   public Year readYear(final InputStream yearStream, SearchControl wanted) 
@@ -163,133 +130,23 @@ public class PersistencyHandler {
     return projectSet;
   }
   
+  public void writeSettings(final Settings settings, 
+                            final OutputStream settingsStream) 
+  {
+    SettingsWriter sw = new SettingsWriter();
+    sw.writeSettings(settings, settingsStream);
+  }
+  
   public void writeYear(final Year year, final OutputStream yearStream) 
   {
-    String indent = xmlUtils.indent(0);
-    final StringBuilder sb = 
-      xmlUtils.getHeader("year", "id=\"" + year.getId() + "\"");
-    indent = xmlUtils.incIndent(indent);
-
-    for (Month month : year.getAllMonths()) {
-      sb.append(indent + "<month id=\"" + month.getId() + "\">\n");
-      indent = xmlUtils.incIndent(indent);
-
-      for (WorkDay workDay : month.getAllWorkDays()) {
-        sb.append(indent + "<workDay date=\"" + 
-                  workDay.getDate().toString("d") + "\">\n");
-        indent = xmlUtils.incIndent(indent);
-      
-        sb.append(indent + "<duration start=\"" + 
-                  workDay.getStartTime().toString("kk:mm") + "\" end=\"" + 
-                  workDay.getEndTime().toString("kk:mm") + "\"/>\n");
-        
-        sb.append(indent + "<overtime treatAs=\"" + 
-                           workDay.getTreatOvertimeAs() + "\"/>\n");
-        
-        if (workDay.isReported) {
-          sb.append(indent + "<isReported/>\n");
-        }
-        if (workDay.journalWritten) {
-          sb.append(indent + "<journalWritten/>\n");
-        }
-        
-        for (ActivityInfo actInfo : workDay.getAllActivities()) {
-          sb.append(indent + "<activity id=\"" + actInfo.getId() + "\">\n");
-          
-          indent = xmlUtils.incIndent(indent);
-          sb.append(indent + "<duration start=\"" + 
-                    actInfo.getStartTime().toString("kk:mm") + "\" end=\"" + 
-                    actInfo.getEndTime().toString("kk:mm") + "\"/>\n");
-          if (actInfo.includeLunch) {
-            sb.append(indent + "<includeLunch duration=\"" + 
-                      actInfo.getLunchLenght().get(DurationFieldType.minutes()) + 
-                      "\"/>\n");
-          }
-          
-          indent = xmlUtils.decIndent(indent);
-          sb.append(indent + "</activity>\n");
-        }
-        
-        indent = xmlUtils.decIndent(indent);
-        sb.append(indent + "</workDay>\n");
-      }
-      
-      indent = xmlUtils.decIndent(indent);
-      sb.append(indent + "</month>\n");
-    }
-    
-    sb.append("</year>");
-    PrintWriter writer = new PrintWriter(yearStream);
-    writer.print(sb);
-    writer.flush();
+    YearWriter yw = new YearWriter();
+    yw.writeYear(year, yearStream);
   }
   
   public void writeProjectSet(final ProjectSet projectSet, 
                               final OutputStream projectsStream) 
   {
-    String indent = xmlUtils.indent(0);
-    StringBuilder pb = xmlUtils.getHeader("projectSet", 
-                                          "id=\"" + projectSet.getId() + "\"");
-    indent = xmlUtils.incIndent(indent);
-
-    for (Company company : projectSet.getCompanies()) {
-      pb.append(indent + "<company id=\"" + company.getId() + "\">\n");
-      indent = xmlUtils.incIndent(indent);
-      pb.append(indent + "<name>" + company.getName() + "</name>\n");
-      if (company.getShortName() != null) {
-        pb.append(indent + "<shortName>" + company.getShortName() + 
-                           "</shortName>\n");
-      }
-      pb.append(indent + "<employeeId>" + company.getEmployeeId() + 
-                         "</employeeId>\n");
-      for (Project project : company.getProjects()) {
-        writeProject(project, pb, indent);
-      }
-      
-      indent = xmlUtils.decIndent(indent);
-      pb.append(indent + "</company>\n");
-    }
-    
-    pb.append("</projectSet>");
-    PrintWriter writer = new PrintWriter(projectsStream);
-    writer.print(pb);
-    writer.flush();
-  }
-  
-  private void writeProject(final Project project, final StringBuilder pb, 
-                            final String indentation) {
-    String indent = indentation;
-    
-    pb.append(indent + "<project id=\"" + project.getId() + "\">\n");
-    indent = xmlUtils.incIndent(indent);
-    
-    pb.append(indent + "<name>" + project.getName() + "</name>\n");
-    if (project.getShortName() != null) {
-      pb.append(indent + "<shortName>" + project.getShortName() + 
-                         "</shortName>\n");
-    }
-    pb.append(indent + "<code>" + project.getCode() + "</code>\n");
-    
-    if (project.getActivities() != null) {
-      for (Activity activity : project.getActivities()) {
-        pb.append(indent + "<activity id=\"" + activity.getId() + "\">\n");
-        indent = xmlUtils.incIndent(indent);
-        pb.append(indent + "<name>" + activity.getName() + "</name>\n");
-        pb.append(indent + "<shortName>" + activity.getShortName() + 
-                           "</shortName>\n");
-        pb.append(indent + "<reportCode>" + activity.getReportCode() + 
-                           "</reportCode>\n");
-        indent = xmlUtils.decIndent(indent);
-        pb.append(indent + "</activity>\n");
-      }
-    }
-    
-    if (project.getSubProjects() != null) {
-      for (Project subProject : project.getSubProjects()) {
-        writeProject(subProject, pb, indent);
-      }
-    }
-    indent = xmlUtils.decIndent(indent);
-    pb.append(indent + "</project>\n");
+    ProjectSetWriter psw = new ProjectSetWriter();
+    psw.writeProjectSet(projectSet, projectsStream);
   }
 }

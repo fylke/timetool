@@ -12,8 +12,9 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ProjectSetParser extends DefaultHandler implements ContentHandler {
-  private XMLReader reader;
-  private ProjectSet projectSet;
+  private static transient final String ns = "";
+  private transient XMLReader reader;
+  private transient ProjectSet projectSet;
   
   public ProjectSetParser(final XMLReader reader) {
     this.reader = reader;
@@ -35,10 +36,10 @@ public class ProjectSetParser extends DefaultHandler implements ContentHandler {
   public void startElement(final String uri, final String localName, 
                            final String qName, final Attributes attributes) 
       throws SAXException {
-    if ("projectSet".equals(qName)) {
+    if ((ns + "projectSet").equals(qName)) {
       projectSet.setId(Integer.parseInt(attributes.getValue("id")));
     }
-    else if ("company".equals(qName)) {
+    else if ((ns + "company").equals(qName)) {
       final Company company = new Company();
       company.setId(Integer.parseInt(attributes.getValue("id")));
       assert(projectSet != null);
@@ -46,7 +47,7 @@ public class ProjectSetParser extends DefaultHandler implements ContentHandler {
       projectSet.addCompany(company);
            
       final ContentHandler companyHandler = 
-        new CompanyHandler(attributes, reader, this, company);
+        new CompanyHandler(attributes, reader, this, company, ns);
       reader.setContentHandler(companyHandler);
     }
   }
