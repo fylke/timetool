@@ -13,14 +13,16 @@ public class ActivityHandler extends DefaultHandler {
   private transient final XMLReader reader;
   private transient final ContentHandler parentHandler;
   private transient final Activity currentActivity;
+  private transient final String ns;
 
   public ActivityHandler(final Attributes attributes, final XMLReader reader, 
                          final ContentHandler parentHandler, 
-                         final Activity currentActivity)  
+                         final Activity currentActivity, final String ns)  
       throws SAXException {
     this.currentActivity = currentActivity;
     this.parentHandler = parentHandler;
     this.reader = reader;
+    this.ns = ns;
     
     text = new CharArrayWriter();
   }
@@ -36,13 +38,13 @@ public class ActivityHandler extends DefaultHandler {
   public void endElement(final String uri, final String localName, 
                          final String qName)
       throws SAXException {
-    if ("name".equals(qName)) {
+    if ((ns + "actName").equals(qName)) {
       currentActivity.setName(getText());
-    } else if ("shortName".equals(qName)) {
+    } else if ((ns + "actShortName").equals(qName)) {
       currentActivity.setShortName(getText());
-    } else if ("reportCode".equals(qName)) {
+    } else if ((ns + "actReportCode").equals(qName)) {
       currentActivity.setReportCode(getText());
-    } else if ("activity".equals(qName)) {
+    } else if ((ns + "activity").equals(qName)) {
       reader.setContentHandler(parentHandler);
     } 
   }

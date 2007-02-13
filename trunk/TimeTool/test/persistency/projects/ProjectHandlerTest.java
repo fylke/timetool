@@ -23,7 +23,8 @@ public class ProjectHandlerTest {
   private transient TestHandler testHandler;
   private transient Project testProject;
   private transient ProjectHandler projectHandler;
-  private final transient int testProjId = 10;
+  private transient final int testProjId = 10;
+  private transient final String ns = "";
 
   @Before
   public void setUp() throws Exception {
@@ -49,7 +50,7 @@ public class ProjectHandlerTest {
     
     final AttributesImpl dummyAttr = new AttributesImpl();
     projectHandler = new ProjectHandler(dummyAttr, reader, testHandler, 
-                                        testProject);
+                                        testProject, ns);
   }
 
   @After
@@ -75,7 +76,7 @@ public class ProjectHandlerTest {
     final Project simpleProjectKey = 
       tpf.getProject(testProjId, projDepth, projSetConfig);
     
-    projectInput = new StringReader(simpleTestProject); 
+    projectInput = new StringReader(simpleTestProject);
     
     testHandler.setHandlerToTest(projectHandler);
     
@@ -103,12 +104,16 @@ public class ProjectHandlerTest {
     final Project nestedProjectKey = 
       tpf.getProject(testProjId, projDepth, projSetConfig);
     
+    System.out.println(nestedTestProject);
+    System.err.println(nestedProjectKey);
+    
     projectInput = new StringReader(nestedTestProject); 
     
     testHandler.setHandlerToTest(projectHandler);
     
     reader.parse(new InputSource(projectInput));
 
+    System.out.println(testProject);    
     assertEquals("Generated test object and key not equal!", 
                  nestedProjectKey, testProject); 
   }

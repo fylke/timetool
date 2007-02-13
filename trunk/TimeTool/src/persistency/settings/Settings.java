@@ -1,4 +1,4 @@
-package logic;
+package persistency.settings;
 
 import persistency.projects.Company;
 import persistency.projects.ProjectSet;

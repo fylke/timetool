@@ -1,4 +1,4 @@
-<!ELEMENT settings (userName, employedAt, projectSetId, lunchBreak, overtime)>
+<!ELEMENT settings (userName, employedAt, projectSet, lunchBreak, overtime)>
 	<!ELEMENT userName EMPTY>
 	<!ATTLIST userName first CDATA #REQUIRED>
 	<!ATTLIST userName last CDATA #REQUIRED>

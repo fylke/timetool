@@ -7,7 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.Set;
 import java.util.TreeSet;
 
-import logic.Settings;
 
 import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
@@ -18,6 +17,7 @@ import org.junit.Test;
 import persistency.projects.ProjSetConfig;
 import persistency.projects.ProjectSet;
 import persistency.projects.TestProjectsFactory;
+import persistency.settings.Settings;
 import persistency.settings.TestSettingsFactory;
 import persistency.year.SearchControl;
 import persistency.year.TestYearFactory;

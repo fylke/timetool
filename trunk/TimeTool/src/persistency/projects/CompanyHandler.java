@@ -14,14 +14,16 @@ public class CompanyHandler extends DefaultHandler {
   private final transient XMLReader reader;
   private final transient ContentHandler parentHandler;
   private final transient Company currentCompany;
+  private final transient String ns;
 
   public CompanyHandler(final Attributes attributes, final XMLReader reader, 
                         final ContentHandler parentHandler, 
-                        final Company currentCompany)  
+                        final Company currentCompany, final String ns)  
       throws SAXException {
     this.currentCompany = currentCompany;
     this.parentHandler = parentHandler;
     this.reader = reader;
+    this.ns = ns;
     
     text = new CharArrayWriter();
   }
@@ -32,14 +34,14 @@ public class CompanyHandler extends DefaultHandler {
       throws SAXException {
     text.reset();
  
-    if ("project".equals(qName)) {
+    if ((ns + "project").equals(qName)) {
       assert(currentCompany != null);
       final Project project = new Project();
       project.setId(Integer.parseInt(attributes.getValue("id")));
       currentCompany.addProject(project);
             
       final ContentHandler projectHandler = 
-        new ProjectHandler(attributes, reader, this, project);
+        new ProjectHandler(attributes, reader, this, project, ns);
 
       reader.setContentHandler(projectHandler);     
     }
@@ -49,13 +51,13 @@ public class CompanyHandler extends DefaultHandler {
   public void endElement(final String uri, final String localName, 
                          final String qName)
       throws SAXException {
-    if ("name".equals(qName)) {
+    if ((ns + "compName").equals(qName)) {
       currentCompany.setName(getText());
-    } else if ("shortName".equals(qName)) {
+    } else if ((ns + "compShortName").equals(qName)) {
       currentCompany.setShortName(getText());
-    } else if ("employeeId".equals(qName)) {
+    } else if ((ns + "employeeId").equals(qName)) {
       currentCompany.setEmployeeId(getText());
-    } else if ("company".equals(qName)) {
+    } else if ((ns + "company").equals(qName)) {
       reader.setContentHandler(parentHandler);
     }
   }

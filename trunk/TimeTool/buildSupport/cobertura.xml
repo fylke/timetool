@@ -1,0 +1,51 @@
+<project>
+  <property name="coberturaDir" location="${buildDir}/cobertura" />
+  <property name="coberturaClasses" location="${coberturaDir}/classes" />
+  <property name="coberturaReports" location="${coberturaDir}/reports" />
+  <property name="coberturaFile" location="${coberturaDir}/cobertura.ser" />
+
+  <!-- Override this target to do project specific preparations -->
+  <target name="cobertura:depends" />
+
+  <target name="cobertura:setup" depends="junit:setup" 
+          description="Prepare for Cobertura">
+    <path id="cobertura.class.path">
+      <fileset dir="C:\Program Files\Cobertura\cobertura-1.8">
+        <include name="cobertura.jar" />
+        <include name="lib/**/*.jar" />
+      </fileset>
+    </path>
+    <path id="junit.override.path">
+      <pathelement location="${coberturaClasses}"/>
+      <path refid="cobertura.class.path"/> 
+    </path>
+    <property name="junit.sysprop.net.sourceforge.cobertura.datafile" 
+              location="${coberturaFile}" />
+    <taskdef classpathref="cobertura.class.path" resource="tasks.properties" />
+    <mkdir dir="${coberturaDir}" />
+    <mkdir dir="${coberturaClasses}" />
+    <mkdir dir="${coberturaReports}" />
+  </target>
+
+  <target name="cobertura:clean" 
+          description="Removes temporary Cobertura files">
+    <delete dir="${coberturaDir}" />
+  </target>
+
+  <target name="cobertura:compile" 
+          depends="jar:compile, cobertura:setup, cobertura:depends" 
+          description="Add instrumentation to class files"> 
+    <cobertura-instrument datafile="${coberturaFile}" 
+                          todir="${coberturaClasses}">
+      <fileset dir="${outputDir}">
+        <include name="**/*.class" />
+      </fileset>
+    </cobertura-instrument>
+  </target>
+  
+  <target name="cobertura" depends="cobertura:compile, junit" 
+          description="Generate cobertura report">
+    <cobertura-report datafile="${coberturaFile}" srcdir="${sourceDir}" 
+                      destdir="${coberturaReports}" />
+  </target>
+</project>

@@ -1,6 +1,5 @@
 package persistency.year;
 
-import logic.Settings.OvertimeType;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -10,6 +9,7 @@ import org.joda.time.PeriodType;
 import org.joda.time.ReadableDuration;
 
 import persistency.XmlUtils;
+import persistency.settings.Settings.OvertimeType;
 
 
 public class TestYearFactory {
@@ -25,6 +25,8 @@ public class TestYearFactory {
   private static transient final int minutes = 0;
   private static transient final int seconds = 0;
   private static transient final int millis = 0;
+  
+  private static transient final String ns = "";
   
   private static TestYearFactory factoryInstance;
   private transient XmlUtils xmlUtils;
@@ -110,20 +112,20 @@ public class TestYearFactory {
   
   public String getXmlYearWithConfig(final YearConfig yearConfig) {
     final StringBuilder sb = 
-      xmlUtils.getHeader("year", "id=\"" + yearConfig.year + "\"");
+      xmlUtils.getHeader(ns + "year", "id=\"" + yearConfig.year + "\"");
     
     for (short i = 1; i <= yearConfig.nrOfMonths ; i++) {
       getXmlMonth(i, yearConfig, sb);
     }
     
-    return sb.toString() + "</year>"; 
+    return sb.toString() + "</" + ns + "year>"; 
   }
   
   public String getXmlMonth(final short month, final YearConfig yearConfig,
                             final StringBuilder sb) {
     String indent = xmlUtils.indent(1);
 
-    sb.append(indent + "<month id=\"" + month + "\">\n");
+    sb.append(indent + "<" + ns + "month id=\"" + month + "\">\n");
     indent = xmlUtils.incIndent(indent);
     
     for (short i = 1; i <= yearConfig.nrOfDaysEachMonth; i++) {
@@ -131,7 +133,7 @@ public class TestYearFactory {
     }
     
     indent = xmlUtils.decIndent(indent);
-    sb.append(indent + "</month>\n");
+    sb.append(indent + "</" + ns + "month>\n");
     
     return sb.toString();
   }
@@ -153,37 +155,38 @@ public class TestYearFactory {
       actLength = new Duration(workDay.getStartTime(), workDay.getEndTime());
     }
 
-    sb.append(indent + "<workDay date=\"" + dateInMonth + "\">\n");
+    sb.append(indent + "<" + ns + "workDay date=\"" + dateInMonth + "\">\n");
     indent = xmlUtils.incIndent(indent);
     
     String workStartTime = workDay.getStartTime().toString("kk:mm");
     String workEndTime = workDay.getEndTime().toString("kk:mm");
     
-    sb.append(indent + "<duration start=\"" + workStartTime + 
-                                "\" end=\"" + workEndTime + "\"/>\n");
-    sb.append(indent + "<overtime treatAs=\"flex\"/>\n");
-    sb.append(indent + "<isReported/>\n");
-    sb.append(indent + "<journalWritten/>\n");
+    sb.append(indent + "<" + ns + "duration start=\"" + workStartTime + 
+                                        "\" end=\"" + workEndTime + "\"/>\n");
+    sb.append(indent + "<" + ns + "overtime treatAs=\"flex\"/>\n");
+    sb.append(indent + "<" + ns + "isReported/>\n");
+    sb.append(indent + "<" + ns + "journalWritten/>\n");
     
     DateTime actStartTime = workDay.getStartTime().toDateTime();
     DateTime actEndTime = actStartTime.plus(actLength);
     
     for (int i = 0; i < yearConfig.nrOfActsEachDay; i++) {
-      sb.append(indent + "<activity id=\"" + i + "\">\n");
+      sb.append(indent + "<" + ns + "activity id=\"" + i + "\">\n");
       indent = xmlUtils.incIndent(indent);
                   
-      sb.append(indent + "<duration start=\"" + actStartTime.toString("kk:mm") + 
-                                  "\" end=\"" + actEndTime.toString("kk:mm") + 
-                                  "\"/>\n");
-      sb.append(indent + "<includeLunch duration=\"" + lunchLength + "\"/>\n");
+      sb.append(indent + "<" + ns + 
+                "duration start=\"" + actStartTime.toString("kk:mm") + 
+                      "\" end=\"" + actEndTime.toString("kk:mm") + "\"/>\n");
+      sb.append(indent + "<" + ns + "includeLunch duration=\"" + 
+                lunchLength + "\"/>\n");
       indent = xmlUtils.decIndent(indent);
-      sb.append(indent + "</activity>\n");
+      sb.append(indent + "</" + ns + "activity>\n");
       
       actStartTime = actEndTime;
       actEndTime = actStartTime.plus(actLength);
     }
     
     indent = xmlUtils.decIndent(indent);
-    sb.append(indent + "</workDay>\n");
+    sb.append(indent + "</" + ns + "workDay>\n");
   }
 }

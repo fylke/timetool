@@ -14,14 +14,16 @@ public class ProjectHandler extends DefaultHandler {
   private transient final XMLReader reader;
   private transient final ContentHandler parentHandler;
   private transient final Project currentProject;
+  private transient final String ns;
 
   public ProjectHandler(final Attributes attributes, final XMLReader reader, 
                         final ContentHandler parentHandler, 
-                        final Project currentProject)  
+                        final Project currentProject, final String ns)  
       throws SAXException {
     this.currentProject = currentProject;
     this.parentHandler = parentHandler;
     this.reader = reader;
+    this.ns = ns;
     
     text = new CharArrayWriter();
   }
@@ -32,24 +34,24 @@ public class ProjectHandler extends DefaultHandler {
       throws SAXException {
     text.reset();
  
-    if ("activity".equals(qName)) {
+    if ((ns + "activity").equals(qName)) {
       assert(currentProject != null);
       final Activity activity = 
         new Activity(Integer.parseInt(attributes.getValue("id")));
       currentProject.addActivity(activity);
       
       final ContentHandler activityHandler = 
-        new ActivityHandler(attributes, reader, this, activity);
+        new ActivityHandler(attributes, reader, this, activity, ns);
       
       reader.setContentHandler(activityHandler);
-    } else if ("project".equals(qName)) {
+    } else if ((ns + "project").equals(qName)) {
       assert(currentProject != null);
       final Project subProject = new Project();
       subProject.setId(Integer.parseInt(attributes.getValue("id")));
       currentProject.addSubProject(subProject);
       
       final ContentHandler subProjectHandler = 
-        new ProjectHandler(attributes, reader, this, subProject);
+        new ProjectHandler(attributes, reader, this, subProject, ns);
       
       reader.setContentHandler(subProjectHandler);
     } 
@@ -59,13 +61,13 @@ public class ProjectHandler extends DefaultHandler {
   public void endElement(final String uri, final String localName, 
                          final String qName)
       throws SAXException {
-    if ("name".equals(qName)) {
+    if ((ns + "projName").equals(qName)) {
       currentProject.setName(getText());
-    } else if ("shortName".equals(qName)) {
+    } else if ((ns + "projShortName").equals(qName)) {
       currentProject.setShortName(getText());
-    } else if ("code".equals(qName)) {
+    } else if ((ns + "code").equals(qName)) {
       currentProject.setCode(getText());
-    } else if ("project".equals(qName)) {
+    } else if ((ns + "project").equals(qName)) {
       reader.setContentHandler(parentHandler);
     }
   }

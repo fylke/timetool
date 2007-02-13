@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:complexType name="settings">
-    <xs:element name="name"         type="xs:string"/>
-    <xs:element name="employmentId" type="xs:string"/>
-    <xs:element name="Employer"     type="xs:string"/>
-    <xs:element name="lunchBreak"   type="duration"/>
-	</xs:complexType>
-</xs:schema>
