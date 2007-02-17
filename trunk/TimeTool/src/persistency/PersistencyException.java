@@ -1,7 +1,7 @@
 package persistency;
 
 public class PersistencyException extends Exception {
-  private static final long serialVersionUID = -1337642302056731282L;
+  private static final long serialVersionUID = 1L;
 
   public PersistencyException(final String message) {
     super(message);
