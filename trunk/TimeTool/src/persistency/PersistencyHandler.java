@@ -6,9 +6,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.util.prefs.Preferences;
 
 import javax.xml.parsers.ParserConfigurationException;
-
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -26,6 +26,9 @@ import persistency.year.YearParser;
 import persistency.year.YearWriter;
 
 public class PersistencyHandler {
+  private final Preferences userPrefs = 
+    Preferences.userRoot().node("/timetool");
+  
   public Settings readSettings(final InputStream settingsStream) 
   throws PersistencyException {
     Reader br = null;
@@ -148,5 +151,23 @@ public class PersistencyHandler {
   {
     ProjectSetWriter psw = new ProjectSetWriter();
     psw.writeProjectSet(projectSet, projectsStream);
+  }
+  
+  /**
+   * Gets the absolute path of the directory where files are stored.
+   *  
+   * @return the absolute path of the directory to store files in
+   */
+  public String getStorageDir() {
+    return userPrefs.get("Storage dir", null);
+  }
+  
+  /**
+   * Sets the path to where TimeTool files should be stored.
+   * 
+   * @param absPath the absolute path to the directory
+   */
+  public void setStorageDir(final String absPath) {
+    userPrefs.put("Storage dir", absPath);
   }
 }
