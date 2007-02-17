@@ -24,7 +24,7 @@ import persistency.year.TestYearFactory;
 import persistency.year.Year;
 import persistency.year.YearConfig;
 
-public class PersistencyHandlerTest {
+public final class PersistencyHandlerTest {
   private transient TestProjectsFactory tpf;
   private transient TestYearFactory tyf;
   private transient TestSettingsFactory tsf;
@@ -288,5 +288,16 @@ public class PersistencyHandlerTest {
     
     assertEquals("Generated test stream and output key not equal!", 
                  yearOutputKey, yearStream.toString());
+  }
+  
+  @Test
+  public final void testSetAndGetStorageDir() throws Exception {
+    final String home = System.getProperty("user.home");
+    ph.setStorageDir(home);
+    
+    final String result = ph.getStorageDir();
+    
+    assertEquals("The dir set and dir gotten back were not equal!", 
+                 home, result);
   }
 }
