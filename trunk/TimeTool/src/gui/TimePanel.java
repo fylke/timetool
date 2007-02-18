@@ -20,7 +20,7 @@ import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class TimePanel extends JPanel implements ActionListener {
-  private static final long serialVersionUID = -7326327191987302561L;
+  private static final long serialVersionUID = 1L;
 
   private ZoneLayout layout;
   private ZoneLayout layoutUpper;
