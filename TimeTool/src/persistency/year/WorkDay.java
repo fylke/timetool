@@ -15,6 +15,7 @@ import org.joda.time.ReadableDuration;
 import org.joda.time.ReadablePeriod;
 
 import persistency.XmlUtils;
+import persistency.settings.Settings;
 import persistency.settings.Settings.OvertimeType;
 
 public class WorkDay {
@@ -26,12 +27,20 @@ public class WorkDay {
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
   private OvertimeType treatOvertimeAs;
+  private Settings settings;
   
   private final transient XmlUtils xmlUtils;
   
   public WorkDay(final int year, final short month, final short dateInMonth) {
+    this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0));
+  }
+  
+  public WorkDay(final ReadableDateTime date) {
     super();
-    this.date = new DateTime(year, month, dateInMonth, 0, 0, 0, 0);
+    
+    settings = new Settings();
+    treatOvertimeAs = settings.getTreatOvertimeAs();
+    this.date = date;
     xmlUtils = XmlUtils.getInstance();
     activities = new TreeMap<Integer, ActivityInfo>();
   }
