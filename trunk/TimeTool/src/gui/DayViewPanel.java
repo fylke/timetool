@@ -5,35 +5,54 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 
-import org.joda.time.LocalDateTime;
+import org.joda.time.DateTime;
+import org.joda.time.DurationFieldType;
+import org.joda.time.ReadableDateTime;
+
+import persistency.year.WorkDay;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class DayViewPanel extends JPanel implements ActionListener {
-  private static final long serialVersionUID = -2161376983888260337L;
+  private static final long serialVersionUID = 1L;
   
+  private WorkDay today;
   private ZoneLayout layout;
-  private LocalDateTime date;
-  private JLabel today;
+  private ReadableDateTime date;
+  private JLabel dateLabel;
   private JTabbedPane activityPanel;
   private Font font;
   
-  private JPanel commonSettingsLeftPanel;
+  private JPanel commonSettingsUpperLeftPanel;
+  private JPanel commonSettingsLowerLeftPanel;
   private JPanel commonSettingsRightPanel;
-  private ZoneLayout commonSettingsLayoutLP;
+  
+  private ZoneLayout commonSettingsLayoutULP;
+  private ZoneLayout commonSettingsLayoutLLP;
   private ZoneLayout commonSettingsLayoutRP;
   
   private JLabel flexBankLabel;
   private JLabel flexBankContent;
   private JLabel hoursWorkedLabel;
   private JLabel hoursWorkedContent;
+  
+  private JLabel overtimeLabel;
+  private JRadioButton flexRB;
+  private JLabel flexLabel;
+  private JRadioButton paidRB;
+  private JLabel paidLabel;
+  private JRadioButton compRB;
+  private JLabel compLabel;
+  private ButtonGroup overtimeGroup;
   
   private JCheckBox isReportedCB;
   private JLabel isReportedLabel;
@@ -43,6 +62,8 @@ public class DayViewPanel extends JPanel implements ActionListener {
    
   public DayViewPanel() {
     super();
+    date = new DateTime();
+    today = new WorkDay(date);
     initComponents();
   }
   
@@ -70,32 +91,36 @@ public class DayViewPanel extends JPanel implements ActionListener {
     layout.addRow("a<-~.....");
     layout.addRow("........a");
     layout.addRow("....6....");
-    layout.addRow("c<^.~b._>");
-    layout.addRow("...c....b");
+    layout.addRow("o<^o~b._>");
+    layout.addRow("c<^c....b");
     
     setLayout(layout);
     
     setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
     
-    date = new LocalDateTime();
-    today = new JLabel(date.dayOfWeek().getAsText() + " " + 
-                       date.getDayOfMonth() + "/" +
-                       date.getMonthOfYear() + " v." +
-                       date.getWeekOfWeekyear() + " " +
-                       date.getYear());
-    today.setFont(font);
-    add(today, "d");
+    dateLabel = new JLabel(date.toDateTime().dayOfWeek().getAsText() + " " + 
+                           date.getDayOfMonth() + "/" +
+                           date.getMonthOfYear() + " v." +
+                           date.getWeekOfWeekyear() + " " +
+                           date.getYear());
+    dateLabel.setFont(font);
+    add(dateLabel, "d");
     
     activityPanel = new JTabbedPane();
     activityPanel.add(new ActivityPanel());
     add(activityPanel, "a");
     
-    commonSettingsLeftPanel = new JPanel();
-    commonSettingsLayoutLP = ZoneLayoutFactory.newZoneLayout();
-    commonSettingsLayoutLP.addRow("c>c2f<f");
-    commonSettingsLayoutLP.addRow("d>d.w<w");
-    commonSettingsLayoutLP.addRow("s>s.r....");
-    commonSettingsLeftPanel.setLayout(commonSettingsLayoutLP);
+    commonSettingsUpperLeftPanel = new JPanel();
+    commonSettingsLayoutULP = ZoneLayoutFactory.newZoneLayout();
+    commonSettingsLayoutULP.addRow("l<...l");
+    commonSettingsLayoutULP.addRow("mnopqr");
+    
+    commonSettingsLowerLeftPanel = new JPanel();
+    commonSettingsLayoutLLP = ZoneLayoutFactory.newZoneLayout();
+    commonSettingsLayoutLLP.addRow("c>c2f<f");
+    commonSettingsLayoutLLP.addRow("d>d.w<w");
+    commonSettingsLayoutLLP.addRow("s>s.r..");
+    commonSettingsLowerLeftPanel.setLayout(commonSettingsLayoutLLP);
     
     commonSettingsRightPanel = new JPanel();
     commonSettingsLayoutRP = ZoneLayoutFactory.newZoneLayout();
@@ -104,22 +129,60 @@ public class DayViewPanel extends JPanel implements ActionListener {
     commonSettingsLayoutRP.addRow("n._>n");    
     commonSettingsRightPanel.setLayout(commonSettingsLayoutRP);
     
+    overtimeLabel = new JLabel("Hantera övertid som:");
+    flexRB = new JRadioButton();
+    flexLabel = new JLabel("Flex");
+    paidRB = new JRadioButton();
+    paidLabel = new JLabel("Betald");
+    compRB = new JRadioButton();
+    compLabel = new JLabel("Komp");
+    overtimeGroup = new ButtonGroup();
+    overtimeGroup.add(flexRB);
+    overtimeGroup.add(paidRB);
+    overtimeGroup.add(compRB);
+    
+    switch(today.getTreatOvertimeAs()) {
+      case FLEX:
+        flexRB.setSelected(true);
+        break;
+      case PAID:
+        paidRB.setSelected(true);
+        break;
+      case COMP:
+        compRB.setSelected(true);
+        break;
+    }
+    
+    commonSettingsUpperLeftPanel.add(overtimeLabel, "l");
+    commonSettingsUpperLeftPanel.add(flexRB, "m");
+    commonSettingsUpperLeftPanel.add(flexLabel, "n");
+    commonSettingsUpperLeftPanel.add(paidRB, "o");
+    commonSettingsUpperLeftPanel.add(paidLabel, "p");
+    commonSettingsUpperLeftPanel.add(compRB, "q");
+    commonSettingsUpperLeftPanel.add(compLabel, "r");
+    
+    add(commonSettingsUpperLeftPanel, "o");
+    
     flexBankLabel = new JLabel("Flexbank:");
-    commonSettingsLeftPanel.add(flexBankLabel, "c");
-    flexBankContent = new JLabel("4h 40min");
-    commonSettingsLeftPanel.add(flexBankContent, "f");
+    commonSettingsLowerLeftPanel.add(flexBankLabel, "c");
+    flexBankContent = 
+      new JLabel(today.getDayBalance().get(DurationFieldType.hours()) + "h " +
+                 today.getDayBalance().get(DurationFieldType.minutes()) + "min");
+    commonSettingsLowerLeftPanel.add(flexBankContent, "f");
     
     hoursWorkedLabel = new JLabel("Jobbat idag:");
-    commonSettingsLeftPanel.add(hoursWorkedLabel, "d");
-    hoursWorkedContent = new JLabel("7h 25min");
-    commonSettingsLeftPanel.add(hoursWorkedContent, "w");
+    commonSettingsLowerLeftPanel.add(hoursWorkedLabel, "d");
+    hoursWorkedContent = 
+      new JLabel(today.getDayBalance().get(DurationFieldType.hours()) + "h " +
+                 today.getDayBalance().get(DurationFieldType.minutes()) + "min");
+    commonSettingsLowerLeftPanel.add(hoursWorkedContent, "w");
     
     isReportedCB = new JCheckBox();
-    commonSettingsLeftPanel.add(isReportedCB, "s");
+    commonSettingsLowerLeftPanel.add(isReportedCB, "s");
     isReportedLabel = new JLabel("Rapporterad");
-    commonSettingsLeftPanel.add(isReportedLabel, "r");
+    commonSettingsLowerLeftPanel.add(isReportedLabel, "r");
     
-    add(commonSettingsLeftPanel, "c");
+    add(commonSettingsLowerLeftPanel, "c");
     
     writeJournalBT = new JButton("Dagbok");
     writeJournalBT.setToolTipText("Uppdatera dagboken");
