@@ -5,11 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -31,11 +29,11 @@ public class TimePanel extends JPanel implements ActionListener {
   private LocalDateTime date;
   
   private JPanel upperPanel;
-  private JPanel lowerPanel;
+//  private JPanel lowerPanel;
   
-  private JRadioButton startFinishRB;
-  private JRadioButton percentEstimateRB;
-  private ButtonGroup radioGroup;
+//  private JRadioButton startFinishRB;
+//  private JRadioButton percentEstimateRB;
+//  private ButtonGroup radioGroup;
   
   private JLabel startLabel;
   private JTextField startTF;
@@ -45,9 +43,9 @@ public class TimePanel extends JPanel implements ActionListener {
   private JTextField finishTF;
   private JButton setFinishToNowBT;
   
-  private JLabel percentEstLabel;
-  private JTextField percentEstTF;
-  private JLabel bigSigmaLabel;
+//  private JLabel percentEstLabel;
+//  private JTextField percentEstTF;
+//  private JLabel bigSigmaLabel;
 
   public TimePanel() {
     super();
@@ -70,7 +68,7 @@ public class TimePanel extends JPanel implements ActionListener {
     
     layout = ZoneLayoutFactory.newZoneLayout();
     layout.addRow("a<a~t~");
-    layout.addRow("b<b...");
+//    layout.addRow("b<b...");
     
     setLayout(layout);
     
@@ -89,13 +87,13 @@ public class TimePanel extends JPanel implements ActionListener {
     
     upperPanel = new JPanel(layoutUpper);
     
-    startFinishRB = new JRadioButton();
-    percentEstimateRB = new JRadioButton();    
-    radioGroup = new ButtonGroup();
-    radioGroup.add(startFinishRB);
-    radioGroup.add(percentEstimateRB);
-    startFinishRB.setSelected(true);
-    upperPanel.add(startFinishRB, "r");
+//    startFinishRB = new JRadioButton();
+//    percentEstimateRB = new JRadioButton();    
+//    radioGroup = new ButtonGroup();
+//    radioGroup.add(startFinishRB);
+//    radioGroup.add(percentEstimateRB);
+//    startFinishRB.setSelected(true);
+//    upperPanel.add(startFinishRB, "r");
         
     startLabel = new JLabel("Började:");
     startLabel.setFont(font);
@@ -126,20 +124,20 @@ public class TimePanel extends JPanel implements ActionListener {
     timeLabel.setFont(timeFont);
     add(timeLabel, "t");
     
-    lowerPanel = new JPanel(layoutLower);
-    
-    lowerPanel.add(percentEstimateRB, "t");
-    
-    percentEstLabel = new JLabel("Procentskattning:");
-    percentEstLabel.setFont(font);
-    lowerPanel.add(percentEstLabel, "p");
-    percentEstTF = new JTextField(2);
-    percentEstTF.setHorizontalAlignment(SwingConstants.RIGHT);
-    lowerPanel.add(percentEstTF, "y");
-    bigSigmaLabel = new JLabel("\u03A3" + "40%");
-    bigSigmaLabel.setFont(font);
-    lowerPanel.add(bigSigmaLabel, "z");
-    
-    add(lowerPanel, "b");
+//    lowerPanel = new JPanel(layoutLower);
+//    
+//    lowerPanel.add(percentEstimateRB, "t");
+//    
+//    percentEstLabel = new JLabel("Procentskattning:");
+//    percentEstLabel.setFont(font);
+//    lowerPanel.add(percentEstLabel, "p");
+//    percentEstTF = new JTextField(2);
+//    percentEstTF.setHorizontalAlignment(SwingConstants.RIGHT);
+//    lowerPanel.add(percentEstTF, "y");
+//    bigSigmaLabel = new JLabel("\u03A3" + "40%");
+//    bigSigmaLabel.setFont(font);
+//    lowerPanel.add(bigSigmaLabel, "z");
+//    
+//    add(lowerPanel, "b");
   }
 }
