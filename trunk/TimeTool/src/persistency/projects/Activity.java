@@ -2,10 +2,14 @@ package persistency.projects;
 
 
 public class Activity {
-  private final int id;
+  private int id;
   private String name;
   private String shortName;
   private String reportCode;
+  
+  public Activity() {
+    super();
+  }
   
   public Activity(final int id) {
     super();
@@ -38,6 +42,13 @@ public class Activity {
    */
   public String getReportCode() {
     return reportCode;
+  }
+
+  /**
+   * @param id the id to set
+   */
+  public void setId(int id) {
+    this.id = id;
   }
 
   /**
