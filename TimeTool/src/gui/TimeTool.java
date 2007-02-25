@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import persistency.settings.Settings;
+
 public class TimeTool extends JFrame {
-  private static final long serialVersionUID = 4567223896725116479L;
+  private static final long serialVersionUID = 1L;
   
   private JTabbedPane background;
   private JPanel dayViewPane;
@@ -37,7 +39,7 @@ public class TimeTool extends JFrame {
     setLocationRelativeTo(null); // Centers the window on the screen.
 
     background = new JTabbedPane();
-    dayViewPane = new DayViewPanel();
+    dayViewPane = new DayViewPanel(new Settings());
     weekViewPane = new WeekViewPanel();
     
     add(background);
