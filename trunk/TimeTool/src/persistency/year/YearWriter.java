@@ -50,8 +50,7 @@ public class YearWriter {
                     actInfo.getEndTime().toString("kk:mm") + "\"/>\n");
           if (actInfo.includeLunch) {
             sb.append(indent + "<" + ns + "includeLunch duration=\"" + 
-                      actInfo.getLunchLenght().get(DurationFieldType.minutes()) + 
-                      "\"/>\n");
+                      actInfo.getLunchLenght() + "\"/>\n");
           }
           
           indent = xmlUtils.decIndent(indent);
