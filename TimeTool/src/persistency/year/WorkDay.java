@@ -1,9 +1,9 @@
 package persistency.year;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
-
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
@@ -21,6 +21,8 @@ import persistency.settings.Settings.OvertimeType;
 public class WorkDay {
   public boolean isReported;
   public boolean journalWritten;
+  
+  private static int nextActId = 0;
   
   private Map<Integer, ActivityInfo> activities;
   private ReadableDateTime date;
@@ -73,6 +75,13 @@ public class WorkDay {
     return new Duration(startTime, endTime);
   }
   
+  /**
+   * @return the settings
+   */
+  public Settings getSettings() {
+    return settings;
+  }
+
   /**
    * @param endTime the endTime to set on the form hh:mm
    */
@@ -152,18 +161,21 @@ public class WorkDay {
   public Collection<ActivityInfo> getAllActivities() {
     return activities.values();
   }
+    
+  public LocalTime getDayBalanceAsLocalTime() {
+    ReadablePeriod dayBalance = getDayBalance();
+    
+    return new LocalTime(dayBalance.get(DurationFieldType.hours()), 
+                         dayBalance.get(DurationFieldType.minutes())); 
+  }
   
-  public ReadablePeriod getDayBalance() {
-    Duration dayBalance = new Duration(Duration.ZERO);
-    for (final ActivityInfo actInfo : activities.values()) {
-      dayBalance.plus(new Duration(actInfo.getStartTime(), 
-                                   actInfo.getEndTime()));
-      if (actInfo.includeLunch) {
-        dayBalance.plus(actInfo.getLunchLenght().get(DurationFieldType.minutes()));
-      }
+  public int getNewActId() {
+    int max = Collections.max(activities.keySet());
+    while (activities.keySet().contains(WorkDay.nextActId)) {
+      WorkDay.nextActId++;
     }
     
-    return dayBalance.toPeriod(PeriodType.minutes());
+    return WorkDay.nextActId;
   }
   
   /* (non-Javadoc)
@@ -246,5 +258,18 @@ public class WorkDay {
     } else if (!treatOvertimeAs.equals(other.treatOvertimeAs))
       return false;
     return true;
+  }
+  
+  private ReadablePeriod getDayBalance() {
+    Duration dayBalance = new Duration(Duration.ZERO);
+    for (final ActivityInfo actInfo : activities.values()) {
+      dayBalance.plus(new Duration(actInfo.getStartTime(), 
+                                   actInfo.getEndTime()));
+      if (actInfo.includeLunch) {
+        dayBalance.plus(actInfo.getLunchLenght());
+      }
+    }
+    
+    return dayBalance.toPeriod(PeriodType.minutes());
   }
 }
