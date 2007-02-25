@@ -3,6 +3,8 @@ package gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -11,11 +13,20 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import persistency.projects.Activity;
+import persistency.projects.Company;
+import persistency.projects.Project;
+import persistency.year.WorkDay;
+
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class ActivityPanel extends JPanel implements ActionListener {
-  private static final long serialVersionUID = -8200082420428928371L;
+  private static final long serialVersionUID = 1L;
+  
+  private final WorkDay currentDay;
+  private int actId;
+  private String[] activities = {};
   
   private Font font;
   private ZoneLayout layout;
@@ -36,12 +47,18 @@ public class ActivityPanel extends JPanel implements ActionListener {
   
   private JPanel lowerRightPanel;
   private JButton deleteTabBT;
-  private JButton saveTabBT;
-  
-  private final String[] activities = { "R4 Maint.", "R5 Feas.", "R5 Exec." }; 
-   
-  public ActivityPanel() {
+  private JButton saveTabBT; 
+
+  public ActivityPanel(final WorkDay currentDay) {
     super();
+    this.currentDay = currentDay;
+    initComponents();
+  }
+  
+  public ActivityPanel(final WorkDay currentDay, final int actId) {
+    super();
+    this.currentDay = currentDay;
+    this.actId = actId;
     initComponents();
   }
 
@@ -84,7 +101,12 @@ public class ActivityPanel extends JPanel implements ActionListener {
     activityLabel.setFont(font);
     upperPanel.add(activityLabel, "a");
     
-    activityCombo = new JComboBox(activities);
+    activities = getActivityList().toArray(activities);
+    if (activities.length > 0) {
+      activityCombo = new JComboBox(activities);
+    } else {
+      activityCombo = new JComboBox(new String[]{"Inga aktiviteter definerade"});
+    }
     activityCombo.setSelectedIndex(0);
     upperPanel.add(activityCombo, "c");
     
@@ -99,13 +121,17 @@ public class ActivityPanel extends JPanel implements ActionListener {
     
     add(timePanel, "t");
     
-    lowerLeftPanel = new JPanel(layoutLowerLeft);
-    includeLunchCB = new JCheckBox();
-    lowerLeftPanel.add(includeLunchCB, "c");
-    includeLunchLabel = new JLabel("Inkludera lunch (40min)");
-    lowerLeftPanel.add(includeLunchLabel, "l");
-    
-    add(lowerLeftPanel, "l");
+    if (currentDay.getActivity(actId) != null) {
+      lowerLeftPanel = new JPanel(layoutLowerLeft);
+      includeLunchCB = new JCheckBox();
+      lowerLeftPanel.add(includeLunchCB, "c");
+      includeLunchLabel = 
+        new JLabel("Inkludera lunch (" +
+                   currentDay.getActivity(actId).getLunchLenght() + "min)");
+      lowerLeftPanel.add(includeLunchLabel, "l");
+      
+      add(lowerLeftPanel, "l");
+    }
     
     lowerRightPanel = new JPanel(layoutLowerRight);
     deleteTabBT = new JButton("Ta bort");
@@ -118,5 +144,17 @@ public class ActivityPanel extends JPanel implements ActionListener {
     add(lowerRightPanel, "b");
     
     setName((String) activityCombo.getSelectedItem());
+  }
+  
+  private List<String> getActivityList() {
+    List<String> actShortNames = new ArrayList<String>();
+    for (Company comp : currentDay.getSettings().getProjectSet().getCompanies()) {
+      for(Project proj : comp.getProjects()) {
+        for (Activity act : proj.getActivities()) {
+          actShortNames.add(act.getShortName());
+        }
+      }
+    }
+    return actShortNames;
   }
 }
