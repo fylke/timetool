@@ -14,9 +14,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTabbedPane;
 
 import org.joda.time.DateTime;
-import org.joda.time.DurationFieldType;
 import org.joda.time.ReadableDateTime;
 
+import persistency.settings.Settings;
 import persistency.year.WorkDay;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
@@ -25,7 +25,9 @@ import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 public class DayViewPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
   
-  private WorkDay today;
+  private WorkDay currentDay;
+  private Settings currentUser;
+  
   private ZoneLayout layout;
   private ReadableDateTime date;
   private JLabel dateLabel;
@@ -60,10 +62,11 @@ public class DayViewPanel extends JPanel implements ActionListener {
   private JButton writeJournalBT;
   private JButton createNewTabBT;
    
-  public DayViewPanel() {
+  public DayViewPanel(Settings currentUser) {
     super();
+    this.currentUser = currentUser;
     date = new DateTime();
-    today = new WorkDay(date);
+    currentDay = new WorkDay(date);
     initComponents();
   }
   
@@ -77,7 +80,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
           }
         );
     } else if (e.getSource().equals(createNewTabBT)) {
-      activityPanel.add(new ActivityPanel());
+      activityPanel.add(new ActivityPanel(currentDay));
     }
   }
 
@@ -107,7 +110,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
     add(dateLabel, "d");
     
     activityPanel = new JTabbedPane();
-    activityPanel.add(new ActivityPanel());
+    activityPanel.add(new ActivityPanel(currentDay));
     add(activityPanel, "a");
     
     commonSettingsUpperLeftPanel = new JPanel();
@@ -141,7 +144,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
     overtimeGroup.add(paidRB);
     overtimeGroup.add(compRB);
     
-    switch(today.getTreatOvertimeAs()) {
+    switch(currentDay.getTreatOvertimeAs()) {
       case FLEX:
         flexRB.setSelected(true);
         break;
@@ -166,15 +169,13 @@ public class DayViewPanel extends JPanel implements ActionListener {
     flexBankLabel = new JLabel("Flexbank:");
     commonSettingsLowerLeftPanel.add(flexBankLabel, "c");
     flexBankContent = 
-      new JLabel(today.getDayBalance().get(DurationFieldType.hours()) + "h " +
-                 today.getDayBalance().get(DurationFieldType.minutes()) + "min");
+      new JLabel(currentDay.getDayBalanceAsLocalTime().toString("H'h' m'min'"));
     commonSettingsLowerLeftPanel.add(flexBankContent, "f");
     
     hoursWorkedLabel = new JLabel("Jobbat idag:");
     commonSettingsLowerLeftPanel.add(hoursWorkedLabel, "d");
     hoursWorkedContent = 
-      new JLabel(today.getDayBalance().get(DurationFieldType.hours()) + "h " +
-                 today.getDayBalance().get(DurationFieldType.minutes()) + "min");
+      new JLabel(currentDay.getDayBalanceAsLocalTime().toString("H'h' m'min'"));
     commonSettingsLowerLeftPanel.add(hoursWorkedContent, "w");
     
     isReportedCB = new JCheckBox();
