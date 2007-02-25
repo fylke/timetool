@@ -15,7 +15,7 @@ public class ActivityInfo {
   private final int id;
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
-  private ReadablePeriod lunchLenght;
+  private int lunchLenght;
 
   private final transient XmlUtils xmlUtils;
 
@@ -23,7 +23,7 @@ public class ActivityInfo {
     this.id = id;
     xmlUtils = XmlUtils.getInstance();
     //FIXME How to fetch the default from Settings?
-    lunchLenght = new Period(40 * 60 * 1000, PeriodType.minutes());
+    lunchLenght = 40;
   }
     
   public int getId() {
@@ -68,8 +68,7 @@ public class ActivityInfo {
     objRep.append("startTime: " + startTime.toString("kk:mm") + "\n");
     objRep.append("endTime: " + endTime.toString("kk:mm") + "\n");
     objRep.append("includeLunch: " + includeLunch + "\n");
-    objRep.append("lunchLength: " + 
-                  lunchLenght.get(DurationFieldType.minutes()) + "\n");
+    objRep.append("lunchLength: " + lunchLenght + "\n");
     
     return objRep.toString();
   }
@@ -77,14 +76,14 @@ public class ActivityInfo {
   /**
    * @return the lunchLenght
    */
-  public ReadablePeriod getLunchLenght() {
+  public int getLunchLenght() {
     return lunchLenght;
   }
 
   /**
    * @param lunchLenght the lunchLenght to set
    */
-  public void setLunchLenght(ReadablePeriod lunchLenght) {
+  public void setLunchLenght(final int lunchLenght) {
     this.lunchLenght = lunchLenght;
   }
   
