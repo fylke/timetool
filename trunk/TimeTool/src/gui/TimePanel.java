@@ -52,11 +52,11 @@ public class TimePanel extends JPanel implements ActionListener {
     initComponents();
   }
   
-  public void actionPerformed(final ActionEvent e) {
-    if (e.getSource().equals(setStartToNowBT)) {
+  public void actionPerformed(final ActionEvent ae) {
+    if (ae.getSource().equals(setStartToNowBT)) {
       date = new LocalDateTime();
       startTF.setText(date.toString("HH:mm"));
-    } else if (e.getSource().equals(setFinishToNowBT)) {
+    } else if (ae.getSource().equals(setFinishToNowBT)) {
       date = new LocalDateTime();
       finishTF.setText(date.toString("HH:mm"));
     } 
