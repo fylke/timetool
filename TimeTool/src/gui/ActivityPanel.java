@@ -26,7 +26,6 @@ public class ActivityPanel extends JPanel implements ActionListener {
   
   private final WorkDay currentDay;
   private int actId;
-  private String[] activities = {};
   
   private Font font;
   private ZoneLayout layout;
@@ -67,7 +66,7 @@ public class ActivityPanel extends JPanel implements ActionListener {
       java.awt.EventQueue.invokeLater(
           new Runnable() {
             public void run() {
-              new CreateActivityFrame().setVisible(true);
+              new CreateActivityFrame(currentDay.getSettings()).setVisible(true);
             }
           }
         );
@@ -101,11 +100,10 @@ public class ActivityPanel extends JPanel implements ActionListener {
     activityLabel.setFont(font);
     upperPanel.add(activityLabel, "a");
     
-    activities = getActivityList().toArray(activities);
-    if (activities.length > 0) {
-      activityCombo = new JComboBox(activities);
-    } else {
+    if (activityCount() <= 0) {
       activityCombo = new JComboBox(new String[]{"Inga aktiviteter definerade"});
+    } else {
+      activityCombo = new JComboBox(getActivityList().toArray(new String[0]));
     }
     activityCombo.setSelectedIndex(0);
     upperPanel.add(activityCombo, "c");
@@ -156,5 +154,17 @@ public class ActivityPanel extends JPanel implements ActionListener {
       }
     }
     return actShortNames;
+  }
+  
+  private int activityCount() {
+    int i = 0;
+    for (Company comp : currentDay.getSettings().getProjectSet().getCompanies()) {
+      for(Project proj : comp.getProjects()) {
+        for (Activity act : proj.getActivities()) {
+          i++;
+        }
+      }
+    }
+    return i;
   }
 }
