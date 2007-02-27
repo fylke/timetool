@@ -3,6 +3,8 @@ package gui;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -14,11 +16,19 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
+import persistency.projects.Company;
+import persistency.projects.Project;
+import persistency.settings.Settings;
+
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class CreateActivityFrame extends JFrame implements ActionListener {
-  private static final long serialVersionUID = -8898541990178357181L;
+  private static final long serialVersionUID = 1L;
+  
+  Settings settings;
+  Collection<Company> companies;
+  Collection<Project> projects;
   
   private ZoneLayout basePanelLayout;
   private JPanel basePanel;
@@ -45,11 +55,11 @@ public class CreateActivityFrame extends JFrame implements ActionListener {
   private JButton applyBT;
   private JButton okBT;
   
-  private final String[] companies = { "Ericsson", "Combitech" };
-  private final String[] projects  = { "R4", "R5" };
-  
-  public CreateActivityFrame() {
+  public CreateActivityFrame(Settings settings) {
     super();
+    this.settings = settings;
+    this.companies = settings.getProjectSet().getCompanies();
+    this.projects = getAllProjects();
     initComponents();
     pack();
   }
@@ -116,7 +126,12 @@ public class CreateActivityFrame extends JFrame implements ActionListener {
     upperPanelLayout.insertTemplate("comboRow");
     companyLabel = new JLabel("Företag:");
     upperPanel.add(companyLabel, "c");
-    companyCoB = new JComboBox(companies);
+    if (companies.isEmpty()) {
+      companyCoB = new JComboBox(new String[]{"Inget företag skapat än"});
+    } else {
+      companyCoB = new JComboBox(companies.toArray(new String[0]));
+    }
+    companyCoB.setSelectedIndex(0);
     upperPanel.add(companyCoB, "d");
     newCompanyBT = new JButton("Nytt");
     newCompanyBT.addActionListener(this);
@@ -125,7 +140,14 @@ public class CreateActivityFrame extends JFrame implements ActionListener {
     upperPanelLayout.insertTemplate("comboRow");
     projectLabel = new JLabel("Projekt:");
     upperPanel.add(projectLabel, "c");
-    projectCoB = new JComboBox(projects);
+    if (companies.isEmpty()) {
+      projectCoB = new JComboBox(new String[]{"Inget företag skapat än"});
+    } else if (projects.isEmpty()) {
+      projectCoB = new JComboBox(new String[]{"Inga projekt skapade än"});
+    } else {
+      projectCoB = new JComboBox(projects.toArray(new String[0]));
+    }
+    projectCoB.setSelectedIndex(0);
     upperPanel.add(projectCoB, "d");
     newProjectBT = new JButton("Nytt");
     newProjectBT.addActionListener(this);
@@ -142,5 +164,13 @@ public class CreateActivityFrame extends JFrame implements ActionListener {
     basePanel.add(lowerPanel, "b");
     
     add(basePanel);
+  }
+  
+  private Collection<Project> getAllProjects() {
+    Collection<Project> allProjects = new ArrayList<Project>();
+    for(Company comp : companies) {
+      allProjects.addAll(comp.getProjects());
+    }
+    return allProjects;
   }
 }
