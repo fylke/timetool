@@ -4,8 +4,6 @@ package persistency.year;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.LocalTime;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
 import org.joda.time.ReadableDuration;
 
 import persistency.XmlUtils;
@@ -99,8 +97,7 @@ public class TestYearFactory {
       actInfo.setActivityEndTime(workDay.getDate(), 
                                  actEndTime.toLocalTime());
       actInfo.includeLunch = true;
-      actInfo.setLunchLenght(new Period(lunchLength * 60 * 1000, 
-                                        PeriodType.minutes()));
+      actInfo.setLunchLenght(lunchLength);
       workDay.addActivity(actInfo);
       
       actStartTime = actEndTime;
