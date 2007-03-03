@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
-import persistency.CompanyAdder;
+import persistency.projects.CompanyAdder;
 import persistency.settings.Settings;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
