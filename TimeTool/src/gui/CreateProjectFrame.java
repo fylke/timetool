@@ -13,11 +13,15 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
+import persistency.settings.Settings;
+
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class CreateProjectFrame extends JFrame implements ActionListener {
-  private static final long serialVersionUID = 8123429262760866760L;
+  private static final long serialVersionUID = 1L;
+  
+  private final Settings settings;
   
   private ZoneLayout basePanelLayout;
   private JPanel basePanel;
@@ -39,8 +43,9 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
   private JButton applyBT;
   private JButton okBT;
   
-  public CreateProjectFrame() {
+  public CreateProjectFrame(final Settings settings) {
     super();
+    this.settings = settings;
     initComponents();
     pack();
   }
