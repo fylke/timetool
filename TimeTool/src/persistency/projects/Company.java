@@ -40,15 +40,27 @@ public class Company {
   }
   
   public void setName(final String name) {
-    this.name = name;
+    if (name == null) {
+      throw new IllegalArgumentException("Name cannot be empty!");
+    } else {
+      this.name = name;
+    }
   }
 
   public void setShortName(final String shortName) {
-    this.shortName = shortName;
+    if (shortName == null) {
+      this.shortName = "";
+    } else {
+      this.shortName = shortName;
+    }
   }
 
   public void setEmployeeId(final String employeeId) {
-    this.employeeId = employeeId;
+    if (employeeId == null) {
+      this.employeeId = "";
+    } else {
+      this.employeeId = employeeId;
+    }
   }
   
   public void addProject(final Project project) {
