@@ -13,11 +13,16 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
+import persistency.CompanyAdder;
+import persistency.settings.Settings;
+
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class CreateCompanyFrame extends JFrame implements ActionListener {
-  private static final long serialVersionUID = -5152709772251665214L;
+  private static final long serialVersionUID = 1L;
+  
+  private final Settings settings;
 
   private ZoneLayout basePanelLayout;
   private JPanel basePanel;
@@ -32,19 +37,27 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
   private JLabel shortNameLabel;
   private JTextField shortNameTF;
   
+  private JLabel empIdLabel;
+  private JTextField empIdTF;
+  
   private JButton cancelBT;
   private JButton applyBT;
   private JButton okBT;
   
-  public CreateCompanyFrame() {
+  public CreateCompanyFrame(final Settings settings) {
     super();
+    this.settings = settings;
     initComponents();
     pack();
   }
   
-  public void actionPerformed(final ActionEvent e) {
-    // TODO Auto-generated method stub
-
+  public void actionPerformed(final ActionEvent ae) {
+    if (ae.getSource().equals(okBT)) {
+      java.awt.EventQueue.invokeLater(new CompanyAdder(nameTF.getText(), 
+                                                       shortNameTF.getText(),
+                                                       empIdTF.getText(),
+                                                       settings));
+    }
   }
 
   private void initComponents() {
@@ -84,6 +97,12 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     shortNameTF = new JTextField();
     upperPanel.add(shortNameTF, "b");
     
+    upperPanelLayout.insertTemplate("valueRow");
+    empIdLabel = new JLabel("Anställningsnr:");
+    upperPanel.add(empIdLabel, "a");
+    empIdTF = new JTextField();
+    upperPanel.add(empIdTF, "b");
+    
     basePanel.add(upperPanel, "a");
     
     lowerPanel = new JPanel();
@@ -92,6 +111,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     cancelBT = new JButton("Avbryt");
     lowerPanel.add(cancelBT, "c");
     okBT = new JButton("OK");
+    okBT.addActionListener(this);
     lowerPanel.add(okBT, "o");
     
     basePanel.add(lowerPanel, "b");
