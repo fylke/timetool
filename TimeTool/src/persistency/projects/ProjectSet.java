@@ -37,6 +37,19 @@ public class ProjectSet {
   public void addCompany(final Company company) {
     companies.put(company.getId(), company);
   }
+  
+  /**
+   * Finds an unused ID for a company in this set.
+   * TODO Improve this, maybe use a hash of Company name?
+   * @return
+   */
+  public int allocateCompanyId() {
+    int suggestion = companies.keySet().size();
+    while(companies.keySet().contains(suggestion)) {
+      suggestion++;
+    }
+    return suggestion;
+  }
 
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
