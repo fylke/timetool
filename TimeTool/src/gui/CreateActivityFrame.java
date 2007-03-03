@@ -69,7 +69,7 @@ public class CreateActivityFrame extends JFrame implements ActionListener {
       java.awt.EventQueue.invokeLater(
           new Runnable() {
             public void run() {
-              new CreateCompanyFrame().setVisible(true);
+              new CreateCompanyFrame(settings).setVisible(true);
             }
           }
         );
@@ -77,7 +77,7 @@ public class CreateActivityFrame extends JFrame implements ActionListener {
       java.awt.EventQueue.invokeLater(
           new Runnable() {
             public void run() {
-              new CreateProjectFrame().setVisible(true);
+              new CreateProjectFrame(settings).setVisible(true);
             }
           }
         );
