@@ -1,6 +1,7 @@
 package persistency;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,12 +26,24 @@ import persistency.year.Year;
 import persistency.year.YearParser;
 import persistency.year.YearWriter;
 
-public class PersistencyHandler {
+public final class PersistencyHandler {
   private final Preferences userPrefs = 
     Preferences.userRoot().node("/timetool");
+  private static PersistencyHandler instance;
+  
+  private PersistencyHandler() {
+    super();
+  }
+  
+  public static PersistencyHandler getInstance() {
+    if (PersistencyHandler.instance == null) {
+      instance = new PersistencyHandler();
+    }
+    return instance;
+  }
   
   public Settings readSettings(final InputStream settingsStream) 
-  throws PersistencyException {
+      throws PersistencyException {
     Reader br = null;
     Settings settings = new Settings();
     try {
@@ -133,21 +146,22 @@ public class PersistencyHandler {
     return projectSet;
   }
   
-  public void writeSettings(final Settings settings, 
-                            final OutputStream settingsStream) 
+  public synchronized void writeSettings(final Settings settings, 
+                                         final OutputStream settingsStream) 
   {
     SettingsWriter sw = new SettingsWriter();
     sw.writeSettings(settings, settingsStream);
   }
   
-  public void writeYear(final Year year, final OutputStream yearStream) 
+  public synchronized void writeYear(final Year year, 
+                                     final OutputStream yearStream) 
   {
     YearWriter yw = new YearWriter();
     yw.writeYear(year, yearStream);
   }
   
-  public void writeProjectSet(final ProjectSet projectSet, 
-                              final OutputStream projectsStream) 
+  public synchronized void writeProjectSet(final ProjectSet projectSet, 
+                                           final OutputStream projectsStream) 
   {
     ProjectSetWriter psw = new ProjectSetWriter();
     psw.writeProjectSet(projectSet, projectsStream);
@@ -159,7 +173,8 @@ public class PersistencyHandler {
    * @return the absolute path of the directory to store files in
    */
   public String getStorageDir() {
-    return userPrefs.get("Storage dir", null);
+    return userPrefs.get("Storage dir", System.getProperty("user.home")) + 
+             File.separator + ".timetool";
   }
   
   /**
