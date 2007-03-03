@@ -37,7 +37,7 @@ public final class PersistencyHandlerTest {
     tpf = TestProjectsFactory.getInstance();
     tyf = TestYearFactory.getInstance();
     tsf = TestSettingsFactory.getInstance();
-    ph = new PersistencyHandler();
+    ph = PersistencyHandler.getInstance();
     baos = new ByteArrayOutputStream();
   }
 
@@ -71,10 +71,6 @@ public final class PersistencyHandlerTest {
     final String testYearString = tyf.getXmlYearWithConfig(yearConfig);
     final ByteArrayInputStream testYearStream = 
       new ByteArrayInputStream(testYearString.getBytes("UTF-8"));
-    
-    final PersistencyHandler ph = new PersistencyHandler();
-    
-
     
     final Year testYear = ph.readYear(testYearStream, searchControl);
     
@@ -220,8 +216,6 @@ public final class PersistencyHandlerTest {
     final ByteArrayInputStream testYearStream = 
       new ByteArrayInputStream(testYearString.getBytes("UTF-8"));
     
-    final PersistencyHandler ph = new PersistencyHandler();
-     
     final Year testYear = ph.readYear(testYearStream, searchControl);
     
     assertEquals("Generated test object and key not equal!", testYear, yearKey);
@@ -242,7 +236,6 @@ public final class PersistencyHandlerTest {
     final ByteArrayInputStream testYearStream = 
       new ByteArrayInputStream(testYearString.getBytes("UTF-8"));
     
-    final PersistencyHandler ph = new PersistencyHandler();
     final Year testYear = ph.readYear(testYearStream, searchControl);
     
     assertEquals("Generated test object and key not equal!", testYear, yearKey);
@@ -262,7 +255,6 @@ public final class PersistencyHandlerTest {
     final String yearOutputKey = tyf.getXmlYearWithConfig(yearConfig);
     final ByteArrayOutputStream yearStream = new ByteArrayOutputStream();    
     
-    final PersistencyHandler ph = new PersistencyHandler();
     ph.writeYear(yearToWrite, yearStream);
     
     assertEquals("Generated test stream and output key not equal!", 
@@ -283,7 +275,6 @@ public final class PersistencyHandlerTest {
     final String yearOutputKey = tyf.getXmlYearWithConfig(yearConfig);
     final ByteArrayOutputStream yearStream = new ByteArrayOutputStream();    
     
-    final PersistencyHandler ph = new PersistencyHandler();
     ph.writeYear(yearToWrite, yearStream);
     
     assertEquals("Generated test stream and output key not equal!", 
