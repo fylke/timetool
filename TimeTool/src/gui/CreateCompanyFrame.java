@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
 import persistency.projects.CompanyAdder;
-import persistency.settings.Settings;
+import persistency.projects.ProjectSet;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
@@ -22,7 +22,7 @@ import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 public class CreateCompanyFrame extends JFrame implements ActionListener {
   private static final long serialVersionUID = 1L;
   
-  private final Settings settings;
+  private final ProjectSet projectSet;
 
   private ZoneLayout basePanelLayout;
   private JPanel basePanel;
@@ -44,20 +44,33 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
   private JButton applyBT;
   private JButton okBT;
   
-  public CreateCompanyFrame(final Settings settings) {
+  public CreateCompanyFrame(final ProjectSet projectSet) {
     super();
-    this.settings = settings;
+    this.projectSet = projectSet;
     initComponents();
     pack();
   }
   
-  public void actionPerformed(final ActionEvent ae) {
-    if (ae.getSource().equals(okBT)) {
-      java.awt.EventQueue.invokeLater(new CompanyAdder(nameTF.getText(), 
+  public void actionPerformed(final ActionEvent e) {
+    if (e.getSource().equals(okBT)) {
+      java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
                                                        shortNameTF.getText(),
                                                        empIdTF.getText(),
-                                                       settings));
-    }
+                                                       projectSet));
+      setVisible(false);
+      dispose();
+    } else if (e.getSource().equals(cancelBT)) {
+      setVisible(false);
+      dispose();
+    } else if (e.getSource().equals(applyBT)) {
+      nameTF.setText("");
+      shortNameTF.setText("");
+      empIdTF.setText("");
+      java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
+                                                       shortNameTF.getText(),
+                                                       empIdTF.getText(),
+                                                       projectSet));
+    } 
   }
 
   private void initComponents() {
@@ -81,7 +94,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     upperPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Skapa nytt företag"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
             
     lowerPanelLayout = ZoneLayoutFactory.newZoneLayout();
-    lowerPanelLayout.addRow("a>a2c>c2o>o");
+    lowerPanelLayout.addRow("a2c2o");
     
     lowerPanel = new JPanel(lowerPanelLayout);
        
