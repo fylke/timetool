@@ -23,6 +23,7 @@ public class ProjectSet {
 
   public void addCompany(final Company company) 
       throws ItemAlreadyDefinedException {
+    // FIXME HashCode depends on company name which isn't necessarily set!
     if (companies.containsKey(company.hashCode())) {
       throw new ItemAlreadyDefinedException("Company " + company.getName() + 
                                             " is already defined!");
