@@ -8,25 +8,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import persistency.ItemAlreadyDefinedException;
 import persistency.PersistencyException;
 import persistency.PersistencyHandler;
-import persistency.settings.Settings;
 
 public class CompanyAdder implements Runnable {
   private static final String storageFileName = "projectSet.xml";
   
+  private final JFrame parent;
+  
   private final String compName;
   private final String compShortName;
   private final String employeeId;
-  private final Settings settings;
+  private ProjectSet ps;
   
-  public CompanyAdder(final String compName, final String compShortName,
-                      final String employeeId, final Settings settings) {
+  public CompanyAdder(final JFrame parent, final String compName, 
+                      final String compShortName,
+                      final String employeeId, final ProjectSet projectSet) {
     super();
+    this.parent = parent;
     this.compName = compName;
     this.compShortName = compShortName;
     this.employeeId = employeeId;
-    this.settings = settings;
+    this.ps = projectSet;
   }
   
   public void run() {
@@ -37,18 +44,23 @@ public class CompanyAdder implements Runnable {
     storageDir.mkdir();
     File storageFile = new File(storageDir, storageFileName);
 
-    ProjectSet ps = null;
     if (storageFile.exists()) {
       InputStream is = null;
       try {
         is = new FileInputStream(storageFile);
         ps = ph.readProjectSet(is);
       } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        JOptionPane.showMessageDialog(parent,
+                                      "Could not open projectSet.xml." + 
+                                      e.getMessage(),
+                                      "File error",
+                                      JOptionPane.ERROR_MESSAGE);
       } catch (PersistencyException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        JOptionPane.showMessageDialog(parent,
+                                      "Could not open projectSet.xml." + 
+                                      e.getMessage(),
+                                      "File error",
+                                      JOptionPane.ERROR_MESSAGE);
       } finally {
         try {
           is.close();
@@ -56,18 +68,22 @@ public class CompanyAdder implements Runnable {
           // We don't care if closing fails...
         }
       }
-    } else {
-      ps = new ProjectSet();
-      ps.setId(settings.getProjectSetId());
     }
 
     Company company = new Company();
-    company.setId(ps.allocateCompanyId());
     company.setName(compName);
     company.setShortName(compShortName);
     company.setEmployeeId(employeeId);
 
-    ps.addCompany(company);
+    try {
+      ps.addCompany(company);
+    } catch (ItemAlreadyDefinedException e) {
+      JOptionPane.showMessageDialog(parent,
+                                    e.getMessage() + 
+                                    " No changes will be made.",
+                                    "Item already defined",
+                                    JOptionPane.WARNING_MESSAGE);
+    }
     
     OutputStream os = null;    
     File tempFile = null;
@@ -76,11 +92,15 @@ public class CompanyAdder implements Runnable {
       os = new FileOutputStream(tempFile);
       ph.writeProjectSet(ps, os);
     } catch (FileNotFoundException e) {
-      // TODO Should probably be handled elsewhere
-      e.printStackTrace();
+      JOptionPane.showMessageDialog(parent,
+                                    e.getMessage(),
+                                    "File error",
+                                    JOptionPane.ERROR_MESSAGE);
     } catch (IOException e) {
-      // TODO Should probably be handled elsewhere
-      e.printStackTrace();
+      JOptionPane.showMessageDialog(parent,
+                                    e.getMessage(),
+                                    "File error",
+                                    JOptionPane.ERROR_MESSAGE);
     } finally {
       try {
         os.close();
@@ -95,7 +115,11 @@ public class CompanyAdder implements Runnable {
       backupFile.delete();
     } else {
       backupFile.renameTo(storageFile);
-      //TODO throw exception
+      JOptionPane.showMessageDialog(parent,
+                                    "Could not store company, no changes " +
+                                    "will be made.",
+                                    "File error",
+                                    JOptionPane.ERROR_MESSAGE);
     }
   }
 }
