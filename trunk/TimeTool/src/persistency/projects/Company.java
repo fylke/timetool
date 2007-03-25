@@ -4,8 +4,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import persistency.ItemAlreadyDefinedException;
+
 public class Company {
-  private int id;
   private String name;
   private String shortName;
   private String employeeId;
@@ -16,7 +17,7 @@ public class Company {
   }
   
   public int getId() {
-    return id;
+    return hashCode();
   }  
   
   public String getName() {
@@ -34,13 +35,9 @@ public class Company {
   public Collection<Project> getProjects() {
     return projects.values();
   }
-
-  public void setId(final int id) {
-    this.id = id;
-  }
-  
+ 
   public void setName(final String name) {
-    if (name == null) {
+    if (name == null || name == "") {
       throw new IllegalArgumentException("Name cannot be empty!");
     } else {
       this.name = name;
@@ -56,14 +53,19 @@ public class Company {
   }
 
   public void setEmployeeId(final String employeeId) {
-    if (employeeId == null) {
-      this.employeeId = "";
+    if (employeeId == null || employeeId == "") {
+      throw new IllegalArgumentException("Employee id cannot be empty!");
     } else {
       this.employeeId = employeeId;
     }
   }
   
-  public void addProject(final Project project) {
+  public void addProject(final Project project) 
+      throws ItemAlreadyDefinedException {
+    if (projects.containsKey(project.hashCode())) {
+      throw new ItemAlreadyDefinedException("Project " + project.getName() + 
+                                            " is already defined!");
+    }
     projects.put(project.getId(), project);
   }
   
@@ -73,7 +75,7 @@ public class Company {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder();
-    objRep.append("id: " + id + "\n");
+    objRep.append("id: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("employeeId: " + employeeId + "\n");
@@ -94,10 +96,7 @@ public class Company {
     final int PRIME = 31;
     int result = 1;
     result = PRIME * result + ((employeeId == null) ? 0 : employeeId.hashCode());
-    result = PRIME * result + id;
     result = PRIME * result + ((name == null) ? 0 : name.hashCode());
-    result = PRIME * result + ((projects == null) ? 0 : projects.hashCode());
-    result = PRIME * result + ((shortName == null) ? 0 : shortName.hashCode());
     return result;
   }
 
@@ -118,23 +117,12 @@ public class Company {
         return false;
     } else if (!employeeId.equals(other.employeeId))
       return false;
-    if (id != other.id)
-      return false;
     if (name == null) {
       if (other.name != null)
         return false;
     } else if (!name.equals(other.name))
       return false;
-    if (projects == null) {
-      if (other.projects != null)
-        return false;
-    } else if (!projects.equals(other.projects))
-      return false;
-    if (shortName == null) {
-      if (other.shortName != null)
-        return false;
-    } else if (!shortName.equals(other.shortName))
-      return false;
     return true;
   }
+
 }
