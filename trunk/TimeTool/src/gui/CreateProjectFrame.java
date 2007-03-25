@@ -3,9 +3,11 @@ package gui;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,7 +15,9 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
-import persistency.settings.Settings;
+import persistency.projects.Company;
+import persistency.projects.ProjectAdder;
+import persistency.projects.ProjectSet;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
@@ -21,7 +25,7 @@ import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 public class CreateProjectFrame extends JFrame implements ActionListener {
   private static final long serialVersionUID = 1L;
   
-  private final Settings settings;
+  private final ProjectSet projectSet;
   
   private ZoneLayout basePanelLayout;
   private JPanel basePanel;
@@ -29,6 +33,9 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
   private JPanel upperPanel;
   private ZoneLayout lowerPanelLayout;
   private JPanel lowerPanel;
+
+  private JLabel compLabel;
+  private JComboBox compCoB;
   
   private JLabel nameLabel;
   private JTextField nameTF;
@@ -43,16 +50,36 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
   private JButton applyBT;
   private JButton okBT;
   
-  public CreateProjectFrame(final Settings settings) {
+  public CreateProjectFrame(final ProjectSet projectSet) {
     super();
-    this.settings = settings;
+    this.projectSet = projectSet;
     initComponents();
     pack();
   }
   
   public void actionPerformed(final ActionEvent e) {
-    // TODO Auto-generated method stub
-
+    if (e.getSource().equals(okBT)) {
+      Company comp = new Company();
+      compCoB.getSelectedItem();
+      java.awt.EventQueue.invokeLater(new ProjectAdder(this, comp.getId(),
+                                                       nameTF.getText(), 
+                                                       shortNameTF.getText(),
+                                                       projectSet));
+      setVisible(false);
+      dispose();
+    } else if (e.getSource().equals(cancelBT)) {
+      setVisible(false);
+      dispose();
+    } else if (e.getSource().equals(applyBT)) {
+      nameTF.setText("");
+      shortNameTF.setText("");
+      Company comp = new Company();
+      compCoB.getSelectedItem();
+      java.awt.EventQueue.invokeLater(new ProjectAdder(this, comp.getId(),
+                                                       nameTF.getText(), 
+                                                       shortNameTF.getText(),
+                                                       projectSet));
+    } 
   }
 
   private void initComponents() {
@@ -69,16 +96,30 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
     basePanel = new JPanel(basePanelLayout);
       
     upperPanelLayout = ZoneLayoutFactory.newZoneLayout();
-    upperPanelLayout.addRow("a>a2b.-~..b", "valueRow");
-    upperPanelLayout.addRow(".....6.....", "valueRow");
+    upperPanelLayout.addRow("a>a2b-~b", "valueRow");
+    upperPanelLayout.addRow("....6...", "valueRow");
     
     upperPanel = new JPanel(upperPanelLayout);
     upperPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Skapa nytt projekt"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
             
     lowerPanelLayout = ZoneLayoutFactory.newZoneLayout();
-    lowerPanelLayout.addRow("a>a2c>c2o>o");
+    lowerPanelLayout.addRow("a>a2c2o");
     
     lowerPanel = new JPanel(lowerPanelLayout);
+
+    upperPanelLayout.insertTemplate("valueRow");
+    compLabel = new JLabel("Företag:");
+    upperPanel.add(compLabel, "a");
+   
+    if (projectSet.getCompanies().isEmpty()) {
+      //TODO När detta fönster får fokus, uppdatera ComboBoxen
+      compCoB = new JComboBox(new String[]{"Inga företag definerade"});
+    } else {
+      compCoB = new JComboBox(new Vector<Company>(projectSet.getCompanies()));
+    }
+    compCoB.setSelectedIndex(0);
+    
+    upperPanel.add(compCoB, "b");
     
     upperPanelLayout.insertTemplate("valueRow");
     nameLabel = new JLabel("Namn:");
@@ -102,10 +143,13 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
     
     lowerPanel = new JPanel();
     applyBT = new JButton("Spara");
+    applyBT.addActionListener(this);
     lowerPanel.add(applyBT, "a");
     cancelBT = new JButton("Avbryt");
+    cancelBT.addActionListener(this);
     lowerPanel.add(cancelBT, "c");
     okBT = new JButton("OK");
+    okBT.addActionListener(this);
     lowerPanel.add(okBT, "o");
     
     basePanel.add(lowerPanel, "b");
