@@ -17,6 +17,7 @@ public class ProjectSetParser extends DefaultHandler {
   private static transient final String ns = "";
   private transient XMLReader reader;
   private transient ProjectSet projectSet;
+  private transient Company company;
   
   public ProjectSetParser(final XMLReader reader) {
     this.reader = reader;
@@ -39,18 +40,27 @@ public class ProjectSetParser extends DefaultHandler {
                            final String qName, final Attributes attributes) 
       throws SAXException {
     if ((ns + "company").equals(qName)) {
-      final Company company = new Company();
+      company = new Company();
       assert(projectSet != null);
+           
+      final ContentHandler companyHandler = 
+        new CompanyHandler(attributes, reader, this, company, ns);
+      reader.setContentHandler(companyHandler);
+    }
+  }
 
+  /* (non-Javadoc)
+   * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+   */
+  @Override
+  public void endElement(String uri, String localName, String qName) 
+      throws SAXException {
+    if ((ns + "company").equals(qName)) {
       try {
         projectSet.addCompany(company);
       } catch (ItemAlreadyDefinedException e) {
         // Silently omit this company
       }
-           
-      final ContentHandler companyHandler = 
-        new CompanyHandler(attributes, reader, this, company, ns);
-      reader.setContentHandler(companyHandler);
     }
   }
 }
