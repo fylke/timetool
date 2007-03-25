@@ -10,6 +10,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -66,7 +68,9 @@ public class ActivityPanel extends JPanel implements ActionListener {
       java.awt.EventQueue.invokeLater(
           new Runnable() {
             public void run() {
-              new CreateActivityFrame(currentDay.getSettings()).setVisible(true);
+              final JFrame createActFrame = 
+                new CreateActFrame(currentDay.getSettings().getProjectSet());
+              createActFrame.setVisible(true);
             }
           }
         );
