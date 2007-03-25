@@ -77,6 +77,7 @@ public class ProjectAdder implements Runnable {
                                     JOptionPane.ERROR_MESSAGE);
     }
 
+    //TODO What about sub projects?
     Project proj = new Project();
     proj.setName(projName);
     proj.setShortName(projShortName);
