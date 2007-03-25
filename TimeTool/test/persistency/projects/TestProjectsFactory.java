@@ -29,9 +29,9 @@ public class TestProjectsFactory {
     return factoryInstance;
   }
   
-  public ProjectSet getProjSetWithConfig(final ProjSetConfig projSetConfig) {
+  public ProjectSet getProjSetWithConfig(final ProjSetConfig projSetConfig) 
+      throws Exception {
     ProjectSet projectSet = new ProjectSet();
-    projectSet.setId(projSetConfig.projSetId);
     
     for (int i = 1; i <= projSetConfig.nrOfComps; i++) { 
        projectSet.addCompany(getCompany(i, projSetConfig));
@@ -40,9 +40,9 @@ public class TestProjectsFactory {
     return projectSet;
   }
   
-  public Company getCompany(final int id, final ProjSetConfig projSetConfig) {
+  public Company getCompany(final int id, final ProjSetConfig projSetConfig) 
+      throws Exception {
     Company company = new Company();
-    company.setId(id);
     company.setName(compName + id);
     company.setShortName(compShortName + id);
     company.setEmployeeId(empId + id);
@@ -58,7 +58,6 @@ public class TestProjectsFactory {
   public Project getProject(final int id, final int depth, 
                             final ProjSetConfig projSetConfig) {
     Project child = new Project();
-    child.setId(id);
     child.setName(projName + id);
     child.setShortName(projShortName + id);
     child.setCode(projCode + id);
