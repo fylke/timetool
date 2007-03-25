@@ -15,14 +15,16 @@ public class CompanyHandler extends DefaultHandler {
   private CharArrayWriter text;
   private final transient XMLReader reader;
   private final transient ContentHandler parentHandler;
-  private final transient Company currentCompany;
+  private final transient Company currComp;
   private final transient String ns;
+  
+  private transient Project proj;
 
   public CompanyHandler(final Attributes attributes, final XMLReader reader, 
                         final ContentHandler parentHandler, 
-                        final Company currentCompany, final String ns)  
+                        final Company currComp, final String ns)  
       throws SAXException {
-    this.currentCompany = currentCompany;
+    this.currComp = currComp;
     this.parentHandler = parentHandler;
     this.reader = reader;
     this.ns = ns;
@@ -37,17 +39,11 @@ public class CompanyHandler extends DefaultHandler {
     text.reset();
  
     if ((ns + "project").equals(qName)) {
-      assert(currentCompany != null);
-      final Project project = new Project();
-      project.setId(Integer.parseInt(attributes.getValue("id")));
-      try {
-        currentCompany.addProject(project);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this project
-      }
+      assert(currComp != null);
+      proj = new Project();
             
       final ContentHandler projectHandler = 
-        new ProjectHandler(attributes, reader, this, project, ns);
+        new ProjectHandler(attributes, reader, this, proj, ns);
 
       reader.setContentHandler(projectHandler);     
     }
@@ -58,12 +54,17 @@ public class CompanyHandler extends DefaultHandler {
                          final String qName)
       throws SAXException {
     if ((ns + "compName").equals(qName)) {
-      currentCompany.setName(getText());
+      currComp.setName(getText());
     } else if ((ns + "compShortName").equals(qName)) {
-      currentCompany.setShortName(getText());
+      currComp.setShortName(getText());
     } else if ((ns + "employeeId").equals(qName)) {
-      currentCompany.setEmployeeId(getText());
+      currComp.setEmployeeId(getText());
     } else if ((ns + "company").equals(qName)) {
+      try {
+        currComp.addProject(proj);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this project
+      }
       reader.setContentHandler(parentHandler);
     }
   }
