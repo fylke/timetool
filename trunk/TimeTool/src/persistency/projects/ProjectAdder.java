@@ -75,6 +75,7 @@ public class ProjectAdder implements Runnable {
                                     "cannot add project.",
                                     "File error",
                                     JOptionPane.ERROR_MESSAGE);
+      return;
     }
 
     //TODO What about sub projects?
