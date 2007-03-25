@@ -13,12 +13,11 @@ public class ProjectSetWriter {
                               final OutputStream projectsStream) 
   {
     String indent = xmlUtils.indent(0);
-    StringBuilder pb = xmlUtils.getHeader(ns + "projectSet", 
-                                          "id=\"" + projectSet.getId() + "\"");
+    StringBuilder pb = xmlUtils.getHeader(ns + "projectSet");
     indent = xmlUtils.incIndent(indent);
 
     for (Company company : projectSet.getCompanies()) {
-      pb.append(indent + "<" + ns + "company id=\"" + company.getId() + "\">\n");
+      pb.append(indent + "<" + ns + "company>\n");
       indent = xmlUtils.incIndent(indent);
       pb.append(indent + "<" + ns + "compName>" + company.getName() + "</" + ns + "compName>\n");
       if (company.getShortName() != null) {
@@ -45,7 +44,7 @@ public class ProjectSetWriter {
                             final String indentation) {
     String indent = indentation;
     
-    pb.append(indent + "<" + ns + "project id=\"" + project.getId() + "\">\n");
+    pb.append(indent + "<" + ns + "project>\n");
     indent = xmlUtils.incIndent(indent);
     
     pb.append(indent + "<" + ns + "projName>" + project.getName() + "</" + ns + "projName>\n");
@@ -57,7 +56,7 @@ public class ProjectSetWriter {
     
     if (project.getActivities() != null) {
       for (Activity activity : project.getActivities()) {
-        pb.append(indent + "<" + ns + "activity id=\"" + activity.getId() + "\">\n");
+        pb.append(indent + "<" + ns + "activity>\n");
         indent = xmlUtils.incIndent(indent);
         pb.append(indent + "<" + ns + "actName>" + activity.getName() + "</" + ns + "actName>\n");
         pb.append(indent + "<" + ns + "actShortName>" + activity.getShortName() + 
