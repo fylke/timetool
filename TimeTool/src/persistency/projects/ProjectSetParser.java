@@ -11,7 +11,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class ProjectSetParser extends DefaultHandler implements ContentHandler {
+import persistency.ItemAlreadyDefinedException;
+
+public class ProjectSetParser extends DefaultHandler {
   private static transient final String ns = "";
   private transient XMLReader reader;
   private transient ProjectSet projectSet;
@@ -36,15 +38,15 @@ public class ProjectSetParser extends DefaultHandler implements ContentHandler {
   public void startElement(final String uri, final String localName, 
                            final String qName, final Attributes attributes) 
       throws SAXException {
-    if ((ns + "projectSet").equals(qName)) {
-      projectSet.setId(Integer.parseInt(attributes.getValue("id")));
-    }
-    else if ((ns + "company").equals(qName)) {
+    if ((ns + "company").equals(qName)) {
       final Company company = new Company();
-      company.setId(Integer.parseInt(attributes.getValue("id")));
       assert(projectSet != null);
 
-      projectSet.addCompany(company);
+      try {
+        projectSet.addCompany(company);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this company
+      }
            
       final ContentHandler companyHandler = 
         new CompanyHandler(attributes, reader, this, company, ns);
