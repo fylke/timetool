@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -62,7 +63,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
   private JButton writeJournalBT;
   private JButton createNewTabBT;
    
-  public DayViewPanel(Settings currentUser) {
+  public DayViewPanel(final Settings currentUser) {
     super();
     this.currentUser = currentUser;
     date = new DateTime();
