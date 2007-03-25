@@ -8,6 +8,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import persistency.ItemAlreadyDefinedException;
+
 
 public class CompanyHandler extends DefaultHandler {
   private CharArrayWriter text;
@@ -38,7 +40,11 @@ public class CompanyHandler extends DefaultHandler {
       assert(currentCompany != null);
       final Project project = new Project();
       project.setId(Integer.parseInt(attributes.getValue("id")));
-      currentCompany.addProject(project);
+      try {
+        currentCompany.addProject(project);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this project
+      }
             
       final ContentHandler projectHandler = 
         new ProjectHandler(attributes, reader, this, project, ns);
