@@ -13,14 +13,17 @@ public class ProjectHandler extends DefaultHandler {
   private CharArrayWriter text;
   private transient final XMLReader reader;
   private transient final ContentHandler parentHandler;
-  private transient final Project currentProject;
+  private transient final Project currProj;
   private transient final String ns;
+  
+  private transient Activity act;
+  private transient Project subProj;
 
   public ProjectHandler(final Attributes attributes, final XMLReader reader, 
                         final ContentHandler parentHandler, 
-                        final Project currentProject, final String ns)  
+                        final Project currProj, final String ns)  
       throws SAXException {
-    this.currentProject = currentProject;
+    this.currProj = currProj;
     this.parentHandler = parentHandler;
     this.reader = reader;
     this.ns = ns;
@@ -30,28 +33,25 @@ public class ProjectHandler extends DefaultHandler {
   
   @Override
   public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attributes) 
+                           final String qName, final Attributes attrs) 
       throws SAXException {
     text.reset();
  
     if ((ns + "activity").equals(qName)) {
-      assert(currentProject != null);
-      final Activity activity = 
-        new Activity(Integer.parseInt(attributes.getValue("id")));
-      currentProject.addActivity(activity);
-      
+      assert(currProj != null);
+      act = new Activity();
+      currProj.addActivity(act);
+            
       final ContentHandler activityHandler = 
-        new ActivityHandler(attributes, reader, this, activity, ns);
+        new ActivityHandler(attrs, reader, this, act, ns);
       
       reader.setContentHandler(activityHandler);
     } else if ((ns + "project").equals(qName)) {
-      assert(currentProject != null);
-      final Project subProject = new Project();
-      subProject.setId(Integer.parseInt(attributes.getValue("id")));
-      currentProject.addSubProject(subProject);
-      
+      assert(currProj != null);
+      subProj = new Project();
+            
       final ContentHandler subProjectHandler = 
-        new ProjectHandler(attributes, reader, this, subProject, ns);
+        new ProjectHandler(attrs, reader, this, subProj, ns);
       
       reader.setContentHandler(subProjectHandler);
     } 
@@ -62,12 +62,13 @@ public class ProjectHandler extends DefaultHandler {
                          final String qName)
       throws SAXException {
     if ((ns + "projName").equals(qName)) {
-      currentProject.setName(getText());
+      currProj.setName(getText());
     } else if ((ns + "projShortName").equals(qName)) {
-      currentProject.setShortName(getText());
+      currProj.setShortName(getText());
     } else if ((ns + "code").equals(qName)) {
-      currentProject.setCode(getText());
+      currProj.setCode(getText());
     } else if ((ns + "project").equals(qName)) {
+      currProj.addSubProject(subProj);
       reader.setContentHandler(parentHandler);
     }
   }
