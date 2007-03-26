@@ -125,8 +125,10 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     
     lowerPanel = new JPanel();
     applyBT = new JButton("Spara");
+    applyBT.addActionListener(this);
     lowerPanel.add(applyBT, "a");
     cancelBT = new JButton("Avbryt");
+    cancelBT.addActionListener(this);
     lowerPanel.add(cancelBT, "c");
     okBT = new JButton("OK");
     okBT.addActionListener(this);
