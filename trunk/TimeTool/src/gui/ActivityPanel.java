@@ -147,6 +147,8 @@ public class ActivityPanel extends JPanel implements ActionListener {
     setName((String) activityCombo.getSelectedItem());
   }
   
+  // TODO Populate the ProjectSet
+  
   private List<String> getActivityList() {
     List<String> actShortNames = new ArrayList<String>();
     for (Company comp : currentDay.getSettings().getProjectSet().getCompanies()) {
