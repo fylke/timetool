@@ -22,6 +22,15 @@ public class ProjectSet {
     return companies.get(id);
   }
   
+  public Company getCompanyByName(final String name) {
+    for (Company comp : companies.values()) {
+      if (comp.getName() == name) {
+        return comp;
+      }
+    }
+    return null;
+  }
+  
   /**
    * Gets all companies.
    * @return all stored companies, null if none stored
