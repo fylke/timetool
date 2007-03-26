@@ -8,6 +8,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import persistency.ItemAlreadyDefinedException;
+
 
 public class ProjectHandler extends DefaultHandler {
   private CharArrayWriter text;
@@ -40,7 +42,11 @@ public class ProjectHandler extends DefaultHandler {
     if ((ns + "activity").equals(qName)) {
       assert(currProj != null);
       act = new Activity();
-      currProj.addActivity(act);
+      try {
+        currProj.addActivity(act);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this activity
+      }
             
       final ContentHandler activityHandler = 
         new ActivityHandler(attrs, reader, this, act, ns);
@@ -68,7 +74,11 @@ public class ProjectHandler extends DefaultHandler {
     } else if ((ns + "code").equals(qName)) {
       currProj.setCode(getText());
     } else if ((ns + "project").equals(qName)) {
-      currProj.addSubProject(subProj);
+      try {
+        currProj.addSubProject(subProj);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this project
+      }
       reader.setContentHandler(parentHandler);
     }
   }
