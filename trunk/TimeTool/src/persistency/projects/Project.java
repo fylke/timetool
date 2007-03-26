@@ -6,7 +6,6 @@ import java.util.TreeMap;
 
 
 public class Project {
-  private int id;
   private String name;
   private String shortName;
   private String code;
@@ -19,7 +18,7 @@ public class Project {
   }
   
   public int getId() {
-    return id;
+    return hashCode();
   }
   
   public String getName() {
@@ -50,20 +49,28 @@ public class Project {
     return subProjects.values();
   }
   
-  public void setId(final int id) {
-    this.id = id;
-  }
-  
   public void setName(final String name) {
-    this.name = name;
+    if (name == null || name == "") {
+      throw new IllegalArgumentException("Name cannot be empty!");
+    } else {
+      this.name = name;
+    }
   }
 
   public void setShortName(final String shortName) {
-    this.shortName = shortName;
+    if (shortName == null) {
+      this.shortName = "";
+    } else {
+      this.shortName = shortName;
+    }
   }
 
   public void setCode(final String code) {
-    this.code = code;
+    if (code == null || code == "") {
+      throw new IllegalArgumentException("Project report code cannot be empty!");
+    } else {
+      this.code = code;
+    }
   }
 
   public void addActivity(final Activity activity) {
@@ -80,18 +87,18 @@ public class Project {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder();
-    objRep.append("projId: " + id + "\n");
+    objRep.append("projId: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("code: " + code + "\n");
         
     for (Project subProject : subProjects.values()) {
-      objRep.append("Subprojects for " + id + ":\n");
+      objRep.append("Subprojects for " + name + ":\n");
       objRep.append(subProject.toString() + "\n");
     }
 
     for (Activity activity : activities.values()) {
-      objRep.append("Activities for " + id + ":\n");
+      objRep.append("Activities for " + name + ":\n");
       objRep.append(activity.toString() + "\n");
     }
     
@@ -105,12 +112,8 @@ public class Project {
   public int hashCode() {
     final int PRIME = 31;
     int result = 1;
-    result = PRIME * result + ((activities == null) ? 0 : activities.hashCode());
     result = PRIME * result + ((code == null) ? 0 : code.hashCode());
-    result = PRIME * result + id;
     result = PRIME * result + ((name == null) ? 0 : name.hashCode());
-    result = PRIME * result + ((shortName == null) ? 0 : shortName.hashCode());
-    result = PRIME * result + ((subProjects == null) ? 0 : subProjects.hashCode());
     return result;
   }
 
@@ -126,32 +129,15 @@ public class Project {
     if (getClass() != obj.getClass())
       return false;
     final Project other = (Project) obj;
-    if (activities == null) {
-      if (other.activities != null)
-        return false;
-    } else if (!activities.equals(other.activities))
-      return false;
     if (code == null) {
       if (other.code != null)
         return false;
     } else if (!code.equals(other.code))
       return false;
-    if (id != other.id)
-      return false;
     if (name == null) {
       if (other.name != null)
         return false;
     } else if (!name.equals(other.name))
-      return false;
-    if (shortName == null) {
-      if (other.shortName != null)
-        return false;
-    } else if (!shortName.equals(other.shortName))
-      return false;
-    if (subProjects == null) {
-      if (other.subProjects != null)
-        return false;
-    } else if (!subProjects.equals(other.subProjects))
       return false;
     return true;
   }
