@@ -124,5 +124,4 @@ public class Company {
       return false;
     return true;
   }
-
 }
