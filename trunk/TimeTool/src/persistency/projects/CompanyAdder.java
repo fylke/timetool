@@ -51,13 +51,13 @@ public class CompanyAdder implements Runnable {
         ps = ph.readProjectSet(is);
       } catch (FileNotFoundException e) {
         JOptionPane.showMessageDialog(parent,
-                                      "Could not open projectSet.xml." + 
+                                      "Could not open projectSet.xml. " + 
                                       e.getMessage(),
                                       "File error",
                                       JOptionPane.ERROR_MESSAGE);
       } catch (PersistencyException e) {
         JOptionPane.showMessageDialog(parent,
-                                      "Could not open projectSet.xml." + 
+                                      "Could not open projectSet.xml. " + 
                                       e.getMessage(),
                                       "File error",
                                       JOptionPane.ERROR_MESSAGE);
