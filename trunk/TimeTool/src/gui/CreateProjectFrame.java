@@ -3,13 +3,15 @@ package gui;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -59,26 +61,28 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
   
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(okBT)) {
-      Company comp = new Company();
-      compCoB.getSelectedItem();
-      java.awt.EventQueue.invokeLater(new ProjectAdder(this, comp.getId(),
-                                                       nameTF.getText(), 
-                                                       shortNameTF.getText(),
-                                                       projectSet));
-      setVisible(false);
-      dispose();
+      if (validInput()) {
+        java.awt.EventQueue.invokeLater(new ProjectAdder(this, 
+                                                         getSelectedComp().getId(),
+                                                         nameTF.getText(), 
+                                                         shortNameTF.getText(),
+                                                         projectSet));
+        setVisible(false);
+        dispose();
+      }
     } else if (e.getSource().equals(cancelBT)) {
       setVisible(false);
       dispose();
     } else if (e.getSource().equals(applyBT)) {
-      nameTF.setText("");
-      shortNameTF.setText("");
-      Company comp = new Company();
-      compCoB.getSelectedItem();
-      java.awt.EventQueue.invokeLater(new ProjectAdder(this, comp.getId(),
-                                                       nameTF.getText(), 
-                                                       shortNameTF.getText(),
-                                                       projectSet));
+      if (validInput()) {
+        nameTF.setText("");
+        shortNameTF.setText("");
+        java.awt.EventQueue.invokeLater(new ProjectAdder(this, 
+                                                         getSelectedComp().getId(),
+                                                         nameTF.getText(), 
+                                                         shortNameTF.getText(),
+                                                         projectSet));
+      }
     } 
   }
 
@@ -110,13 +114,8 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
     upperPanelLayout.insertTemplate("valueRow");
     compLabel = new JLabel("Företag:");
     upperPanel.add(compLabel, "a");
-   
-    if (projectSet.getCompanies().isEmpty()) {
-      //TODO När detta fönster får fokus, uppdatera ComboBoxen
-      compCoB = new JComboBox(new String[]{"Inga företag definerade"});
-    } else {
-      compCoB = new JComboBox(new Vector<Company>(projectSet.getCompanies()));
-    }
+
+    compCoB = new JComboBox(getComboContents());
     compCoB.setSelectedIndex(0);
     
     upperPanel.add(compCoB, "b");
@@ -155,5 +154,55 @@ public class CreateProjectFrame extends JFrame implements ActionListener {
     basePanel.add(lowerPanel, "b");
     
     add(basePanel);
+  }
+  
+  private String[] getComboContents() {
+    List<String> names = new ArrayList<String>();
+    if (projectSet.getCompanies() != null) {
+      for (Company comp : projectSet.getCompanies()) {
+        names.add(comp.getName());
+      }
+    } 
+    return names.isEmpty() ? new String[]{"Inga skapade än"} : 
+                             names.toArray(new String[0]);
+  }
+  
+  /**
+   * Translates the contents in the company combo box to the actual company 
+   * object.
+   * @return the in the combo box currently selected company, returns null if no 
+   * companies
+   */
+  private Company getSelectedComp() {
+    final String compName = (String) compCoB.getSelectedItem();
+    return projectSet.getCompanyByName(compName);
+  }
+  
+  private boolean validInput() {
+    StringBuilder errorMsg = new StringBuilder();
+    if (nameTF.getText().isEmpty()) {
+       errorMsg.append("Projektets namn\n");
+    }
+    
+    if (reportCodeTF.getText().isEmpty()) {
+       errorMsg.append("Projektets rapportkod\n");
+    }
+    
+    if (getSelectedComp() == null) {
+      errorMsg.append("Företag med vilket projektet skall associeras\n");
+    }
+        
+    errorMsg.trimToSize();
+    
+    if (errorMsg.length() > 0) {
+      JOptionPane.showMessageDialog(this,
+                                    "Följande information saknas " +
+                                    "fortfarande:\n" + errorMsg,
+                                    "Nödvändig information saknas",
+                                    JOptionPane.ERROR_MESSAGE);
+      return false;
+    } else {
+      return true;
+    }
   }
 }
