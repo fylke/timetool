@@ -13,14 +13,29 @@ public class ProjectSet {
     companies = new TreeMap<Integer, Company>();
   }
 
+  /**
+   * Gets the company specified by the supplied ID.
+   * @param id
+   * @return the requested company, null if not found
+   */
   public Company getCompany(final int id) {
     return companies.get(id);
   }
   
+  /**
+   * Gets all companies.
+   * @return all stored companies, null if none stored
+   */
   public Collection<Company> getCompanies() {
     return companies.values();
   }
 
+  /**
+   * Adds a company to the project set.
+   * @param company the company to add
+   * @throws ItemAlreadyDefinedException if company already exists in the 
+   * project set
+   */
   public void addCompany(final Company company) 
       throws ItemAlreadyDefinedException {
     // FIXME HashCode depends on company name which isn't necessarily set!
