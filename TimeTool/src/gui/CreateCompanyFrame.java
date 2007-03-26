@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -53,23 +54,27 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
   
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(okBT)) {
-      java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
-                                                       shortNameTF.getText(),
-                                                       empIdTF.getText(),
-                                                       projectSet));
-      setVisible(false);
-      dispose();
+      if (validInput()) {
+        java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
+                                                         shortNameTF.getText(),
+                                                         empIdTF.getText(),
+                                                         projectSet));
+        setVisible(false);
+        dispose();
+      }
     } else if (e.getSource().equals(cancelBT)) {
       setVisible(false);
       dispose();
     } else if (e.getSource().equals(applyBT)) {
-      nameTF.setText("");
-      shortNameTF.setText("");
-      empIdTF.setText("");
-      java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
-                                                       shortNameTF.getText(),
-                                                       empIdTF.getText(),
-                                                       projectSet));
+      if (validInput()) {
+        nameTF.setText("");
+        shortNameTF.setText("");
+        empIdTF.setText("");
+        java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
+                                                         shortNameTF.getText(),
+                                                         empIdTF.getText(),
+                                                         projectSet));
+      }
     } 
   }
 
@@ -130,5 +135,29 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     basePanel.add(lowerPanel, "b");
     
     add(basePanel);
+  }
+  
+  private boolean validInput() {
+    StringBuilder errorMsg = new StringBuilder();
+    if (nameTF.getText().isEmpty()) {
+       errorMsg.append("Företagets namn\n");
+    }
+    
+    if (empIdTF.getText().isEmpty()) {
+       errorMsg.append("Anställningsnummer hos företaget\n");
+    }
+        
+    errorMsg.trimToSize();
+    
+    if (errorMsg.length() > 0) {
+      JOptionPane.showMessageDialog(this,
+                                    "Följande information saknas " +
+                                    "fortfarande:\n" + errorMsg,
+                                    "Nödvändig information saknas",
+                                    JOptionPane.ERROR_MESSAGE);
+      return false;
+    } else {
+      return true;
+    }
   }
 }
