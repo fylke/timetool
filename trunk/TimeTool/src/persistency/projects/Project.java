@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
+import persistency.ItemAlreadyDefinedException;
+
 
 public class Project {
   private String name;
@@ -73,11 +75,22 @@ public class Project {
     }
   }
 
-  public void addActivity(final Activity activity) {
+  public void addActivity(final Activity activity) 
+      throws ItemAlreadyDefinedException {
+    if (activities.containsKey(activity.hashCode())) {
+      throw new ItemAlreadyDefinedException("Activity " + activity.getName() + 
+                                            " is already defined!");
+    }
     activities.put(activity.getId(), activity);
   }
   
-  public void addSubProject(final Project subProject) {
+  public void addSubProject(final Project subProject)
+      throws ItemAlreadyDefinedException {
+    if (subProjects.containsKey(subProject.hashCode())) {
+      throw new ItemAlreadyDefinedException("Sub project " + 
+                                            subProject.getName() + 
+                                            " is already defined!");
+    }
     subProjects.put(subProject.getId(), subProject);
   }
   
