@@ -32,6 +32,10 @@ public class Company {
     return employeeId;
   }
 
+  public Project getProject(final int id) {
+    return projects.get(id);
+  }
+  
   public Collection<Project> getProjects() {
     return projects.values();
   }
