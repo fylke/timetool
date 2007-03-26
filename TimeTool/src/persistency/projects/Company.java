@@ -1,6 +1,7 @@
 package persistency.projects;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -34,6 +35,15 @@ public class Company {
 
   public Project getProject(final int id) {
     return projects.get(id);
+  }
+  
+  public Project getProjectByName(final String name) {
+    for (Project proj : projects.values()) {
+      if (proj.getName() == name) {
+        return proj;
+      }
+    }
+    return null;
   }
   
   public Collection<Project> getProjects() {
