@@ -83,7 +83,8 @@ public class CreateActFrame extends JFrame implements
       java.awt.EventQueue.invokeLater(
           new Runnable() {
             public void run() {
-              // TODO Link to parent?
+              // TODO Would be nice to return to the same frame when clicking
+              //      on newCompBT if a CreateCompFrame is already open.
               final JFrame createComp = new CreateCompanyFrame(projectSet);
               createComp.setVisible(true);
             }
