@@ -102,6 +102,9 @@ public class CreateActFrame extends JFrame implements ActionListener {
       dispose();
     } else if (e.getSource().equals(applyBT)) {
       if (validInput()) {
+        nameTF.setText("");
+        shortNameTF.setText("");
+        reportCodeTF.setText("");
         java.awt.EventQueue.invokeLater(new ActAdder(this, 
                                                      getSelectedComp().getId(), 
                                                      getSelectedProj().getId(),
