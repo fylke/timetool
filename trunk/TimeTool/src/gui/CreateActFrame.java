@@ -3,6 +3,8 @@ package gui;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,8 @@ import persistency.projects.ProjectSet;
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
-public class CreateActFrame extends JFrame implements ActionListener {
+public class CreateActFrame extends JFrame implements 
+    ActionListener, FocusListener {
   private static final long serialVersionUID = 1L;
     
   ProjectSet projectSet;
@@ -64,6 +67,16 @@ public class CreateActFrame extends JFrame implements ActionListener {
     initComponents();
     pack();
   }
+  
+  /**
+   * Update the combo boxes in case companies or projects have been added.
+   */
+  public void focusGained(final FocusEvent e) {
+    compCoB = new JComboBox(getComboContents("company"));
+    projCoB = new JComboBox(getComboContents("project"));
+  }
+  
+  public void focusLost(FocusEvent e) {}
   
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(newCompBT)) {
