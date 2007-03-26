@@ -2,7 +2,6 @@ package persistency.projects;
 
 
 public class Activity {
-  private int id;
   private String name;
   private String shortName;
   private String reportCode;
@@ -10,17 +9,12 @@ public class Activity {
   public Activity() {
     super();
   }
-  
-  public Activity(final int id) {
-    super();
-    this.id = id;
-  }
 
   /**
    * @return the activity's unique ID
    */
   public int getId() {
-    return id;
+    return hashCode();
   }
   
   /**
@@ -45,31 +39,36 @@ public class Activity {
   }
 
   /**
-   * @param id the id to set
-   */
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  /**
    * @param reportCode the reportCode to set
    */
   public void setReportCode(final String reportCode) {
-    this.reportCode = reportCode;
+    if (reportCode == null || reportCode == "") {
+      throw new IllegalArgumentException("Activity report code cannot be empty!");
+    } else {
+      this.reportCode = reportCode;
+    }
   }
 
   /**
    * @param the name of the activity to set
    */
   public void setName(final String name) {
-    this.name = name;
+    if (name == null || name == "") {
+      throw new IllegalArgumentException("Name cannot be empty!");
+    } else {
+      this.name = name;
+    }
   }
 
   /**
    * @param shortName the shortName to set
    */
   public void setShortName(final String shortName) {
-    this.shortName = shortName;
+    if (shortName == null) {
+      this.shortName = "";
+    } else {
+      this.shortName = shortName;
+    }
   }
   
   /* (non-Javadoc)
@@ -78,7 +77,7 @@ public class Activity {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder(); 
-    objRep.append("actId: " + id + "\n");
+    objRep.append("actId: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("reportCode: " + reportCode);
@@ -93,9 +92,8 @@ public class Activity {
   public int hashCode() {
     final int PRIME = 31;
     int result = 1;
-    result = PRIME * result + id;
     result = PRIME * result + ((name == null) ? 0 : name.hashCode());
-    result = PRIME * result + ((shortName == null) ? 0 : shortName.hashCode());
+    result = PRIME * result + ((reportCode == null) ? 0 : reportCode.hashCode());
     return result;
   }
 
@@ -111,17 +109,15 @@ public class Activity {
     if (getClass() != obj.getClass())
       return false;
     final Activity other = (Activity) obj;
-    if (id != other.id)
-      return false;
     if (name == null) {
       if (other.name != null)
         return false;
     } else if (!name.equals(other.name))
       return false;
-    if (shortName == null) {
-      if (other.shortName != null)
+    if (reportCode == null) {
+      if (other.reportCode != null)
         return false;
-    } else if (!shortName.equals(other.shortName))
+    } else if (!reportCode.equals(other.reportCode))
       return false;
     return true;
   }
