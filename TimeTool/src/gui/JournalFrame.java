@@ -19,7 +19,7 @@ import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class JournalFrame extends JFrame {
-  private static final long serialVersionUID = -6108305501628243012L;
+  private static final long serialVersionUID = 1L;
   
   private JPanel basePanel;
   private ZoneLayout layout;
@@ -78,8 +78,11 @@ public class JournalFrame extends JFrame {
     basePanel.add(textAreaPanel, "t");
     
     applyBT = new JButton("Spara");
+    basePanel.add(applyBT, "b");
     cancelBT = new JButton("Avbryt");
+    basePanel.add(cancelBT, "b");
     okBT = new JButton("OK");
+    basePanel.add(okBT, "b");
     
     add(basePanel);
   }
