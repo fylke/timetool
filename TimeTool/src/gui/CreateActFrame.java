@@ -5,12 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +21,7 @@ import persistency.projects.ActAdder;
 import persistency.projects.Company;
 import persistency.projects.Project;
 import persistency.projects.ProjectSet;
+import persistency.settings.UserSettings;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
@@ -50,11 +49,13 @@ public class CreateActFrame extends JFrame implements
   private JTextField reportCodeTF;
   
   private JLabel compLabel;
-  private JComboBox compCoB;
+  private MyComboBox compCoB;
+  private String compEmptyMsg = "Inga företag definierade";
   private JButton newCompBT;
   
   private JLabel projLabel;
-  private JComboBox projCoB;
+  private MyComboBox projCoB;
+  private String projEmptyMsg = "Inga projekt definierade";
   private JButton newProjBT;
   
   private JButton cancelBT;
@@ -72,8 +73,8 @@ public class CreateActFrame extends JFrame implements
    * Update the combo boxes in case companies or projects have been added.
    */
   public void focusGained(final FocusEvent e) {
-    compCoB = new JComboBox(getComboContents("company"));
-    projCoB = new JComboBox(getComboContents("project"));
+    compCoB.setContents(getComboContents("company"));
+    projCoB.setContents(getComboContents("projects"));
   }
   
   public void focusLost(FocusEvent e) {}
@@ -85,7 +86,7 @@ public class CreateActFrame extends JFrame implements
             public void run() {
               // TODO Would be nice to return to the same frame when clicking
               //      on newCompBT if a CreateCompFrame is already open.
-              final JFrame createComp = new CreateCompanyFrame(projectSet);
+              final JFrame createComp = new CreateCompanyFrame();
               createComp.setVisible(true);
             }
           }
@@ -94,20 +95,22 @@ public class CreateActFrame extends JFrame implements
       java.awt.EventQueue.invokeLater(
           new Runnable() {
             public void run() {
-              final JFrame createProj = new CreateProjectFrame(projectSet);
+              final JFrame createProj = new CreateProjectFrame(UserSettings.getInstance().getProjectSet());
               createProj.setVisible(true);
             }
           }
         );
     } else if (e.getSource().equals(okBT)) {
       if (validInput()) {
+        final Company comp = (Company) compCoB.getSelected();
+        final Project proj = (Project) projCoB.getSelected();
         java.awt.EventQueue.invokeLater(new ActAdder(this, 
-                                                     getSelectedComp().getId(), 
-                                                     getSelectedProj().getId(),
+                                                     comp.getId(), 
+                                                     proj.getId(),
                                                      nameTF.getText(), 
                                                      shortNameTF.getText(),
                                                      reportCodeTF.getText(),
-                                                     projectSet));
+                                                     UserSettings.getInstance().getProjectSet()));
       setVisible(false);
       dispose();
       }      
@@ -119,9 +122,11 @@ public class CreateActFrame extends JFrame implements
         nameTF.setText("");
         shortNameTF.setText("");
         reportCodeTF.setText("");
+        final Company comp = (Company) compCoB.getSelected();
+        final Project proj = (Project) projCoB.getSelected();
         java.awt.EventQueue.invokeLater(new ActAdder(this, 
-                                                     getSelectedComp().getId(), 
-                                                     getSelectedProj().getId(),
+                                                     comp.getId(), 
+                                                     proj.getId(),
                                                      nameTF.getText(), 
                                                      shortNameTF.getText(),
                                                      reportCodeTF.getText(),
@@ -178,7 +183,7 @@ public class CreateActFrame extends JFrame implements
     upperPanelLayout.insertTemplate("comboRow");
     compLabel = new JLabel("Företag:");
     upperPanel.add(compLabel, "c");
-    compCoB = new JComboBox(getComboContents("company"));
+    compCoB = new MyComboBox(getComboContents("company"), compEmptyMsg);
     compCoB.setSelectedIndex(0);
     upperPanel.add(compCoB, "d");
     newCompBT = new JButton("Nytt");
@@ -188,7 +193,7 @@ public class CreateActFrame extends JFrame implements
     upperPanelLayout.insertTemplate("comboRow");
     projLabel = new JLabel("Projekt:");
     upperPanel.add(projLabel, "c");
-    projCoB = new JComboBox(getComboContents("project"));
+    projCoB = new MyComboBox(getComboContents("project"), projEmptyMsg);
     projCoB.setSelectedIndex(0);
     upperPanel.add(projCoB, "d");
     newProjBT = new JButton("Nytt");
@@ -211,43 +216,18 @@ public class CreateActFrame extends JFrame implements
     add(basePanel);
   }
   
-  private String[] getComboContents(final String kind) {
-    List<String> names = new ArrayList<String>();
+  private Vector<MyComboBoxDisplayable> getComboContents(final String kind) {
+    Vector<MyComboBoxDisplayable> disps = new Vector<MyComboBoxDisplayable>();
     if ("company".equalsIgnoreCase(kind) && projectSet.getCompanies() != null) {
-      for (Company comp : projectSet.getCompanies()) {
-        names.add(comp.getName());
-      }
+      disps.addAll(projectSet.getCompanies());
     } else if ("project".equalsIgnoreCase(kind)) {
-      final Company currComp = getSelectedComp();
+      final Company currComp = (Company) compCoB.getSelected();
       
       if (currComp != null && currComp.getProjects() != null) {
-        for (Project proj : currComp.getProjects()) {
-          names.add(proj.getName());
-        }
+        disps.addAll(currComp.getProjects());
       }
     }
-    return names.isEmpty() ? new String[]{"Inga skapade än"} : 
-                             names.toArray(new String[0]);
-  }
-  
-  /**
-   * Translates the contents in the company combo box to the actual company 
-   * object.
-   * @return the in the combo box currently selected company, returns null if no 
-   * companies
-   */
-  private Company getSelectedComp() {
-    final String compName = (String) compCoB.getSelectedItem();
-    return projectSet.getCompanyByName(compName);
-  }
-  
-  private Project getSelectedProj() {
-    final Company comp = getSelectedComp();
-    if (comp != null) {
-      final String projName = (String) projCoB.getSelectedItem();
-      return comp.getProjectByName(projName); 
-    }
-    return null;
+    return disps;
   }
   
   private boolean validInput() {
@@ -260,11 +240,11 @@ public class CreateActFrame extends JFrame implements
        errorMsg.append("Aktivitetens rapportkod\n");
     }
     
-    if (getSelectedComp() == null) {
+    if (compCoB.getSelected() == null) {
       errorMsg.append("Företag med vilket aktiviteten skall associeras\n");
     }
     
-    if (getSelectedProj() == null) {
+    if (projCoB.getSelected() == null) {
       errorMsg.append("Projekt med vilket aktiviteten skall associeras\n");
     }
     
