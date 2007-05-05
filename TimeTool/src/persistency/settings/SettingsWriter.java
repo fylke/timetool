@@ -10,23 +10,23 @@ public class SettingsWriter {
   private transient XmlUtils xmlUtils = XmlUtils.getInstance();
   private static transient final String ns = "";
   
-  public void writeSettings(final Settings settings, 
+  public void writeUserSettings(final Settings userSettings, 
                             final OutputStream settingsStream) 
   {
     String indent = xmlUtils.indent(0);
     StringBuilder sb = xmlUtils.getHeader("settings");
     indent = xmlUtils.incIndent(indent);
 
-    sb.append(indent + "<" + ns + "userName first=\"" + settings.getUserFirstName() + 
-                               "\" last=\"" + settings.getUserLastName() +
+    sb.append(indent + "<" + ns + "userName first=\"" + userSettings.getFirstName() + 
+                               "\" last=\"" + userSettings.getLastName() +
                                "\"/>\n");
-    sb.append(indent + "<" + ns + "employedAt id=\"" + settings.getEmployerId() + 
+    sb.append(indent + "<" + ns + "employedAt id=\"" + userSettings.getEmployerId() + 
                        "\"/>\n");
-    sb.append(indent + "<" + ns + "projectSet id=\"" + settings.getProjectSetId() + 
+    sb.append(indent + "<" + ns + "projectSet id=\"" + userSettings.getProjectSetId() + 
                        "\"/>\n");
-    sb.append(indent + "<" + ns + "lunchBreak duration=\"" + settings.getLunchBreak() + 
+    sb.append(indent + "<" + ns + "lunchBreak duration=\"" + userSettings.getLunchBreak() + 
                        "\"/>\n");
-    sb.append(indent + "<" + ns + "overtime treatAs=\"" + settings.getTreatOvertimeAs() + 
+    sb.append(indent + "<" + ns + "overtime treatAs=\"" + userSettings.getTreatOvertimeAs() + 
                        "\"/>\n");
     
     indent = xmlUtils.decIndent(indent);   
