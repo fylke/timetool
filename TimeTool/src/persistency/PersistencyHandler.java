@@ -19,6 +19,7 @@ import persistency.projects.ProjectSet;
 import persistency.projects.ProjectSetParser;
 import persistency.projects.ProjectSetWriter;
 import persistency.settings.Settings;
+import persistency.settings.UserSettings;
 import persistency.settings.SettingsParser;
 import persistency.settings.SettingsWriter;
 import persistency.year.SearchControl;
@@ -42,10 +43,10 @@ public final class PersistencyHandler {
     return instance;
   }
   
-  public Settings readSettings(final InputStream settingsStream) 
+  public Settings readUserSettings(final InputStream settingsStream) 
       throws PersistencyException {
     Reader br = null;
-    Settings settings = new Settings();
+    Settings userSettings = UserSettings.getInstance();
     try {
       final XMLReader settingsParser = FileParserFactory.getParser("settings");
       br = new BufferedReader(new InputStreamReader(settingsStream));
@@ -53,19 +54,21 @@ public final class PersistencyHandler {
       // Sending in the object we want to contain the result of the parsing.
       final SettingsParser sp = 
         ((SettingsParser) settingsParser.getContentHandler());
-      sp.setTargetObject(settings);
+      sp.setTargetObject(userSettings);
 
       settingsParser.parse(new InputSource(br));
     } catch (final SAXException e) {
       throw new PersistencyException("There was a parser problem when " +
-                                     "reading the settings file.", e);
+                                     "reading the settings file. " + 
+                                     e.getMessage(), e);
     } catch (final IOException e) {
       throw new PersistencyException("There was an I/O problem when " +
-                                     "reading the settings file.", e);
+                                     "reading the settings file. " + 
+                                     e.getMessage(), e);
     } catch (final ParserConfigurationException e) {
       throw new PersistencyException("There was a problem initializing " +
                                      "a parser while reading the settings " +
-                                     "file.", e);
+                                     "file. " + e.getMessage(), e);
     } finally {
       try {
         br.close();
@@ -73,10 +76,10 @@ public final class PersistencyHandler {
         // We don't care if closing fails...
       }
     }
-    return settings;
+    return userSettings;
   }
   
-  public Year readYear(final InputStream yearStream, SearchControl wanted) 
+  public Year readYear(final InputStream yearStream, final SearchControl wanted) 
       throws PersistencyException {
     Reader br = null;
     Year year = new Year();
@@ -93,14 +96,16 @@ public final class PersistencyHandler {
       yearParser.parse(new InputSource(br));
     } catch (final SAXException e) {
       throw new PersistencyException("There was a parser problem when " +
-                                     "reading the year file.", e);
+                                     "reading the year file. " + 
+                                     e.getMessage(), e);
     } catch (final IOException e) {
       throw new PersistencyException("There was an I/O problem when " +
-                                     "reading the year file.", e);
+                                     "reading the year file. " + 
+                                     e.getMessage(), e);
     } catch (final ParserConfigurationException e) {
       throw new PersistencyException("There was a problem initializing " +
                                      "a parser while reading the year " +
-                                     "file.", e);
+                                     "file. " + e.getMessage(), e);
     } finally {
       try {
         br.close();
@@ -111,31 +116,34 @@ public final class PersistencyHandler {
     return year;
   }
   
-  public ProjectSet readProjectSet(final InputStream projectsStream) 
+  public ProjectSet readProjectSet(final InputStream projStr) 
       throws PersistencyException {
     Reader br = null;
-    ProjectSet projectSet = new ProjectSet();
+    ProjectSet projSet = new ProjectSet();
     try {
-      final XMLReader projectsParser = 
+      final XMLReader projSetParser = 
         FileParserFactory.getParser("projectSet");
-      br = new BufferedReader(new InputStreamReader(projectsStream));
+      
+      br = new BufferedReader(new InputStreamReader(projStr));
       
       // Sending in the object we want to contain the result of the parsing.
       final ProjectSetParser pp = 
-        ((ProjectSetParser) projectsParser.getContentHandler());
-      pp.setTargetObject(projectSet);
+        ((ProjectSetParser) projSetParser.getContentHandler());
+      pp.setTargetObject(projSet);
       
-      projectsParser.parse(new InputSource(br));
+      projSetParser.parse(new InputSource(br));
     } catch (final SAXException e) {
       throw new PersistencyException("There was a parser problem when " +
-                                     "reading the projects file.", e);
+                                     "reading the projects file." + 
+                                     e.getMessage(), e);
     } catch (final IOException e) {
       throw new PersistencyException("There was an I/O problem when " +
-                                     "reading the projects file.", e);
+                                     "reading the projects file. " + 
+                                     e.getMessage(), e);
     } catch (final ParserConfigurationException e) {
       throw new PersistencyException("There was a problem initializing " +
                                      "a parser while reading the projects " +
-                                     "file.", e);
+                                     "file. " + e.getMessage(), e);
     } finally {
       try {
         br.close();
@@ -143,14 +151,14 @@ public final class PersistencyHandler {
         // We don't care if closing fails...
       }
     }
-    return projectSet;
+    return projSet;
   }
   
-  public synchronized void writeSettings(final Settings settings, 
-                                         final OutputStream settingsStream) 
+  public synchronized void writeUserSettings(final Settings userSettings, 
+                                             final OutputStream settingsStream) 
   {
     SettingsWriter sw = new SettingsWriter();
-    sw.writeSettings(settings, settingsStream);
+    sw.writeUserSettings(userSettings, settingsStream);
   }
   
   public synchronized void writeYear(final Year year, 
@@ -174,7 +182,7 @@ public final class PersistencyHandler {
    */
   public String getStorageDir() {
     return userPrefs.get("Storage dir", System.getProperty("user.home")) + 
-             File.separator + ".timetool";
+                         File.separator + ".timetool";
   }
   
   /**
