@@ -5,12 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,7 +38,8 @@ public class CreateProjectFrame extends JFrame implements
   private JPanel lowerPanel;
 
   private JLabel compLabel;
-  private JComboBox compCoB;
+  private MyComboBox compCoB;
+  private String compCoBEmptyMsg = "Inga företag definierade";
   
   private JLabel nameLabel;
   private JTextField nameTF;
@@ -66,7 +65,7 @@ public class CreateProjectFrame extends JFrame implements
    * Update the combo box in case companies has been added.
    */
   public void focusGained(final FocusEvent e) {
-    compCoB = new JComboBox(getComboContents());
+    compCoB.setContents(getComboContents());
   }
   
   public void focusLost(FocusEvent e) {}
@@ -74,8 +73,9 @@ public class CreateProjectFrame extends JFrame implements
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(okBT)) {
       if (validInput()) {
+        final Company comp = (Company) compCoB.getSelected();
         java.awt.EventQueue.invokeLater(new ProjectAdder(this, 
-                                                         getSelectedComp().getId(),
+                                                         comp.getId(),
                                                          nameTF.getText(), 
                                                          shortNameTF.getText(),
                                                          projectSet));
@@ -89,8 +89,9 @@ public class CreateProjectFrame extends JFrame implements
       if (validInput()) {
         nameTF.setText("");
         shortNameTF.setText("");
+        final Company comp = (Company) compCoB.getSelected();
         java.awt.EventQueue.invokeLater(new ProjectAdder(this, 
-                                                         getSelectedComp().getId(),
+                                                         comp.getId(),
                                                          nameTF.getText(), 
                                                          shortNameTF.getText(),
                                                          projectSet));
@@ -127,7 +128,7 @@ public class CreateProjectFrame extends JFrame implements
     compLabel = new JLabel("Företag:");
     upperPanel.add(compLabel, "a");
 
-    compCoB = new JComboBox(getComboContents());
+    compCoB = new MyComboBox(getComboContents(), compCoBEmptyMsg);
     compCoB.setSelectedIndex(0);
     
     upperPanel.add(compCoB, "b");
@@ -168,26 +169,12 @@ public class CreateProjectFrame extends JFrame implements
     add(basePanel);
   }
   
-  private String[] getComboContents() {
-    List<String> names = new ArrayList<String>();
+  private Vector<MyComboBoxDisplayable> getComboContents() {
+    Vector<MyComboBoxDisplayable> comps = new Vector<MyComboBoxDisplayable>();
     if (projectSet.getCompanies() != null) {
-      for (Company comp : projectSet.getCompanies()) {
-        names.add(comp.getName());
-      }
+      comps.addAll(projectSet.getCompanies());
     } 
-    return names.isEmpty() ? new String[]{"Inga skapade än"} : 
-                             names.toArray(new String[0]);
-  }
-  
-  /**
-   * Translates the contents in the company combo box to the actual company 
-   * object.
-   * @return the in the combo box currently selected company, returns null if no 
-   * companies
-   */
-  private Company getSelectedComp() {
-    final String compName = (String) compCoB.getSelectedItem();
-    return projectSet.getCompanyByName(compName);
+    return comps;
   }
   
   private boolean validInput() {
@@ -200,7 +187,7 @@ public class CreateProjectFrame extends JFrame implements
        errorMsg.append("Projektets rapportkod\n");
     }
     
-    if (getSelectedComp() == null) {
+    if (compCoB.getSelected() == null) {
       errorMsg.append("Företag med vilket projektet skall associeras\n");
     }
         
