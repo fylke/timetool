@@ -16,14 +16,14 @@ import org.xml.sax.helpers.DefaultHandler;
 public class SettingsParser extends DefaultHandler implements ContentHandler {
   private static transient final String ns = "";
   private XMLReader reader;
-  private Settings settings;
+  private Settings userSettings;
   
   public SettingsParser(final XMLReader reader) {
     this.reader = reader;
   }
   
-  public void setTargetObject(final Settings settings) {
-    this.settings = settings;
+  public void setTargetObject(final Settings userSettings) {
+    this.userSettings = userSettings;
   }
 
   public Settings parse(final InputSource is) 
@@ -31,7 +31,7 @@ public class SettingsParser extends DefaultHandler implements ContentHandler {
     reader.setContentHandler(this);
     reader.parse(is);
     
-    return settings;
+    return userSettings;
   }
 
   @Override
@@ -39,16 +39,16 @@ public class SettingsParser extends DefaultHandler implements ContentHandler {
                            final String qName, final Attributes attrs) 
       throws SAXException {
     if ((ns + "userName").equals(qName)) {
-      settings.setUserFirstName(attrs.getValue("first"));
-      settings.setUserLastName(attrs.getValue("last"));
+      userSettings.setFirstName(attrs.getValue("first"));
+      userSettings.setLastName(attrs.getValue("last"));
     } else if ((ns + "employedAt").equals(qName)) {
-      settings.setEmployedAt(attrs.getValue("id")); 
+      userSettings.setEmployedAt(attrs.getValue("id")); 
     } else if ((ns + "projectSet").equals(qName)) {
-      settings.setProjectSetId(attrs.getValue("id"));
+      userSettings.setProjectSetId(attrs.getValue("id"));
     } else if ((ns + "lunchBreak").equals(qName)) {
-      settings.setLunchBreak(attrs.getValue("duration"));
+      userSettings.setLunchBreak(attrs.getValue("duration"));
     } else if ((ns + "overtime").equals(qName)) {
-      settings.setTreatOvertimeAs(attrs.getValue("treatAs"));
+      userSettings.setTreatOvertimeAs(attrs.getValue("treatAs"));
     }
   }
 }
