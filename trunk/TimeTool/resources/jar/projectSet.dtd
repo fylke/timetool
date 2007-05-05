@@ -1,13 +1,16 @@
 <!ELEMENT projectSet (company+)>
     <!ELEMENT company (compName, compShortName?, employeeId, project+)>
+    <!ATTLIST company id CDATA #REQUIRED>
 		<!ELEMENT compName (#PCDATA)>
 		<!ELEMENT compShortName (#PCDATA)>
 		<!ELEMENT employeeId (#PCDATA)>
 		<!ELEMENT project (projName, projShortName?, code, activity*, project*)>
+		<!ATTLIST project id CDATA #REQUIRED>
 			<!ELEMENT projName (#PCDATA)>
 			<!ELEMENT projShortName (#PCDATA)>
 	  	    <!ELEMENT code (#PCDATA)>
 	  	    <!ELEMENT activity (actName, actShortName)>
+	  	    <!ATTLIST activity id CDATA #REQUIRED>
 	  	        <!ELEMENT actName (#PCDATA)>
 		        <!ELEMENT actShortName (#PCDATA)>
 		        <!ELEMENT actReportCode (#PCDATA)>
