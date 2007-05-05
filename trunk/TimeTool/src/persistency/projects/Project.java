@@ -1,5 +1,7 @@
 package persistency.projects;
 
+import gui.MyComboBoxDisplayable;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
@@ -7,7 +9,8 @@ import java.util.TreeMap;
 import persistency.ItemAlreadyDefinedException;
 
 
-public class Project {
+public class Project implements MyComboBoxDisplayable {
+  private int id;
   private String name;
   private String shortName;
   private String code;
@@ -18,9 +21,17 @@ public class Project {
     activities = new TreeMap<Integer, Activity>();
     subProjects = new TreeMap<Integer, Project>();
   }
+
+  public String getLongDispString() {
+    return name;
+  }
+  
+  public String getShortDispString() {
+    return shortName;
+  }
   
   public int getId() {
-    return hashCode();
+    return id;
   }
   
   public String getName() {
@@ -50,7 +61,14 @@ public class Project {
   public Collection<Project> getSubProjects() {
     return subProjects.values();
   }
-  
+    
+  /**
+   * @param id the id to set
+   */
+  public void setId(final int id) {
+    this.id = id;
+  }
+
   public void setName(final String name) {
     if (name == null || name == "") {
       throw new IllegalArgumentException("Name cannot be empty!");
@@ -75,6 +93,7 @@ public class Project {
     }
   }
 
+  //FIXME Maybe throw illegal arg on null.
   public void addActivity(final Activity activity) 
       throws ItemAlreadyDefinedException {
     if (activities.containsKey(activity.hashCode())) {
@@ -84,6 +103,7 @@ public class Project {
     activities.put(activity.getId(), activity);
   }
   
+  //FIXME Maybe throw illegal arg on null.
   public void addSubProject(final Project subProject)
       throws ItemAlreadyDefinedException {
     if (subProjects.containsKey(subProject.hashCode())) {
@@ -100,7 +120,7 @@ public class Project {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder();
-    objRep.append("projId: " + hashCode() + "\n");
+    objRep.append("projId: " + id + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("code: " + code + "\n");

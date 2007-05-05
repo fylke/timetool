@@ -16,15 +16,15 @@ import persistency.ItemAlreadyDefinedException;
 public class ProjectSetParser extends DefaultHandler {
   private static transient final String ns = "";
   private transient XMLReader reader;
-  private transient ProjectSet projectSet;
-  private transient Company company;
+  private transient ProjectSet projSet;
+  private transient Company comp;
   
   public ProjectSetParser(final XMLReader reader) {
     this.reader = reader;
   }
   
-  public void setTargetObject(final ProjectSet projectSet) {
-    this.projectSet = projectSet;
+  public void setTargetObject(final ProjectSet projSet) {
+    this.projSet = projSet;
   }
 
   public ProjectSet parse(final InputSource is) throws SAXException, IOException, 
@@ -32,20 +32,20 @@ public class ProjectSetParser extends DefaultHandler {
     reader.setContentHandler(this);
     reader.parse(is);
     
-    return projectSet;
+    return projSet;
   }
 
   @Override
   public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attributes) 
+                           final String qName, final Attributes attrs) 
       throws SAXException {
     if ((ns + "company").equals(qName)) {
-      company = new Company();
-      assert(projectSet != null);
+      comp = new Company();
+      assert(projSet != null);
            
-      final ContentHandler companyHandler = 
-        new CompanyHandler(attributes, reader, this, company, ns);
-      reader.setContentHandler(companyHandler);
+      final ContentHandler compHandler = 
+        new CompanyHandler(attrs, reader, this, comp, ns);
+      reader.setContentHandler(compHandler);
     }
   }
 
@@ -55,9 +55,10 @@ public class ProjectSetParser extends DefaultHandler {
   @Override
   public void endElement(String uri, String localName, String qName) 
       throws SAXException {
-    if ((ns + "company").equals(qName)) {
+    if ((ns + "company").equals(qName) && comp != null) {
+      System.err.println("loc:" + localName);
       try {
-        projectSet.addCompany(company);
+        projSet.addCompany(comp);
       } catch (ItemAlreadyDefinedException e) {
         // Silently omit this company
       }

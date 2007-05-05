@@ -1,7 +1,10 @@
 package persistency.projects;
 
+import gui.MyComboBoxDisplayable;
 
-public class Activity {
+
+public class Activity implements MyComboBoxDisplayable {
+  private int id;
   private String name;
   private String shortName;
   private String reportCode;
@@ -10,11 +13,19 @@ public class Activity {
     super();
   }
 
+  public String getLongDispString() {
+    return name;
+  }
+  
+  public String getShortDispString() {
+    return shortName;
+  }
+
   /**
    * @return the activity's unique ID
    */
   public int getId() {
-    return hashCode();
+    return id;
   }
   
   /**
@@ -36,6 +47,13 @@ public class Activity {
    */
   public String getReportCode() {
     return reportCode;
+  }
+  
+  /**
+   * @param id the id to set
+   */
+  public void setId(final int id) {
+    this.id = id;
   }
 
   /**
@@ -77,7 +95,7 @@ public class Activity {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder(); 
-    objRep.append("actId: " + hashCode() + "\n");
+    objRep.append("id: " + id + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("reportCode: " + reportCode);

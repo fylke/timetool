@@ -27,13 +27,12 @@ public class CompanyAdder implements Runnable {
   
   public CompanyAdder(final JFrame parent, final String compName, 
                       final String compShortName,
-                      final String employeeId, final ProjectSet projectSet) {
+                      final String employeeId) {
     super();
     this.parent = parent;
     this.compName = compName;
     this.compShortName = compShortName;
     this.employeeId = employeeId;
-    this.ps = projectSet;
   }
   
   public void run() {
@@ -51,14 +50,14 @@ public class CompanyAdder implements Runnable {
         ps = ph.readProjectSet(is);
       } catch (FileNotFoundException e) {
         JOptionPane.showMessageDialog(parent,
-                                      "Could not open projectSet.xml. " + 
-                                      e.getMessage(),
+                                      "Could not open  " + storageFileName +
+                                      ". " + e.getMessage(),
                                       "File error",
                                       JOptionPane.ERROR_MESSAGE);
       } catch (PersistencyException e) {
         JOptionPane.showMessageDialog(parent,
-                                      "Could not open projectSet.xml. " + 
-                                      e.getMessage(),
+                                      "Could not open  " + storageFileName +
+                                      ". " + e.getMessage(),
                                       "File error",
                                       JOptionPane.ERROR_MESSAGE);
       } finally {
@@ -75,6 +74,10 @@ public class CompanyAdder implements Runnable {
     company.setShortName(compShortName);
     company.setEmployeeId(employeeId);
 
+    if (ps == null) {
+      ps = new ProjectSet();
+    }
+    
     try {
       ps.addCompany(company);
     } catch (ItemAlreadyDefinedException e) {

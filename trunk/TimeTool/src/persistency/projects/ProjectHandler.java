@@ -42,19 +42,26 @@ public class ProjectHandler extends DefaultHandler {
     if ((ns + "activity").equals(qName)) {
       assert(currProj != null);
       act = new Activity();
+      act.setId(Integer.parseInt(attrs.getValue("id")));
       try {
         currProj.addActivity(act);
       } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this activity
+        // Silently omit this activity...
       }
             
-      final ContentHandler activityHandler = 
+      final ContentHandler actHandler = 
         new ActivityHandler(attrs, reader, this, act, ns);
       
-      reader.setContentHandler(activityHandler);
+      reader.setContentHandler(actHandler);
     } else if ((ns + "project").equals(qName)) {
       assert(currProj != null);
       subProj = new Project();
+      subProj.setId(Integer.parseInt(attrs.getValue("id")));
+      try {
+        currProj.addSubProject(subProj);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this sub project...
+      }
             
       final ContentHandler subProjectHandler = 
         new ProjectHandler(attrs, reader, this, subProj, ns);
@@ -74,11 +81,6 @@ public class ProjectHandler extends DefaultHandler {
     } else if ((ns + "code").equals(qName)) {
       currProj.setCode(getText());
     } else if ((ns + "project").equals(qName)) {
-      try {
-        currProj.addSubProject(subProj);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this project
-      }
       reader.setContentHandler(parentHandler);
     }
   }

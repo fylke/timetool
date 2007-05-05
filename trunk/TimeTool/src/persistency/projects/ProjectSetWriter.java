@@ -16,17 +16,17 @@ public class ProjectSetWriter {
     StringBuilder pb = xmlUtils.getHeader(ns + "projectSet");
     indent = xmlUtils.incIndent(indent);
 
-    for (Company company : projectSet.getCompanies()) {
-      pb.append(indent + "<" + ns + "company>\n");
+    for (Company comp : projectSet.getCompanies()) {
+      pb.append(indent + "<" + ns + "company id=\"" + comp.getId() + "\">\n");
       indent = xmlUtils.incIndent(indent);
-      pb.append(indent + "<" + ns + "compName>" + company.getName() + "</" + ns + "compName>\n");
-      if (company.getShortName() != null) {
-        pb.append(indent + "<" + ns + "compShortName>" + company.getShortName() + 
+      pb.append(indent + "<" + ns + "compName>" + comp.getName() + "</" + ns + "compName>\n");
+      if (comp.getShortName() != null) {
+        pb.append(indent + "<" + ns + "compShortName>" + comp.getShortName() + 
                            "</" + ns + "compShortName>\n");
       }
-      pb.append(indent + "<" + ns + "employeeId>" + company.getEmployeeId() + 
+      pb.append(indent + "<" + ns + "employeeId>" + comp.getEmployeeId() + 
                          "</" + ns + "employeeId>\n");
-      for (Project project : company.getProjects()) {
+      for (Project project : comp.getProjects()) {
         writeProject(project, pb, indent);
       }
       
@@ -40,36 +40,36 @@ public class ProjectSetWriter {
     writer.flush();
   }
   
-  private void writeProject(final Project project, final StringBuilder pb, 
-                            final String indentation) {
-    String indent = indentation;
+  private void writeProject(final Project proj, final StringBuilder pb, 
+                            final String indentLvl) {
+    String indent = indentLvl;
     
-    pb.append(indent + "<" + ns + "project>\n");
+    pb.append(indent + "<" + ns + "project id=\"" + proj.getId() + "\">\n");
     indent = xmlUtils.incIndent(indent);
     
-    pb.append(indent + "<" + ns + "projName>" + project.getName() + "</" + ns + "projName>\n");
-    if (project.getShortName() != null) {
-      pb.append(indent + "<" + ns + "projShortName>" + project.getShortName() + 
+    pb.append(indent + "<" + ns + "projName>" + proj.getName() + "</" + ns + "projName>\n");
+    if (proj.getShortName() != null) {
+      pb.append(indent + "<" + ns + "projShortName>" + proj.getShortName() + 
                          "</" + ns + "projShortName>\n");
     }
-    pb.append(indent + "<" + ns + "code>" + project.getCode() + "</code>\n");
+    pb.append(indent + "<" + ns + "code>" + proj.getCode() + "</code>\n");
     
-    if (project.getActivities() != null) {
-      for (Activity activity : project.getActivities()) {
-        pb.append(indent + "<" + ns + "activity>\n");
+    if (proj.getActivities() != null) {
+      for (Activity act : proj.getActivities()) {
+        pb.append(indent + "<" + ns + "activity id=\"" + act.getId() + "\">\n");
         indent = xmlUtils.incIndent(indent);
-        pb.append(indent + "<" + ns + "actName>" + activity.getName() + "</" + ns + "actName>\n");
-        pb.append(indent + "<" + ns + "actShortName>" + activity.getShortName() + 
+        pb.append(indent + "<" + ns + "actName>" + act.getName() + "</" + ns + "actName>\n");
+        pb.append(indent + "<" + ns + "actShortName>" + act.getShortName() + 
                            "</" + ns + "actShortName>\n");
-        pb.append(indent + "<" + ns + "actReportCode>" + activity.getReportCode() + 
+        pb.append(indent + "<" + ns + "actReportCode>" + act.getReportCode() + 
                            "</" + ns + "actReportCode>\n");
         indent = xmlUtils.decIndent(indent);
         pb.append(indent + "</" + ns + "activity>\n");
       }
     }
     
-    if (project.getSubProjects() != null) {
-      for (Project subProject : project.getSubProjects()) {
+    if (proj.getSubProjects() != null) {
+      for (Project subProject : proj.getSubProjects()) {
         writeProject(subProject, pb, indent);
       }
     }

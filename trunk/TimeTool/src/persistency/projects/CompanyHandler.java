@@ -20,7 +20,7 @@ public class CompanyHandler extends DefaultHandler {
   
   private transient Project proj;
 
-  public CompanyHandler(final Attributes attributes, final XMLReader reader, 
+  public CompanyHandler(final Attributes attrs, final XMLReader reader, 
                         final ContentHandler parentHandler, 
                         final Company currComp, final String ns)  
       throws SAXException {
@@ -34,16 +34,22 @@ public class CompanyHandler extends DefaultHandler {
 
   @Override
   public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attributes) 
+                           final String qName, final Attributes attrs) 
       throws SAXException {
     text.reset();
  
     if ((ns + "project").equals(qName)) {
       assert(currComp != null);
       proj = new Project();
-            
+      proj.setId(Integer.parseInt(attrs.getValue("id")));
+      try {
+        currComp.addProject(proj);
+      } catch (ItemAlreadyDefinedException e) {
+        // Silently omit this project...
+      }      
+      
       final ContentHandler projectHandler = 
-        new ProjectHandler(attributes, reader, this, proj, ns);
+        new ProjectHandler(attrs, reader, this, proj, ns);
 
       reader.setContentHandler(projectHandler);     
     }
@@ -60,11 +66,6 @@ public class CompanyHandler extends DefaultHandler {
     } else if ((ns + "employeeId").equals(qName)) {
       currComp.setEmployeeId(getText());
     } else if ((ns + "company").equals(qName)) {
-      try {
-        currComp.addProject(proj);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this project
-      }
       reader.setContentHandler(parentHandler);
     }
   }

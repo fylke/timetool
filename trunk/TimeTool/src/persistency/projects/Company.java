@@ -1,13 +1,14 @@
 package persistency.projects;
 
+import gui.MyComboBoxDisplayable;
+
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 import persistency.ItemAlreadyDefinedException;
 
-public class Company {
+public class Company implements MyComboBoxDisplayable {
   private String name;
   private String shortName;
   private String employeeId;
@@ -15,6 +16,14 @@ public class Company {
   
   public Company() {
     projects = new TreeMap<Integer, Project>();
+  }
+  
+  public String getLongDispString() {
+    return name;
+  }
+  
+  public String getShortDispString() {
+    return shortName;
   }
   
   public int getId() {
@@ -74,6 +83,7 @@ public class Company {
     }
   }
   
+  // FIXME Maybe throw illegal arg on null.
   public void addProject(final Project project) 
       throws ItemAlreadyDefinedException {
     if (projects.containsKey(project.hashCode())) {
