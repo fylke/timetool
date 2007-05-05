@@ -1,5 +1,6 @@
 package persistency.projects;
 
+import persistency.ItemAlreadyDefinedException;
 import persistency.XmlUtils;
 
 public class TestProjectsFactory {
@@ -56,7 +57,8 @@ public class TestProjectsFactory {
   }
   
   public Project getProject(final int id, final int depth, 
-                            final ProjSetConfig projSetConfig) {
+                            final ProjSetConfig projSetConfig) 
+        throws ItemAlreadyDefinedException {
     Project child = new Project();
     child.setName(projName + id);
     child.setShortName(projShortName + id);
@@ -74,7 +76,8 @@ public class TestProjectsFactory {
   }
   
   public Activity getActivity(final int id) {
-    Activity act = new Activity(id);
+    Activity act = new Activity();
+    act.setId(id);
     act.setName(actName + id);
     act.setShortName(actShortName + id);
     act.setReportCode(actRepCode + id);
