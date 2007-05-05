@@ -8,7 +8,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -18,6 +17,7 @@ import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 
 import persistency.settings.Settings;
+import persistency.settings.UserSettings;
 import persistency.year.WorkDay;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
@@ -27,7 +27,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
   
   private WorkDay currentDay;
-  private Settings currentUser;
+  private Settings user;
   
   private ZoneLayout layout;
   private ReadableDateTime date;
@@ -63,9 +63,9 @@ public class DayViewPanel extends JPanel implements ActionListener {
   private JButton writeJournalBT;
   private JButton createNewTabBT;
    
-  public DayViewPanel(final Settings currentUser) {
+  public DayViewPanel() {
     super();
-    this.currentUser = currentUser;
+    user = UserSettings.getInstance();
     date = new DateTime();
     currentDay = new WorkDay(date);
     initComponents();
