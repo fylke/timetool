@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import persistency.settings.Settings;
+import persistency.settings.SettingsReader;
 
 public class TimeTool extends JFrame {
   private static final long serialVersionUID = 1L;
@@ -25,7 +25,9 @@ public class TimeTool extends JFrame {
     java.awt.EventQueue.invokeLater(
       new Runnable() {
         public void run() {
-          new TimeTool().setVisible(true);
+          if (new SettingsReader().read()) {
+            new TimeTool().setVisible(true);
+          }
         }
       }
     );
@@ -37,13 +39,13 @@ public class TimeTool extends JFrame {
 
     setTitle("TimeTool");
     setLocationRelativeTo(null); // Centers the window on the screen.
-
+    
     background = new JTabbedPane();
-    dayViewPane = new DayViewPanel(new Settings());
+    dayViewPane = new DayViewPanel();
     weekViewPane = new WeekViewPanel();
     
     add(background);
     background.add(dayViewPane);
     background.add(weekViewPane);
-  }
+  }    
 }
