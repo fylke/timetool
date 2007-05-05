@@ -15,15 +15,12 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
 import persistency.projects.CompanyAdder;
-import persistency.projects.ProjectSet;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class CreateCompanyFrame extends JFrame implements ActionListener {
   private static final long serialVersionUID = 1L;
-  
-  private final ProjectSet projectSet;
 
   private ZoneLayout basePanelLayout;
   private JPanel basePanel;
@@ -45,9 +42,8 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
   private JButton applyBT;
   private JButton okBT;
   
-  public CreateCompanyFrame(final ProjectSet projectSet) {
+  public CreateCompanyFrame() {
     super();
-    this.projectSet = projectSet;
     initComponents();
     pack();
   }
@@ -57,8 +53,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
       if (validInput()) {
         java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
                                                          shortNameTF.getText(),
-                                                         empIdTF.getText(),
-                                                         projectSet));
+                                                         empIdTF.getText()));
         setVisible(false);
         dispose();
       }
@@ -72,8 +67,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
         empIdTF.setText("");
         java.awt.EventQueue.invokeLater(new CompanyAdder(this, nameTF.getText(), 
                                                          shortNameTF.getText(),
-                                                         empIdTF.getText(),
-                                                         projectSet));
+                                                         empIdTF.getText()));
       }
     } 
   }
