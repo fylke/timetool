@@ -3,18 +3,17 @@ package gui;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import persistency.projects.Activity;
 import persistency.projects.Company;
 import persistency.projects.Project;
 import persistency.year.WorkDay;
@@ -22,7 +21,8 @@ import persistency.year.WorkDay;
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
-public class ActivityPanel extends JPanel implements ActionListener {
+public class ActivityPanel extends JPanel implements ActionListener, 
+    FocusListener {
   private static final long serialVersionUID = 1L;
   
   private final WorkDay currentDay;
@@ -36,7 +36,8 @@ public class ActivityPanel extends JPanel implements ActionListener {
   
   private JPanel upperPanel;
   private JLabel activityLabel;
-  private JComboBox activityCombo;
+  private MyComboBox actCoB;
+  private String actCoBEmptyMsg = "Inga aktiviteter definerade";
   private JButton createNewActBT;
     
   private TimePanel timePanel;
@@ -54,13 +55,23 @@ public class ActivityPanel extends JPanel implements ActionListener {
     this.currentDay = currentDay;
     initComponents();
   }
-  
+
   public ActivityPanel(final WorkDay currentDay, final int actId) {
-    super();
-    this.currentDay = currentDay;
+    this(currentDay);
     this.actId = actId;
-    initComponents();
   }
+
+  /* (non-Javadoc)
+   * @see java.awt.event.FocusListener#focusGained(java.awt.event.FocusEvent)
+   */
+  public void focusGained(final FocusEvent e) {
+    actCoB.setContents(getComboContents());
+  }
+
+  /* (non-Javadoc)
+   * @see java.awt.event.FocusListener#focusLost(java.awt.event.FocusEvent)
+   */
+  public void focusLost(final FocusEvent e) {}
 
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(createNewActBT)) {
@@ -68,7 +79,7 @@ public class ActivityPanel extends JPanel implements ActionListener {
           new Runnable() {
             public void run() {
               final JFrame createActFrame = 
-                new CreateActFrame(currentDay.getSettings().getProjectSet());
+                new CreateActFrame(currentDay.getUserSettings().getProjectSet());
               createActFrame.setVisible(true);
             }
           }
@@ -102,14 +113,9 @@ public class ActivityPanel extends JPanel implements ActionListener {
     activityLabel = new JLabel("Aktivitet:");
     activityLabel.setFont(font);
     upperPanel.add(activityLabel, "a");
-    
-    if (activityCount() <= 0) {
-      activityCombo = new JComboBox(new String[]{"Inga aktiviteter definerade"});
-    } else {
-      activityCombo = new JComboBox(getActivityList().toArray(new String[0]));
-    }
-    activityCombo.setSelectedIndex(0);
-    upperPanel.add(activityCombo, "c");
+    actCoB = new MyComboBox(getComboContents(), actCoBEmptyMsg);
+    actCoB.setSelectedIndex(0);
+    upperPanel.add(actCoB, "c");
     
     createNewActBT = new JButton("Ny");
     createNewActBT.setToolTipText("Skapa ny aktivitetstyp");
@@ -144,30 +150,21 @@ public class ActivityPanel extends JPanel implements ActionListener {
     
     add(lowerRightPanel, "b");
     
-    setName((String) activityCombo.getSelectedItem());
+    if (actCoB.getSelected() != null) {
+      setName(actCoB.getSelected().getShortDispString());
+    } else {
+      setName(actCoBEmptyMsg);
+    }
   }
   
-  // TODO Populate the ProjectSet
-  
-  private List<String> getActivityList() {
-    List<String> actShortNames = new ArrayList<String>();
-    for (Company comp : currentDay.getSettings().getProjectSet().getCompanies()) {
+  private Vector<MyComboBoxDisplayable> getComboContents() {
+    final Vector<MyComboBoxDisplayable> acts = 
+      new Vector<MyComboBoxDisplayable>();
+    for (Company comp : currentDay.getUserSettings().getProjectSet().getCompanies()) {
       for(Project proj : comp.getProjects()) {
-        for (Activity act : proj.getActivities()) {
-          actShortNames.add(act.getShortName());
-        }
+        acts.addAll(proj.getActivities());
       }
     }
-    return actShortNames;
-  }
-  
-  private int activityCount() {
-    int i = 0;
-    for (Company comp : currentDay.getSettings().getProjectSet().getCompanies()) {
-      for(Project proj : comp.getProjects()) {
-        i += proj.getActivities().size();
-      }
-    }
-    return i;
+    return acts;
   }
 }
