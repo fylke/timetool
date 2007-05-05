@@ -26,17 +26,17 @@ public class TestSettingsFactory {
     return factoryInstance;
   }
   
-  public Settings getSettings() {
-    Settings settings = new Settings();
+  public Settings getUserSettings() {
+    Settings userSettings = UserSettings.getInstance();
     
-    settings.setUserFirstName(userFirstName);
-    settings.setUserLastName(userLastName);
-    settings.setEmployedAt(employedAt);
-    settings.setProjectSetId(projectSetId);
-    settings.setLunchBreak(lunchBreak);
-    settings.setTreatOvertimeAs(overtime);
+    userSettings.setFirstName(userFirstName);
+    userSettings.setLastName(userLastName);
+    userSettings.setEmployedAt(employedAt);
+    userSettings.setProjectSetId(projectSetId);
+    userSettings.setLunchBreak(lunchBreak);
+    userSettings.setTreatOvertimeAs(overtime);
     
-    return settings;
+    return userSettings;
   }
   
   public String getXmlSettings() {

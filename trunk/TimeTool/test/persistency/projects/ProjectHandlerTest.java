@@ -43,7 +43,6 @@ public class ProjectHandlerTest {
     }
 
     testProject = new Project();
-    testProject.setId(testProjId);
     testHandler = new TestHandler(reader);
     
     reader.setContentHandler(testHandler);

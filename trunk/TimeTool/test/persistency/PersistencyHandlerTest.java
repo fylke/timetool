@@ -80,21 +80,21 @@ public final class PersistencyHandlerTest {
   @Test
   public final void testReadSettings() throws Exception {
     final String settingsString = tsf.getXmlSettings();
-    final Settings settingsKey = tsf.getSettings();
+    final Settings userSettingsKey = tsf.getUserSettings();
     
     bais = new ByteArrayInputStream(settingsString.getBytes("UTF-8"));
-    final Settings testSettings = ph.readSettings(bais);
+    final Settings testUserSettings = ph.readUserSettings(bais);
   
     assertEquals("Generated test stream and output key not equal!", 
-                 testSettings, settingsKey);
+                 testUserSettings, userSettingsKey);
   }
   
   @Test
   public final void testWriteSettings() throws Exception {
-    final Settings settingsInput = tsf.getSettings();
+    final Settings userSettingsInput = tsf.getUserSettings();
     final String settingsKey = tsf.getXmlSettings();
 
-    ph.writeSettings(settingsInput, baos);
+    ph.writeUserSettings(userSettingsInput, baos);
     
     assertEquals("Generated test string and key string not equal!", 
                  settingsKey, baos.toString());

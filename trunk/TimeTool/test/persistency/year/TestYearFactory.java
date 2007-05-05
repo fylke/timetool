@@ -7,7 +7,7 @@ import org.joda.time.LocalTime;
 import org.joda.time.ReadableDuration;
 
 import persistency.XmlUtils;
-import persistency.settings.Settings.OvertimeType;
+import persistency.settings.UserSettings.OvertimeType;
 
 
 public class TestYearFactory {
