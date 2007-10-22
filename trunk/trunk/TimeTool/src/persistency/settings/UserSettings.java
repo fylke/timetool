@@ -1,5 +1,6 @@
 package persistency.settings;
 
+import static java.lang.Integer.parseInt;
 import persistency.projects.Company;
 import persistency.projects.ProjectSet;
 
@@ -11,11 +12,11 @@ public class UserSettings implements Settings {
     
     private final String stringRepr;
     
-    OvertimeType(String stringRepr) {
+    OvertimeType(final String stringRepr) {
       this.stringRepr = stringRepr;
     }
     
-    public static OvertimeType transOvertimeType(String overtimeType) {
+    public static OvertimeType transOvertimeType(final String overtimeType) {
       if (OvertimeType.FLEX.toString().equalsIgnoreCase(overtimeType)) {
         return OvertimeType.FLEX;
       } else if (OvertimeType.COMP.toString().equalsIgnoreCase(overtimeType)) {
@@ -130,7 +131,7 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setTreatOvertimeAs(java.lang.String)
    */
-  public void setTreatOvertimeAs(String treatOvertimeAs) {
+  public void setTreatOvertimeAs(final String treatOvertimeAs) {
     this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
   }
 
@@ -172,14 +173,14 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setProjectSet(persistency.projects.ProjectSet)
    */
-  public void setProjectSet(ProjectSet projectSet) {
+  public void setProjectSet(final ProjectSet projectSet) {
     this.projectSet = projectSet;
   }
 
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setTreatOvertimeAs(persistency.settings.UserSettings.OvertimeType)
    */
-  public void setTreatOvertimeAs(OvertimeType treatOvertimeAs) {
+  public void setTreatOvertimeAs(final OvertimeType treatOvertimeAs) {
     this.treatOvertimeAs = treatOvertimeAs;
   }
 
@@ -200,9 +201,6 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
-  /* (non-Javadoc)
-   * @see persistency.settings.Settings#toString()
-   */
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder();
@@ -218,9 +216,6 @@ public class UserSettings implements Settings {
 
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
-   */
-  /* (non-Javadoc)
-   * @see persistency.settings.Settings#hashCode()
    */
   @Override
   public int hashCode() {
@@ -239,11 +234,8 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see java.lang.Object#equals(java.lang.Object)
    */
-  /* (non-Javadoc)
-   * @see persistency.settings.Settings#equals(java.lang.Object)
-   */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)
