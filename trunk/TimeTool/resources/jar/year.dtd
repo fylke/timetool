@@ -1,0 +1,21 @@
+<!ELEMENT year (month+)>
+<!ATTLIST year id ID #REQUIRED>
+	<!ELEMENT month (workDay+)>
+	<!ATTLIST month id ID #REQUIRED>
+		<!ELEMENT workDay (wdDuration, overtime, isReported?, journalWritten?, activity+)>
+		<!ATTLIST workDay date CDATA #REQUIRED>
+		<!ELEMENT wdDuration EMPTY>
+		<!ATTLIST wdDuration start CDATA #REQUIRED>
+		<!ATTLIST wdDuration end CDATA #REQUIRED>
+		<!ELEMENT overtime EMPTY>
+		<!ATTLIST overtime treatAs (flex|comp|paid) "flex">
+		<!ATTLIST duration start CDATA #REQUIRED>
+		<!ELEMENT isReported EMPTY>
+		<!ELEMENT journalWritten EMPTY>
+		<!ELEMENT activity (actDuration, includeLunch?)>
+		<!ATTLIST activity id CDATA #REQUIRED>
+			<!ELEMENT actDuration EMPTY>
+			<!ATTLIST actDuration start CDATA #REQUIRED>
+			<!ATTLIST actDuration end CDATA #REQUIRED>
+			<!ELEMENT includeLunch EMPTY>
+			<!ATTLIST includeLunch duration CDATA #REQUIRED>
