@@ -50,7 +50,7 @@ public class CreateActFrame extends JFrame implements
   
   private JLabel compLabel;
   private MyComboBox compCoB;
-  private String compEmptyMsg = "Inga företag definierade";
+  private String compEmptyMsg = "Inga fÃ¶retag definierade";
   private JButton newCompBT;
   
   private JLabel projLabel;
@@ -181,7 +181,7 @@ public class CreateActFrame extends JFrame implements
     upperPanel.add(reportCodeTF, "b");
     
     upperPanelLayout.insertTemplate("comboRow");
-    compLabel = new JLabel("Företag:");
+    compLabel = new JLabel("FÃ¶retag:");
     upperPanel.add(compLabel, "c");
     compCoB = new MyComboBox(getComboContents("company"), compEmptyMsg);
     compCoB.setSelectedIndex(0);
@@ -241,7 +241,7 @@ public class CreateActFrame extends JFrame implements
     }
     
     if (compCoB.getSelected() == null) {
-      errorMsg.append("Företag med vilket aktiviteten skall associeras\n");
+      errorMsg.append("FÃ¶retag med vilket aktiviteten skall associeras\n");
     }
     
     if (projCoB.getSelected() == null) {
@@ -252,9 +252,9 @@ public class CreateActFrame extends JFrame implements
     
     if (errorMsg.length() > 0) {
       JOptionPane.showMessageDialog(this,
-                                    "Följande information saknas " +
+                                    "Fï¿½ljande information saknas " +
                                     "fortfarande:\n" + errorMsg,
-                                    "Nödvändig information saknas",
+                                    "NÃ¶dvÃ¤ndig information saknas",
                                     JOptionPane.ERROR_MESSAGE);
       return false;
     } else {
