@@ -12,7 +12,7 @@ import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class WeekViewPanel extends JPanel {
-  private static final long serialVersionUID = -3518586282256849833L;
+  private static final long serialVersionUID = 1L;
   
   private ZoneLayout layout;
   private LocalDateTime date;
