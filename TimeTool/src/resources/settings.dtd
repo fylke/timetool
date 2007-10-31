@@ -1,0 +1,12 @@
+<!ELEMENT settings (userName, employedAt, projectSet, lunchBreak, overtime)>
+	<!ELEMENT userName EMPTY>
+	<!ATTLIST userName first CDATA #REQUIRED>
+	<!ATTLIST userName last CDATA #REQUIRED>
+	<!ELEMENT employedAt EMPTY>
+	<!ATTLIST employedAt id ID #REQUIRED>	
+	<!ELEMENT projectSet EMPTY>
+	<!ATTLIST projectSet id ID #REQUIRED>	
+	<!ELEMENT lunchBreak EMPTY>
+	<!ATTLIST lunchBreak duration CDATA #REQUIRED>	
+	<!ELEMENT overtime EMPTY>
+	<!ATTLIST overtime treatAs (flex|comp|paid) "flex">
