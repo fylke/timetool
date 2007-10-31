@@ -133,7 +133,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
     commonSettingsLayoutRP.addRow("n._>n");    
     commonSettingsRightPanel.setLayout(commonSettingsLayoutRP);
     
-    overtimeLabel = new JLabel("Hantera övertid som:");
+    overtimeLabel = new JLabel("Hantera Ã¶vertid som:");
     flexRB = new JRadioButton();
     flexLabel = new JLabel("Flex");
     paidRB = new JRadioButton();
