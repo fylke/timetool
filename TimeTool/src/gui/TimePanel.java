@@ -74,7 +74,7 @@ public class TimePanel extends JPanel implements ActionListener {
     
     setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), 
-                                                 "Tidsåtgång"));
+                                                 "TidsÃ¥tgÃ¥ng"));
     
     layoutUpper = ZoneLayoutFactory.newZoneLayout();
     layoutUpper.addRow("r2s2v2n");
@@ -95,14 +95,14 @@ public class TimePanel extends JPanel implements ActionListener {
 //    startFinishRB.setSelected(true);
 //    upperPanel.add(startFinishRB, "r");
         
-    startLabel = new JLabel("Började:");
+    startLabel = new JLabel("BÃ¶rjade:");
     startLabel.setFont(font);
     upperPanel.add(startLabel, "s");
     startTF = new JTextField(3);
     startTF.setHorizontalAlignment(SwingConstants.RIGHT);
     upperPanel.add(startTF, "v");
     setStartToNowBT = new JButton("Nu");
-    setStartToNowBT.setToolTipText("Sätt aktivitetens starttid till aktuellt klockslag");
+    setStartToNowBT.setToolTipText("SÃ¤tt aktivitetens starttid till aktuellt klockslag");
     setStartToNowBT.addActionListener(this);
     upperPanel.add(setStartToNowBT, "n");
         
@@ -113,7 +113,7 @@ public class TimePanel extends JPanel implements ActionListener {
     finishTF.setHorizontalAlignment(SwingConstants.RIGHT);
     upperPanel.add(finishTF, "x");
     setFinishToNowBT = new JButton("Nu");
-    setFinishToNowBT.setToolTipText("Sätt aktivitetens sluttid till aktuellt klockslag");
+    setFinishToNowBT.setToolTipText("SÃ¤tt aktivitetens sluttid till aktuellt klockslag");
     setFinishToNowBT.addActionListener(this);
     upperPanel.add(setFinishToNowBT, "m");
     
