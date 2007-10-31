@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           elementFormDefault="qualified">
+  <xs:element name="year">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="month" minOccurs="1" maxOccurs="12"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:ID"/>  
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="month">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="workDay" minOccurs="1" maxOccurs="31"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:ID"/>  
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="workDay">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="wdDuration"     minOccurs="1" maxOccurs="1"/>
+        <xs:element ref="overtime"       minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="isReported"     minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="journalWritten" minOccurs="0" maxOccurs="1"/>
+        <xs:element ref="activity"       minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+      <xs:attribute name="date" use="required" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="wdDuration">
+    <xs:complexType>
+      <xs:attribute name="start" use="required" type="xs:time"/>
+      <xs:attribute name="end"   use="required" type="xs:time"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="overtime">
+    <xs:complexType>
+      <xs:attribute name="treatAs" default="flex">
+        <xs:simpleType>
+          <xs:restriction base="xs:token">
+            <xs:enumeration value="flex"/>
+            <xs:enumeration value="comp"/>
+            <xs:enumeration value="paid"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="isReported">
+    <xs:complexType/>
+  </xs:element>
+  
+  <xs:element name="journalWritten">
+    <xs:complexType/>
+  </xs:element>
+  
+  <xs:element name="activity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="actDuration"  minOccurs="1" maxOccurs="1"/>
+        <xs:element ref="includeLunch" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:IDREF"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="actDuration">
+    <xs:complexType>
+      <xs:attribute name="start" use="required" type="xs:time"/>
+      <xs:attribute name="end"   use="required" type="xs:time"/>
+    </xs:complexType>
+  </xs:element>
+    
+  <xs:element name="includeLunch">
+    <xs:complexType>
+      <xs:attribute name="duration" use="required" type="xs:duration"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
