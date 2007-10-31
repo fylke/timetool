@@ -43,7 +43,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
   
   private JLabel compLabel;
   private MyComboBox compCoB;
-  private String compEmptyMsg = "Inga företag definierade";
+  private String compEmptyMsg = "Inga fÃ¶retag definierade";
   private JButton newCompBT;
  
   private JButton cancelBT;
@@ -99,7 +99,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-    setTitle("Ny användare");
+    setTitle("Ny anvÃ¤ndare");
     setLocationRelativeTo(null); // Centers the window on the screen.
     
     basePanelLayout = ZoneLayoutFactory.newZoneLayout();
@@ -115,7 +115,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
     upperPanelLayout.addRow("....6...", "comboRow");
     
     upperPanel = new JPanel(upperPanelLayout);
-    upperPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Skapa ny användare"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+    upperPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Skapa ny anvÃ¤ndare"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
             
     lowerPanelLayout = ZoneLayoutFactory.newZoneLayout();
     lowerPanelLayout.addRow("a>a2c2o");
@@ -123,7 +123,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
     lowerPanel = new JPanel(lowerPanelLayout);
        
     upperPanelLayout.insertTemplate("valueRow");
-    firstNameLabel = new JLabel("Förnamn:");
+    firstNameLabel = new JLabel("FÃ¶rnamn:");
     upperPanel.add(firstNameLabel, "a");
     firstNameTF = new JTextField();
     upperPanel.add(firstNameTF, "b");
@@ -172,7 +172,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
   private boolean validInput() {
     StringBuilder errorMsg = new StringBuilder();
     if (firstNameTF.getText().isEmpty()) {
-       errorMsg.append("Förnamn\n");
+       errorMsg.append("FÃ¶rnamn\n");
     }
     
     if (lastNameTF.getText().isEmpty()) {
@@ -187,9 +187,9 @@ public class CreateUserFrame extends JFrame implements ActionListener {
     
     if (errorMsg.length() > 0) {
       JOptionPane.showMessageDialog(this,
-                                    "Följande information saknas " +
+                                    "FÃ¶ljande information saknas " +
                                     "fortfarande:\n" + errorMsg,
-                                    "Nödvändig information saknas",
+                                    "NÃ¶dvÃ¤ndig information saknas",
                                     JOptionPane.ERROR_MESSAGE);
       return false;
     } else {
