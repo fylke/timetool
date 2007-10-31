@@ -76,7 +76,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-    setTitle("Företag");
+    setTitle("Fï¿½retag");
     setLocationRelativeTo(null); // Centers the window on the screen.
     
     basePanelLayout = ZoneLayoutFactory.newZoneLayout();
@@ -90,7 +90,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     upperPanelLayout.addRow(".....6.....", "valueRow");
     
     upperPanel = new JPanel(upperPanelLayout);
-    upperPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Skapa nytt företag"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+    upperPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Skapa nytt fï¿½retag"), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
             
     lowerPanelLayout = ZoneLayoutFactory.newZoneLayout();
     lowerPanelLayout.addRow("a2c2o");
@@ -110,7 +110,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
     upperPanel.add(shortNameTF, "b");
     
     upperPanelLayout.insertTemplate("valueRow");
-    empIdLabel = new JLabel("Anställningsnr:");
+    empIdLabel = new JLabel("AnstÃ¤llningsnr:");
     upperPanel.add(empIdLabel, "a");
     empIdTF = new JTextField();
     upperPanel.add(empIdTF, "b");
@@ -136,20 +136,20 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
   private boolean validInput() {
     StringBuilder errorMsg = new StringBuilder();
     if (nameTF.getText().isEmpty()) {
-       errorMsg.append("Företagets namn\n");
+       errorMsg.append("FÃ¶retagets namn\n");
     }
     
     if (empIdTF.getText().isEmpty()) {
-       errorMsg.append("Anställningsnummer hos företaget\n");
+       errorMsg.append("AnstÃ¤llningsnummer hos fÃ¶retaget\n");
     }
         
     errorMsg.trimToSize();
     
     if (errorMsg.length() > 0) {
       JOptionPane.showMessageDialog(this,
-                                    "Följande information saknas " +
+                                    "FÃ¶ljande information saknas " +
                                     "fortfarande:\n" + errorMsg,
-                                    "Nödvändig information saknas",
+                                    "NÃ¶dvÃ¤ndig information saknas",
                                     JOptionPane.ERROR_MESSAGE);
       return false;
     } else {
