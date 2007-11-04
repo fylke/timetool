@@ -83,15 +83,7 @@ public class ProjectAdder implements Runnable {
     proj.setName(projName);
     proj.setShortName(projShortName);
 
-    try {
-      ps.getCompany(compId).addProject(proj);
-    } catch (ItemAlreadyDefinedException e) {
-      JOptionPane.showMessageDialog(parent,
-                                    e.getMessage() + 
-                                    " No changes will be made.",
-                                    "Item already defined",
-                                    JOptionPane.WARNING_MESSAGE);
-    }
+    ps.getCompany(compId).addProject(proj);
     
     OutputStream os = null;    
     File tempFile = null;
