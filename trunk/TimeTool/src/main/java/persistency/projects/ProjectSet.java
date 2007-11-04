@@ -39,20 +39,12 @@ public class ProjectSet {
     return companies.values();
   }
 
-  /**
-   * Adds a company to the project set.
-   * @param company the company to add
-   * @throws ItemAlreadyDefinedException if company already exists in the 
-   * project set
-   */
-  public void addCompany(final Company company) 
-      throws ItemAlreadyDefinedException {
-    // FIXME HashCode depends on company name which isn't necessarily set!
-    if (companies.containsKey(company.hashCode())) {
-      throw new ItemAlreadyDefinedException("Company " + company.getName() + 
-                                            " is already defined!");
-    }
-    companies.put(company.hashCode(), company);
+  public void addCompany(final Company company) {
+    addCompanyWithId(company, company.getId());
+  }
+ 
+  public void addCompanyWithId(final Company company, final int id) {
+    companies.put(id, company);
   }
   
   /* (non-Javadoc)
