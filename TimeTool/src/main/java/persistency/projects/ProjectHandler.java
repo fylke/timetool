@@ -22,7 +22,7 @@ public class ProjectHandler extends DefaultHandler {
   private transient Project subProj;
 
   public ProjectHandler(final Attributes attributes, final XMLReader reader, 
-                        final ContentHandler parentHandler, 
+                        final ContentHandler parentHandler,
                         final Project currProj, final String ns)  
       throws SAXException {
     this.currProj = currProj;
@@ -42,12 +42,7 @@ public class ProjectHandler extends DefaultHandler {
     if ((ns + "activity").equals(qName)) {
       assert(currProj != null);
       act = new Activity();
-      act.setId(Integer.parseInt(attrs.getValue("id")));
-      try {
-        currProj.addActivity(act);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this activity...
-      }
+      currProj.addActivityWithId(act, Integer.parseInt(attrs.getValue("id")));
             
       final ContentHandler actHandler = 
         new ActivityHandler(attrs, reader, this, act, ns);
@@ -56,18 +51,13 @@ public class ProjectHandler extends DefaultHandler {
     } else if ((ns + "project").equals(qName)) {
       assert(currProj != null);
       subProj = new Project();
-      subProj.setId(Integer.parseInt(attrs.getValue("id")));
-      try {
-        currProj.addSubProject(subProj);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this sub project...
-      }
+      currProj.addSubProjectWithId(subProj, Integer.parseInt(attrs.getValue("id")));
             
       final ContentHandler subProjectHandler = 
         new ProjectHandler(attrs, reader, this, subProj, ns);
       
       reader.setContentHandler(subProjectHandler);
-    } 
+    }
   }
 
   @Override
@@ -80,7 +70,7 @@ public class ProjectHandler extends DefaultHandler {
       currProj.setShortName(getText());
     } else if ((ns + "code").equals(qName)) {
       currProj.setCode(getText());
-    } else if ((ns + "project").equals(qName)) {
+    } else if ((ns + "project").equals(qName)) {  
       reader.setContentHandler(parentHandler);
     }
   }
