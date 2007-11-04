@@ -83,14 +83,12 @@ public class Company implements MyComboBoxDisplayable {
     }
   }
   
-  // FIXME Maybe throw illegal arg on null.
-  public void addProject(final Project project) 
-      throws ItemAlreadyDefinedException {
-    if (projects.containsKey(project.hashCode())) {
-      throw new ItemAlreadyDefinedException("Project " + project.getName() + 
-                                            " is already defined!");
-    }
-    projects.put(project.getId(), project);
+  public void addProject(final Project project) {
+    addProjectWithId(project, project.getId());
+  }
+  
+  public void addProjectWithId(final Project project, final int id) {
+    projects.put(id, project);
   }
   
   /* (non-Javadoc)

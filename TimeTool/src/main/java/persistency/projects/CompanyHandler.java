@@ -12,7 +12,7 @@ import persistency.ItemAlreadyDefinedException;
 
 
 public class CompanyHandler extends DefaultHandler {
-  private CharArrayWriter text;
+  private final transient CharArrayWriter text;
   private final transient XMLReader reader;
   private final transient ContentHandler parentHandler;
   private final transient Company currComp;
@@ -41,12 +41,7 @@ public class CompanyHandler extends DefaultHandler {
     if ((ns + "project").equals(qName)) {
       assert(currComp != null);
       proj = new Project();
-      proj.setId(Integer.parseInt(attrs.getValue("id")));
-      try {
-        currComp.addProject(proj);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this project...
-      }      
+      currComp.addProjectWithId(proj, Integer.parseInt(attrs.getValue("id")));    
       
       final ContentHandler projectHandler = 
         new ProjectHandler(attrs, reader, this, proj, ns);
