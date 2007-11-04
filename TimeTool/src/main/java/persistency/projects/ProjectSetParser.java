@@ -40,28 +40,13 @@ public class ProjectSetParser extends DefaultHandler {
                            final String qName, final Attributes attrs) 
       throws SAXException {
     if ((ns + "company").equals(qName)) {
-      comp = new Company();
       assert(projSet != null);
+      comp = new Company();
+      projSet.addCompanyWithId(comp, Integer.parseInt(attrs.getValue("id")));
            
       final ContentHandler compHandler = 
         new CompanyHandler(attrs, reader, this, comp, ns);
       reader.setContentHandler(compHandler);
-    }
-  }
-
-  /* (non-Javadoc)
-   * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
-   */
-  @Override
-  public void endElement(String uri, String localName, String qName) 
-      throws SAXException {
-    if ((ns + "company").equals(qName) && comp != null) {
-      System.err.println("loc:" + localName);
-      try {
-        projSet.addCompany(comp);
-      } catch (ItemAlreadyDefinedException e) {
-        // Silently omit this company
-      }
     }
   }
 }
