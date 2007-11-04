@@ -2,7 +2,7 @@ package persistency.settings;
 
 import persistency.XmlUtils;
 
-public class TestSettingsFactory {
+public class SettingsFactory {
   private static transient final String userFirstName = "testUserFirstName";
   private static transient final String userLastName = "testUserLastName";
   private static transient final int employedAt = 1;
@@ -11,17 +11,17 @@ public class TestSettingsFactory {
   private static transient final String overtime = "flex";
   private static transient final String ns = "";
   
-  private static TestSettingsFactory factoryInstance;
+  private static SettingsFactory factoryInstance;
   private transient XmlUtils xmlUtils;
   
-  private TestSettingsFactory() {
+  private SettingsFactory() {
     super();
     xmlUtils = XmlUtils.getInstance();
   }
   
-  public static TestSettingsFactory getInstance() {
+  public static SettingsFactory getInstance() {
     if (factoryInstance == null) {
-      factoryInstance = new TestSettingsFactory();
+      factoryInstance = new SettingsFactory();
     }
     return factoryInstance;
   }
