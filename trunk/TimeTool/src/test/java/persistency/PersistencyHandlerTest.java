@@ -16,27 +16,27 @@ import org.junit.Test;
 
 import persistency.projects.ProjSetConfig;
 import persistency.projects.ProjectSet;
-import persistency.projects.TestProjectsFactory;
+import persistency.projects.ProjectsFactory;
 import persistency.settings.Settings;
-import persistency.settings.TestSettingsFactory;
+import persistency.settings.SettingsFactory;
 import persistency.year.SearchControl;
-import persistency.year.TestYearFactory;
+import persistency.year.YearFactory;
 import persistency.year.Year;
 import persistency.year.YearConfig;
 
 public final class PersistencyHandlerTest {
-  private transient TestProjectsFactory tpf;
-  private transient TestYearFactory tyf;
-  private transient TestSettingsFactory tsf;
+  private transient ProjectsFactory tpf;
+  private transient YearFactory tyf;
+  private transient SettingsFactory tsf;
   private transient PersistencyHandler ph;
   private transient ByteArrayInputStream bais;
   private transient ByteArrayOutputStream baos;
 
   @Before
   public void setUp() throws Exception {
-    tpf = TestProjectsFactory.getInstance();
-    tyf = TestYearFactory.getInstance();
-    tsf = TestSettingsFactory.getInstance();
+    tpf = ProjectsFactory.getInstance();
+    tyf = YearFactory.getInstance();
+    tsf = SettingsFactory.getInstance();
     ph = PersistencyHandler.getInstance();
     baos = new ByteArrayOutputStream();
   }
@@ -113,12 +113,12 @@ public final class PersistencyHandlerTest {
                                                           projDepth);
     final String projSetString = tpf.getXmlProjSetWithConfig(projSetConfig);
     final ProjectSet projSetKey = tpf.getProjSetWithConfig(projSetConfig);
-    
+
     bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
-    final ProjectSet testProjectSet = ph.readProjectSet(bais);
-  
+    final ProjectSet testProjSet = ph.readProjectSet(bais);
+
     assertEquals("Generated test stream and output key not equal!", 
-                 testProjectSet, projSetKey);
+                 testProjSet, projSetKey);
   }
   
   @Test
