@@ -17,7 +17,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import persistency.TestHandler;
 
 public class ProjectHandlerTest {
-  private transient TestProjectsFactory tpf;
+  private transient ProjectsFactory tpf;
   private transient Reader projectInput;
   private transient XMLReader reader;
   private transient TestHandler testHandler;
@@ -28,7 +28,7 @@ public class ProjectHandlerTest {
 
   @Before
   public void setUp() throws Exception {
-    tpf = TestProjectsFactory.getInstance();
+    tpf = ProjectsFactory.getInstance();
     
     try {
       reader = 
@@ -108,8 +108,7 @@ public class ProjectHandlerTest {
     testHandler.setHandlerToTest(projectHandler);
     
     reader.parse(new InputSource(projectInput));
-
-    System.out.println(testProject);    
+  
     assertEquals("Generated test object and key not equal!", 
                  nestedProjectKey, testProject); 
   }
