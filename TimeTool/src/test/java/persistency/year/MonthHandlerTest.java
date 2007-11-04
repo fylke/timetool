@@ -17,7 +17,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import persistency.TestHandler;
 
 public class MonthHandlerTest {
-  private transient TestYearFactory tyf;
+  private transient YearFactory tyf;
   private transient Reader monthInput;
   private transient XMLReader reader;
   private transient TestHandler testHandler;
@@ -28,7 +28,7 @@ public class MonthHandlerTest {
 
   @Before
   public void setUp() throws Exception {
-    tyf = TestYearFactory.getInstance();
+    tyf = YearFactory.getInstance();
     
     try {
       reader = 

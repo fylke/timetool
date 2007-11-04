@@ -10,7 +10,7 @@ import persistency.XmlUtils;
 import persistency.settings.UserSettings.OvertimeType;
 
 
-public class TestYearFactory {
+public class YearFactory {
   public static transient final String startTime = "9:00";
   public static transient final int startHour = 9;
   public static transient final int startMinute = 0;
@@ -26,17 +26,17 @@ public class TestYearFactory {
   
   private static transient final String ns = "";
   
-  private static TestYearFactory factoryInstance;
+  private static YearFactory factoryInstance;
   private transient XmlUtils xmlUtils;
   
-  private TestYearFactory() {
+  private YearFactory() {
     super();
     xmlUtils = XmlUtils.getInstance();
   }
   
-  public static TestYearFactory getInstance() {
+  public static YearFactory getInstance() {
     if (factoryInstance == null) {
-      factoryInstance = new TestYearFactory();
+      factoryInstance = new YearFactory();
     }
     return factoryInstance;
   }
