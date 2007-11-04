@@ -103,9 +103,6 @@ public class ProjectHandlerTest {
     final Project nestedProjectKey = 
       tpf.getProject(testProjId, projDepth, projSetConfig);
     
-    System.out.println(nestedTestProject);
-    System.err.println(nestedProjectKey);
-    
     projectInput = new StringReader(nestedTestProject); 
     
     testHandler.setHandlerToTest(projectHandler);
