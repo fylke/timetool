@@ -78,15 +78,7 @@ public class CompanyAdder implements Runnable {
       ps = new ProjectSet();
     }
     
-    try {
-      ps.addCompany(company);
-    } catch (ItemAlreadyDefinedException e) {
-      JOptionPane.showMessageDialog(parent,
-                                    e.getMessage() + 
-                                    " No changes will be made.",
-                                    "Item already defined",
-                                    JOptionPane.WARNING_MESSAGE);
-    }
+    ps.addCompany(company);
     
     OutputStream os = null;    
     File tempFile = null;

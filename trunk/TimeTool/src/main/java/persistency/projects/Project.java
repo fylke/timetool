@@ -10,7 +10,6 @@ import persistency.ItemAlreadyDefinedException;
 
 
 public class Project implements MyComboBoxDisplayable {
-  private int id;
   private String name;
   private String shortName;
   private String code;
@@ -31,7 +30,7 @@ public class Project implements MyComboBoxDisplayable {
   }
   
   public int getId() {
-    return id;
+    return hashCode();
   }
   
   public String getName() {
@@ -61,13 +60,6 @@ public class Project implements MyComboBoxDisplayable {
   public Collection<Project> getSubProjects() {
     return subProjects.values();
   }
-    
-  /**
-   * @param id the id to set
-   */
-  public void setId(final int id) {
-    this.id = id;
-  }
 
   public void setName(final String name) {
     if (name == null || name == "") {
@@ -93,25 +85,20 @@ public class Project implements MyComboBoxDisplayable {
     }
   }
 
-  //FIXME Maybe throw illegal arg on null.
-  public void addActivity(final Activity activity) 
-      throws ItemAlreadyDefinedException {
-    if (activities.containsKey(activity.hashCode())) {
-      throw new ItemAlreadyDefinedException("Activity " + activity.getName() + 
-                                            " is already defined!");
-    }
-    activities.put(activity.getId(), activity);
+  public void addSubProject(final Project subProject) {
+    addSubProjectWithId(subProject, subProject.getId());
   }
   
-  //FIXME Maybe throw illegal arg on null.
-  public void addSubProject(final Project subProject)
-      throws ItemAlreadyDefinedException {
-    if (subProjects.containsKey(subProject.hashCode())) {
-      throw new ItemAlreadyDefinedException("Sub project " + 
-                                            subProject.getName() + 
-                                            " is already defined!");
-    }
-    subProjects.put(subProject.getId(), subProject);
+  public void addSubProjectWithId(final Project subProject, final int id) {
+    subProjects.put(id, subProject);
+  }
+
+  public void addActivity(final Activity act) {
+    addActivityWithId(act, act.getId());
+  }
+  
+  public void addActivityWithId(final Activity act, final int id) {
+    activities.put(id, act);
   }
   
   /* (non-Javadoc)
@@ -120,7 +107,7 @@ public class Project implements MyComboBoxDisplayable {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder();
-    objRep.append("projId: " + id + "\n");
+    objRep.append("projId: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("code: " + code + "\n");

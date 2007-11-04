@@ -4,7 +4,6 @@ import gui.MyComboBoxDisplayable;
 
 
 public class Activity implements MyComboBoxDisplayable {
-  private int id;
   private String name;
   private String shortName;
   private String reportCode;
@@ -25,7 +24,7 @@ public class Activity implements MyComboBoxDisplayable {
    * @return the activity's unique ID
    */
   public int getId() {
-    return id;
+    return hashCode();
   }
   
   /**
@@ -42,18 +41,8 @@ public class Activity implements MyComboBoxDisplayable {
     return shortName;
   }
   
-  /**
-   * @return the reportCode
-   */
   public String getReportCode() {
     return reportCode;
-  }
-  
-  /**
-   * @param id the id to set
-   */
-  public void setId(final int id) {
-    this.id = id;
   }
 
   /**
@@ -95,7 +84,7 @@ public class Activity implements MyComboBoxDisplayable {
   @Override
   public String toString() {
     StringBuilder objRep = new StringBuilder(); 
-    objRep.append("id: " + id + "\n");
+    objRep.append("id: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("reportCode: " + reportCode);

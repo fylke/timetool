@@ -101,15 +101,7 @@ public class ActAdder implements Runnable {
       return;
     }
 
-    try {
-      ps.getCompany(compId).getProject(projId).addActivity(act);
-    } catch (ItemAlreadyDefinedException e) {
-      JOptionPane.showMessageDialog(parent,
-                                    e.getMessage() + 
-                                    " No changes will be made.",
-                                    "Item already defined",
-                                    JOptionPane.WARNING_MESSAGE);
-    }
+    ps.getCompany(compId).getProject(projId).addActivity(act);
     
     OutputStream os = null;    
     File tempFile = null;
