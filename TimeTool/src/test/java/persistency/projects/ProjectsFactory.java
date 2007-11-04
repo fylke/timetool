@@ -32,28 +32,28 @@ public class ProjectsFactory {
   
   public ProjectSet getProjSetWithConfig(final ProjSetConfig projSetConfig) 
       throws Exception {
-    ProjectSet projectSet = new ProjectSet();
+    ProjectSet projSet = new ProjectSet();
     
     for (int i = 1; i <= projSetConfig.nrOfComps; i++) {
-      projectSet.addCompany(getCompany(i, projSetConfig));
+      projSet.addCompany(getCompany(i, projSetConfig));
     }
     
-    return projectSet;
+    return projSet;
   }
   
   public Company getCompany(final int id, final ProjSetConfig projSetConfig) 
       throws Exception {
-    Company company = new Company();
-    company.setName(compName + id);
-    company.setShortName(compShortName + id);
-    company.setEmployeeId(empId + id);
+    final Company comp = new Company();
+    comp.setName(compName + id);
+    comp.setShortName(compShortName + id);
+    comp.setEmployeeId(empId + id);
     
     for (int i = 1; i <= projSetConfig.nrOfProjsPerComp; i++) {
-      company.addProject(getProject(i + (id * 10), projSetConfig.projDepth,
-                                    projSetConfig));
+      comp.addProject(getProject(i + (id * 10), projSetConfig.projDepth,
+                      projSetConfig));
     }
     
-    return company;
+    return comp;
   }
   
   public Project getProject(final int id, final int depth, 
@@ -65,7 +65,7 @@ public class ProjectsFactory {
     child.setCode(projCode + id);
 
     for (int i = 0; i < projSetConfig.nrOfActsPerProj; i++) {
-      child.addActivity(getActivity(i + (id *10)));
+      child.addActivity(getActivity(i + (id * 10)));
     }
 
     if (depth > 0) {
