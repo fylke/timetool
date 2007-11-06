@@ -14,13 +14,13 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import persistency.TestHandler;
+import persistency.MockHandler;
 
 public class MonthHandlerTest {
   private transient YearFactory tyf;
   private transient Reader monthInput;
   private transient XMLReader reader;
-  private transient TestHandler testHandler;
+  private transient MockHandler testHandler;
   private transient Month testMonth;
   private transient MonthHandler monthHandler;
   // We won't bother with SearchControl in these tests
@@ -50,7 +50,7 @@ public class MonthHandlerTest {
     final AttributesImpl attr = new AttributesImpl();
     attr.addAttribute("", "", "id", "String", Short.toString(testMonthId));
     
-    testHandler = new TestHandler(reader);
+    testHandler = new MockHandler(reader);
     testMonth = new Month(testMonthId, testYearId);
     
     reader.setContentHandler(testHandler); 
