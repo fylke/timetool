@@ -33,6 +33,7 @@ public class ProjectsFactory {
   public ProjectSet getProjSetWithConfig(final ProjSetConfig projSetConfig) 
       throws Exception {
     ProjectSet projSet = new ProjectSet();
+    projSet.setId(projSetConfig.projSetId);
     
     for (int i = 1; i <= projSetConfig.nrOfComps; i++) {
       projSet.addCompany(getCompany(i, projSetConfig));
