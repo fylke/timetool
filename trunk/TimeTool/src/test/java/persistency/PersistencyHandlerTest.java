@@ -1,5 +1,6 @@
 package persistency;
 
+import java.io.File;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -25,24 +26,25 @@ import persistency.year.Year;
 import persistency.year.YearConfig;
 
 public final class PersistencyHandlerTest {
-  private transient ProjectsFactory tpf;
-  private transient YearFactory tyf;
-  private transient SettingsFactory tsf;
+  private transient ProjectsFactory pf;
+  private transient YearFactory yf;
+  private transient SettingsFactory sf;
   private transient PersistencyHandler ph;
   private transient ByteArrayInputStream bais;
   private transient ByteArrayOutputStream baos;
 
   @Before
-  public void setUp() throws Exception {
-    tpf = ProjectsFactory.getInstance();
-    tyf = YearFactory.getInstance();
-    tsf = SettingsFactory.getInstance();
+  public void setUpBeforeClass() throws Exception {
+    pf = ProjectsFactory.getInstance();
+    yf = YearFactory.getInstance();
+    sf = SettingsFactory.getInstance();
     ph = PersistencyHandler.getInstance();
     baos = new ByteArrayOutputStream();
   }
 
   @After
-  public void tearDown() throws Exception {
+  public void tearDownAfterClass() throws Exception {
+    baos.close();
   }
   
   @Test
@@ -67,8 +69,8 @@ public final class PersistencyHandlerTest {
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
                                            nrOfActsEachDay, searchControl);
         
-    final Year yearKey = tyf.getYearWithConfig(yearConfig);
-    final String testYearString = tyf.getXmlYearWithConfig(yearConfig);
+    final Year yearKey = yf.getYearWithConfig(yearConfig);
+    final String testYearString = yf.getXmlYearWithConfig(yearConfig);
     final ByteArrayInputStream testYearStream = 
       new ByteArrayInputStream(testYearString.getBytes("UTF-8"));
     
@@ -79,8 +81,8 @@ public final class PersistencyHandlerTest {
 
   @Test
   public final void testReadSettings() throws Exception {
-    final String settingsString = tsf.getXmlSettings();
-    final Settings userSettingsKey = tsf.getUserSettings();
+    final String settingsString = sf.getXmlSettings();
+    final Settings userSettingsKey = sf.getUserSettings();
     
     bais = new ByteArrayInputStream(settingsString.getBytes("UTF-8"));
     final Settings testUserSettings = ph.readUserSettings(bais);
@@ -91,8 +93,8 @@ public final class PersistencyHandlerTest {
   
   @Test
   public final void testWriteSettings() throws Exception {
-    final Settings userSettingsInput = tsf.getUserSettings();
-    final String settingsKey = tsf.getXmlSettings();
+    final Settings userSettingsInput = sf.getUserSettings();
+    final String settingsKey = sf.getXmlSettings();
 
     ph.writeUserSettings(userSettingsInput, baos);
     
@@ -111,8 +113,8 @@ public final class PersistencyHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    final String projSetString = tpf.getXmlProjSetWithConfig(projSetConfig);
-    final ProjectSet projSetKey = tpf.getProjSetWithConfig(projSetConfig);
+    final String projSetString = pf.getXmlProjSetWithConfig(projSetConfig);
+    final ProjectSet projSetKey = pf.getProjSetWithConfig(projSetConfig);
 
     bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
     final ProjectSet testProjSet = ph.readProjectSet(bais);
@@ -132,8 +134,8 @@ public final class PersistencyHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    final String projSetString = tpf.getXmlProjSetWithConfig(projSetConfig);
-    final ProjectSet projSetKey = tpf.getProjSetWithConfig(projSetConfig);
+    final String projSetString = pf.getXmlProjSetWithConfig(projSetConfig);
+    final ProjectSet projSetKey = pf.getProjSetWithConfig(projSetConfig);
     
     bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
     final ProjectSet testProjectSet = ph.readProjectSet(bais);
@@ -153,8 +155,8 @@ public final class PersistencyHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    final ProjectSet projSetInput = tpf.getProjSetWithConfig(projSetConfig);
-    final String projSetKey = tpf.getXmlProjSetWithConfig(projSetConfig);
+    final ProjectSet projSetInput = pf.getProjSetWithConfig(projSetConfig);
+    final String projSetKey = pf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
 
@@ -173,8 +175,8 @@ public final class PersistencyHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    final ProjectSet projSetInput = tpf.getProjSetWithConfig(projSetConfig);
-    final String projSetKey = tpf.getXmlProjSetWithConfig(projSetConfig);
+    final ProjectSet projSetInput = pf.getProjSetWithConfig(projSetConfig);
+    final String projSetKey = pf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
     
@@ -193,8 +195,8 @@ public final class PersistencyHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    final ProjectSet projSetInput = tpf.getProjSetWithConfig(projSetConfig);
-    final String projSetKey = tpf.getXmlProjSetWithConfig(projSetConfig);
+    final ProjectSet projSetInput = pf.getProjSetWithConfig(projSetConfig);
+    final String projSetKey = pf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
     assertEquals("Generated test string and key string not equal!", 
@@ -211,8 +213,8 @@ public final class PersistencyHandlerTest {
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
                                            nrOfActsEachDay, searchControl);
     
-    final Year yearKey = tyf.getYearWithConfig(yearConfig);
-    final String testYearString = tyf.getXmlYearWithConfig(yearConfig);
+    final Year yearKey = yf.getYearWithConfig(yearConfig);
+    final String testYearString = yf.getXmlYearWithConfig(yearConfig);
     final ByteArrayInputStream testYearStream = 
       new ByteArrayInputStream(testYearString.getBytes("UTF-8"));
     
@@ -231,8 +233,8 @@ public final class PersistencyHandlerTest {
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
                                            nrOfActsEachDay, searchControl);
     
-    final Year yearKey = tyf.getYearWithConfig(yearConfig);
-    final String testYearString = tyf.getXmlYearWithConfig(yearConfig);
+    final Year yearKey = yf.getYearWithConfig(yearConfig);
+    final String testYearString = yf.getXmlYearWithConfig(yearConfig);
     final ByteArrayInputStream testYearStream = 
       new ByteArrayInputStream(testYearString.getBytes("UTF-8"));
     
@@ -251,8 +253,8 @@ public final class PersistencyHandlerTest {
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
                                            nrOfActsEachDay, searchControl);
     
-    final Year yearToWrite = tyf.getYearWithConfig(yearConfig);
-    final String yearOutputKey = tyf.getXmlYearWithConfig(yearConfig);
+    final Year yearToWrite = yf.getYearWithConfig(yearConfig);
+    final String yearOutputKey = yf.getXmlYearWithConfig(yearConfig);
     final ByteArrayOutputStream yearStream = new ByteArrayOutputStream();    
     
     ph.writeYear(yearToWrite, yearStream);
@@ -271,8 +273,8 @@ public final class PersistencyHandlerTest {
     YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
                                            nrOfActsEachDay, searchControl);
     
-    final Year yearToWrite = tyf.getYearWithConfig(yearConfig);
-    final String yearOutputKey = tyf.getXmlYearWithConfig(yearConfig);
+    final Year yearToWrite = yf.getYearWithConfig(yearConfig);
+    final String yearOutputKey = yf.getXmlYearWithConfig(yearConfig);
     final ByteArrayOutputStream yearStream = new ByteArrayOutputStream();    
     
     ph.writeYear(yearToWrite, yearStream);
@@ -283,12 +285,12 @@ public final class PersistencyHandlerTest {
   
   @Test
   public final void testSetAndGetStorageDir() throws Exception {
-    final String home = System.getProperty("user.home");
-    ph.setStorageDir(home);
+    final String testDir = System.getProperty("user.home") + File.separator + "test";
+    ph.setStorageDir(testDir);
     
     final String result = ph.getStorageDir();
     
     assertEquals("The dir set and dir gotten back were not equal!", 
-                 home, result);
+                 testDir, result);
   }
 }
