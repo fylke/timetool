@@ -14,13 +14,13 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import persistency.TestHandler;
+import persistency.MockHandler;
 
 public class ProjectHandlerTest {
   private transient ProjectsFactory tpf;
   private transient Reader projectInput;
   private transient XMLReader reader;
-  private transient TestHandler testHandler;
+  private transient MockHandler testHandler;
   private transient Project testProject;
   private transient ProjectHandler projectHandler;
   private transient final int testProjId = 10;
@@ -43,7 +43,7 @@ public class ProjectHandlerTest {
     }
 
     testProject = new Project();
-    testHandler = new TestHandler(reader);
+    testHandler = new MockHandler(reader);
     
     reader.setContentHandler(testHandler);
     
