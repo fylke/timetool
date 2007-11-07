@@ -7,10 +7,6 @@ public class Activity implements MyComboBoxDisplayable {
   private String name;
   private String shortName;
   private String reportCode;
-  
-  public Activity() {
-    super();
-  }
 
   public String getLongDispString() {
     return name;
@@ -49,33 +45,21 @@ public class Activity implements MyComboBoxDisplayable {
    * @param reportCode the reportCode to set
    */
   public void setReportCode(final String reportCode) {
-    if (reportCode == null || reportCode == "") {
-      throw new IllegalArgumentException("Activity report code cannot be empty!");
-    } else {
-      this.reportCode = reportCode;
-    }
+  	this.reportCode = reportCode;
   }
 
   /**
    * @param the name of the activity to set
    */
   public void setName(final String name) {
-    if (name == null || name == "") {
-      throw new IllegalArgumentException("Name cannot be empty!");
-    } else {
-      this.name = name;
-    }
+    this.name = name;
   }
 
   /**
    * @param shortName the shortName to set
    */
   public void setShortName(final String shortName) {
-    if (shortName == null) {
-      this.shortName = "";
-    } else {
-      this.shortName = shortName;
-    }
+    this.shortName = shortName;
   }
   
   /* (non-Javadoc)
@@ -83,7 +67,7 @@ public class Activity implements MyComboBoxDisplayable {
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder(); 
+    final StringBuilder objRep = new StringBuilder(); 
     objRep.append("id: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
@@ -108,7 +92,7 @@ public class Activity implements MyComboBoxDisplayable {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)
