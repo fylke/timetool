@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import persistency.ItemAlreadyDefinedException;
-
 public class Company implements MyComboBoxDisplayable {
   private String name;
   private String shortName;
@@ -48,7 +46,7 @@ public class Company implements MyComboBoxDisplayable {
   
   public Project getProjectByName(final String name) {
     for (Project proj : projects.values()) {
-      if (proj.getName() == name) {
+      if (name.equals(proj.getName())) {
         return proj;
       }
     }
@@ -60,27 +58,15 @@ public class Company implements MyComboBoxDisplayable {
   }
  
   public void setName(final String name) {
-    if (name == null || name == "") {
-      throw new IllegalArgumentException("Name cannot be empty!");
-    } else {
-      this.name = name;
-    }
+    this.name = name;
   }
 
   public void setShortName(final String shortName) {
-    if (shortName == null) {
-      this.shortName = "";
-    } else {
-      this.shortName = shortName;
-    }
+    this.shortName = shortName;
   }
 
   public void setEmployeeId(final String employeeId) {
-    if (employeeId == null || employeeId == "") {
-      throw new IllegalArgumentException("Employee id cannot be empty!");
-    } else {
-      this.employeeId = employeeId;
-    }
+    this.employeeId = employeeId;
   }
   
   public void addProject(final Project project) {
@@ -96,7 +82,7 @@ public class Company implements MyComboBoxDisplayable {
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder();
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("id: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
@@ -126,7 +112,7 @@ public class Company implements MyComboBoxDisplayable {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)
