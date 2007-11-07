@@ -10,7 +10,7 @@ public class Company implements MyComboBoxDisplayable {
   private String name;
   private String shortName;
   private String employeeId;
-  private Map<Integer, Project> projects;
+  private final Map<Integer, Project> projects;
   
   public Company() {
     projects = new TreeMap<Integer, Project>();
