@@ -11,35 +11,21 @@ import persistency.settings.UserSettings.OvertimeType;
 
 
 public class YearFactory {
-  public static transient final String startTime = "9:00";
-  public static transient final int startHour = 9;
-  public static transient final int startMinute = 0;
-  public static transient final String endTime = "17:00";
-  public static transient final int endHour = 17;
-  public static transient final int endMinute = 0;
-  public static transient final int lunchLength = 40;
+  public static final String START_TIME = "9:00";
+  public static final int START_HOUR = 9;
+  public static final int START_MINUTE = 0;
+  public static final String END_TIME = "17:00";
+  public static final int END_HOUR = 17;
+  public static final int END_MINUTE = 0;
+  public static final int LUNCH_LENGTH = 40;
   
-  private static transient final int hours = 0;
-  private static transient final int minutes = 0;
-  private static transient final int seconds = 0;
-  private static transient final int millis = 0;
+  private static final int HOURS = 0;
+  private static final int MINUTES = 0;
+  private static final int SECONDS = 0;
+  private static final int MILLIS = 0;
   
-  private static transient final String ns = "";
-  
-  private static YearFactory factoryInstance;
-  private transient XmlUtils xmlUtils;
-  
-  private YearFactory() {
-    super();
-    xmlUtils = XmlUtils.getInstance();
-  }
-  
-  public static YearFactory getInstance() {
-    if (factoryInstance == null) {
-      factoryInstance = new YearFactory();
-    }
-    return factoryInstance;
-  }
+  private static transient final String ns = "";  
+  private XmlUtils xmlUtils = new XmlUtils();
   
   public Year getYearWithConfig(final YearConfig yearConfig) {
     Year myYear = new Year();
@@ -59,8 +45,8 @@ public class YearFactory {
       if (yearConfig.searchControl == null ||
           (yearConfig.searchControl != null &&
           yearConfig.searchControl.isHit(new DateTime(yearConfig.year, month,
-                                                      day, hours, minutes,
-                                                      seconds, millis)))) {
+                                                      day, HOURS, MINUTES,
+                                                      SECONDS, MILLIS)))) {
         myMonth.addWorkDay(getWorkDay(yearConfig, month, day));
       }
     }
@@ -72,8 +58,8 @@ public class YearFactory {
                             final short dateInMonth) {  
     WorkDay workDay = new WorkDay(yearConfig.year, month, dateInMonth);
     
-    workDay.setStartTime(new LocalTime(startHour, startMinute));
-    workDay.setEndTime(new LocalTime(endHour, endMinute));
+    workDay.setStartTime(new LocalTime(START_HOUR, START_MINUTE));
+    workDay.setEndTime(new LocalTime(END_HOUR, END_MINUTE));
     
     ReadableDuration actLength = null;
     if (yearConfig.nrOfActsEachDay > 0) {
@@ -97,7 +83,7 @@ public class YearFactory {
       actInfo.setActivityEndTime(workDay.getDate(), 
                                  actEndTime.toLocalTime());
       actInfo.includeLunch = true;
-      actInfo.setLunchLenght(lunchLength);
+      actInfo.setLunchLenght(LUNCH_LENGTH);
       workDay.addActivity(actInfo);
       
       actStartTime = actEndTime;
@@ -141,8 +127,8 @@ public class YearFactory {
     String indent = xmlUtils.indent(2);
     WorkDay workDay = new WorkDay(yearConfig.year, month, dateInMonth);
     
-    workDay.setStartTime(new LocalTime(startHour, startMinute));
-    workDay.setEndTime(new LocalTime(endHour, endMinute));
+    workDay.setStartTime(new LocalTime(START_HOUR, START_MINUTE));
+    workDay.setEndTime(new LocalTime(END_HOUR, END_MINUTE));
     
     ReadableDuration actLength = null;
     if (yearConfig.nrOfActsEachDay > 0) {
@@ -175,7 +161,7 @@ public class YearFactory {
                 "duration start=\"" + actStartTime.toString("kk:mm") + 
                       "\" end=\"" + actEndTime.toString("kk:mm") + "\"/>\n");
       sb.append(indent + "<" + ns + "includeLunch duration=\"" + 
-                lunchLength + "\"/>\n");
+                LUNCH_LENGTH + "\"/>\n");
       indent = xmlUtils.decIndent(indent);
       sb.append(indent + "</" + ns + "activity>\n");
       
