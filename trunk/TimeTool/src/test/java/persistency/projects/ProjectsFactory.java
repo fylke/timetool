@@ -4,16 +4,16 @@ import persistency.ItemAlreadyDefinedException;
 import persistency.XmlUtils;
 
 public class ProjectsFactory {
-  private static final String compName = "testCompany";
-  private static final String compShortName = "testComp";
-  private static final String empId = "testId";
-  private static final String projName = "testProject";
-  private static final String projShortName = "testProj";
-  private static final String projCode = "testCode";
-  private static final String actName = "activityName";
-  private static final String actShortName = "actName";
-  private static final String actRepCode = "actRepCode";
-  private static final String ns = "";
+  private static final String COMP_NAME = "testCompany";
+  private static final String COMP_SHORT_NAME = "testComp";
+  private static final String EMP_ID = "testId";
+  private static final String PROJ_NAME = "testProject";
+  private static final String PROJ_SHORT_NAME = "testProj";
+  private static final String PROJ_CODE = "testCode";
+  private static final String ACT_NAME = "activityName";
+  private static final String ACT_SHORT_NAME = "actName";
+  private static final String ACT_REP_CODE = "actRepCode";
+  private static final String NS = "";
   
   private XmlUtils xmlUtils = new XmlUtils();
   
@@ -32,9 +32,9 @@ public class ProjectsFactory {
   public Company getCompany(final int id, final ProjSetConfig projSetConfig) 
       throws Exception {
     final Company comp = new Company();
-    comp.setName(compName + id);
-    comp.setShortName(compShortName + id);
-    comp.setEmployeeId(empId + id);
+    comp.setName(COMP_NAME + id);
+    comp.setShortName(COMP_SHORT_NAME + id);
+    comp.setEmployeeId(EMP_ID + id);
     
     for (int i = 1; i <= projSetConfig.nrOfProjsPerComp; i++) {
       comp.addProject(getProject(i + (id * 10), projSetConfig.projDepth,
@@ -48,9 +48,9 @@ public class ProjectsFactory {
                             final ProjSetConfig projSetConfig) 
       throws ItemAlreadyDefinedException {
     Project child = new Project();
-    child.setName(projName + id);
-    child.setShortName(projShortName + id);
-    child.setCode(projCode + id);
+    child.setName(PROJ_NAME + id);
+    child.setShortName(PROJ_SHORT_NAME + id);
+    child.setCode(PROJ_CODE + id);
 
     for (int i = 0; i < projSetConfig.nrOfActsPerProj; i++) {
       child.addActivity(getActivity(i + (id * 10)));
@@ -65,22 +65,22 @@ public class ProjectsFactory {
   
   public Activity getActivity(final int id) {
     Activity act = new Activity();
-    act.setName(actName + id);
-    act.setShortName(actShortName + id);
-    act.setReportCode(actRepCode + id);
+    act.setName(ACT_NAME + id);
+    act.setShortName(ACT_SHORT_NAME + id);
+    act.setReportCode(ACT_REP_CODE + id);
     
     return act;
   }
   
   public String getXmlProjSetWithConfig(final ProjSetConfig projSetConfig) {
-    final StringBuilder sb = xmlUtils.getHeader(ns + "projectSet", "id=\"" + 
+    final StringBuilder sb = xmlUtils.getHeader(NS + "projectSet", "id=\"" + 
                                                 projSetConfig.projSetId + "\"");
-
+   
     for (int i = 1; i <= projSetConfig.nrOfComps; i++) {
       sb.append(getXmlCompany(i, projSetConfig));
     }
 
-    return sb.toString() + "</" + ns + "projectSet>";
+    return sb.toString() + "</" + NS + "projectSet>";
   }
   
   public String getXmlCompany(final int id, final ProjSetConfig projSetConfig) {
@@ -88,24 +88,24 @@ public class ProjectsFactory {
     StringBuilder sb = new StringBuilder();
     
     final Company comp = new Company();
-    comp.setName(compName + id);
-    comp.setShortName(compShortName + id);
-    comp.setEmployeeId(empId + id);
+    comp.setName(COMP_NAME + id);
+    comp.setShortName(COMP_SHORT_NAME + id);
+    comp.setEmployeeId(EMP_ID + id);
 
-    sb.append(indent + "<" + ns + "company id=\"" + comp.getId() + "\">\n");
+    sb.append(indent + "<" + NS + "company id=\"" + comp.getId() + "\">\n");
     indent = xmlUtils.incIndent(indent);
-    sb.append(indent + "<" + ns + "compName>" + compName + id + 
-                       "</" + ns + "compName>\n");
-    sb.append(indent + "<" + ns + "compShortName>" + compShortName + id + 
-                       "</" + ns + "compShortName>\n");
-    sb.append(indent + "<" + ns + "employeeId>" + empId + id + 
-                       "</" + ns + "employeeId>\n");
+    sb.append(indent + "<" + NS + "compName>" + COMP_NAME + id + 
+                       "</" + NS + "compName>\n");
+    sb.append(indent + "<" + NS + "compShortName>" + COMP_SHORT_NAME + id + 
+                       "</" + NS + "compShortName>\n");
+    sb.append(indent + "<" + NS + "employeeId>" + EMP_ID + id + 
+                       "</" + NS + "employeeId>\n");
 
     for (int i = 1; i <= projSetConfig.nrOfProjsPerComp; i++) {
       getXmlProject(i + (id * 10), projSetConfig.projDepth, projSetConfig, sb);
     }
     indent = xmlUtils.decIndent(indent);
-    sb.append(indent + "</" + ns + "company>\n");
+    sb.append(indent + "</" + NS + "company>\n");
 
     return sb.toString();
   }
@@ -116,18 +116,18 @@ public class ProjectsFactory {
     String indent = xmlUtils.indent(Integer.toString(id).length());
     
     final Project proj = new Project();
-    proj.setName(projName + id);
-    proj.setShortName(projShortName + id);
-    proj.setCode(projCode + id);
+    proj.setName(PROJ_NAME + id);
+    proj.setShortName(PROJ_SHORT_NAME + id);
+    proj.setCode(PROJ_CODE + id);
 
-    sb.append(indent + "<" + ns + "project id=\"" + proj.getId() + "\">\n");
+    sb.append(indent + "<" + NS + "project id=\"" + proj.getId() + "\">\n");
     indent = xmlUtils.incIndent(indent);
-    sb.append(indent + "<" + ns + "projName>" + projName + id + 
-                       "</" + ns + "projName>\n");
-    sb.append(indent + "<" + ns + "projShortName>" + projShortName + id + 
-                       "</" + ns + "projShortName>\n");
-    sb.append(indent + "<" + ns + "code>" + projCode + id + 
-                       "</" + ns + "code>\n");
+    sb.append(indent + "<" + NS + "projName>" + PROJ_NAME + id + 
+                       "</" + NS + "projName>\n");
+    sb.append(indent + "<" + NS + "projShortName>" + PROJ_SHORT_NAME + id + 
+                       "</" + NS + "projShortName>\n");
+    sb.append(indent + "<" + NS + "code>" + PROJ_CODE + id + 
+                       "</" + NS + "code>\n");
 
     for (int i = 0; i < projSetConfig.nrOfActsPerProj; i++) {
       getXmlActivity(i + (id * 10), sb);
@@ -138,7 +138,7 @@ public class ProjectsFactory {
     }
 
     indent = xmlUtils.decIndent(indent);
-    sb.append(indent + "</" + ns + "project>\n");
+    sb.append(indent + "</" + NS + "project>\n");
     
     return sb.toString();
   }
@@ -147,20 +147,20 @@ public class ProjectsFactory {
     String indent = xmlUtils.indent(Integer.toString(id).length());
     
     final Activity act = new Activity();
-    act.setName(actName + id);
-    act.setShortName(actShortName + id);
-    act.setReportCode(actRepCode + id);
+    act.setName(ACT_NAME + id);
+    act.setShortName(ACT_SHORT_NAME + id);
+    act.setReportCode(ACT_REP_CODE + id);
     
-    sb.append(indent + "<" + ns + "activity id=\"" + act.getId() + "\">\n");
+    sb.append(indent + "<" + NS + "activity id=\"" + act.getId() + "\">\n");
     indent = xmlUtils.incIndent(indent);
-    sb.append(indent + "<" + ns + "actName>" + actName + id + 
-                       "</" + ns + "actName>\n");
-    sb.append(indent + "<" + ns + "actShortName>" + actShortName + id + 
-                       "</" + ns + "actShortName>\n");
-    sb.append(indent + "<" + ns + "actReportCode>" + actRepCode + id + 
-                       "</" + ns + "actReportCode>\n");
+    sb.append(indent + "<" + NS + "actName>" + ACT_NAME + id + 
+                       "</" + NS + "actName>\n");
+    sb.append(indent + "<" + NS + "actShortName>" + ACT_SHORT_NAME + id + 
+                       "</" + NS + "actShortName>\n");
+    sb.append(indent + "<" + NS + "actReportCode>" + ACT_REP_CODE + id + 
+                       "</" + NS + "actReportCode>\n");
     indent = xmlUtils.decIndent(indent);
-    sb.append(indent + "</" + ns + "activity>\n");
+    sb.append(indent + "</" + NS + "activity>\n");
     
     return sb.toString();
   }
