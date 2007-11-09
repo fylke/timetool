@@ -11,21 +11,6 @@ public class SettingsFactory {
   private static transient final String overtime = "flex";
   private static transient final String ns = "";
   
-  private static SettingsFactory factoryInstance;
-  private transient XmlUtils xmlUtils;
-  
-  private SettingsFactory() {
-    super();
-    xmlUtils = XmlUtils.getInstance();
-  }
-  
-  public static SettingsFactory getInstance() {
-    if (factoryInstance == null) {
-      factoryInstance = new SettingsFactory();
-    }
-    return factoryInstance;
-  }
-  
   public Settings getUserSettings() {
     Settings userSettings = UserSettings.getInstance();
     
@@ -40,6 +25,8 @@ public class SettingsFactory {
   }
   
   public String getXmlSettings() {
+  	final XmlUtils xmlUtils = new XmlUtils();
+  	
     final StringBuilder sb = xmlUtils.getHeader(ns + "settings");
     String indent = xmlUtils.indent(1);
     
@@ -47,8 +34,7 @@ public class SettingsFactory {
                                         "\" last=\"" + userLastName + "\"/>\n");
     sb.append(indent + "<" + ns + "employedAt id=\"" + employedAt + "\"/>\n");
     sb.append(indent + "<" + ns + "projectSet id=\"" + projectSetId + "\"/>\n");
-    sb.append(indent + "<" + ns + "lunchBreak duration=\"" + lunchBreak  + 
-              "\"/>\n");
+    sb.append(indent + "<" + ns + "lunchBreak duration=\"" + lunchBreak  + "\"/>\n");
     sb.append(indent + "<" + ns + "overtime treatAs=\"" + overtime  + "\"/>\n");
     
     indent = xmlUtils.decIndent(indent);
