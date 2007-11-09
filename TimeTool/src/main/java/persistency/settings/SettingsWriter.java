@@ -7,12 +7,12 @@ import persistency.XmlUtils;
 
 
 public class SettingsWriter {
-  private transient XmlUtils xmlUtils = XmlUtils.getInstance();
-  private static transient final String ns = "";
+  private static final String ns = "";
   
   public void writeUserSettings(final Settings userSettings, 
                             final OutputStream settingsStream) 
   {
+  	final XmlUtils xmlUtils = new XmlUtils();
     String indent = xmlUtils.indent(0);
     StringBuilder sb = xmlUtils.getHeader("settings");
     indent = xmlUtils.incIndent(indent);
