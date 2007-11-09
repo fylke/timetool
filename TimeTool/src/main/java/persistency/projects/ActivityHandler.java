@@ -9,11 +9,11 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ActivityHandler extends DefaultHandler {
-  private CharArrayWriter text;
-  private transient final XMLReader reader;
-  private transient final ContentHandler parentHandler;
-  private transient final Activity currentActivity;
-  private transient final String ns;
+  CharArrayWriter text;
+  final XMLReader reader;
+  final ContentHandler parentHandler;
+  final Activity currentActivity;
+  final String ns;
 
   public ActivityHandler(final Attributes attributes, final XMLReader reader, 
                          final ContentHandler parentHandler, 
@@ -54,7 +54,7 @@ public class ActivityHandler extends DefaultHandler {
     text.write(ch, start, length);
   }
   
-  private String getText() {
+  String getText() {
     return text.toString().trim();
   }
 }

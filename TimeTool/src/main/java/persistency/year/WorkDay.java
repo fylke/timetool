@@ -32,8 +32,6 @@ public class WorkDay {
   private OvertimeType treatOvertimeAs;
   private Settings userSettings;
   
-  private final transient XmlUtils xmlUtils;
-  
   public WorkDay(final int year, final short month, final short dateInMonth) {
     this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0));
   }
@@ -44,7 +42,6 @@ public class WorkDay {
     userSettings = UserSettings.getInstance();
     treatOvertimeAs = userSettings.getTreatOvertimeAs();
     this.date = date;
-    xmlUtils = XmlUtils.getInstance();
     activities = new TreeMap<Integer, ActivityInfo>();
   }
 
@@ -87,6 +84,7 @@ public class WorkDay {
    * @param endTime the endTime to set on the form hh:mm
    */
   public void setEndTime(String endTime) {
+  	final XmlUtils xmlUtils = new XmlUtils();
     this.endTime = xmlUtils.stringToTime(endTime, date); 
   }
 
@@ -94,6 +92,7 @@ public class WorkDay {
    * @param startTime the startTime to set on the form hh:mm
    */
   public void setStartTime(String startTime) {
+  	final XmlUtils xmlUtils = new XmlUtils();
     this.startTime = xmlUtils.stringToTime(startTime, date); 
   }
   
