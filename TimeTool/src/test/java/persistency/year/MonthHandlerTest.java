@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -17,18 +17,18 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import persistency.MockHandler;
 
 public class MonthHandlerTest {
-  private transient YearFactory tyf;
-  private transient Reader monthInput;
-  private transient XMLReader reader;
-  private transient MockHandler testHandler;
-  private transient Month testMonth;
-  private transient MonthHandler monthHandler;
+  private YearFactory yf;
+  private Reader monthInput;
+  private XMLReader reader;
+  private MockHandler testHandler;
+  private Month testMonth;
+  private MonthHandler monthHandler;
   // We won't bother with SearchControl in these tests
-  private transient SearchControl searchControl = null;
+  private SearchControl searchControl = null;
 
-  @Before
-  public void setUp() throws Exception {
-    tyf = YearFactory.getInstance();
+  @BeforeClass
+  public void setUpBeforeClass() throws Exception {
+    yf = new YearFactory();
     
     try {
       reader = 
@@ -58,8 +58,8 @@ public class MonthHandlerTest {
       new MonthHandler(attr, reader, testHandler, testMonth, searchControl);
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterClass
+  public void tearDownAfterClass() throws Exception {
     monthInput.close();
   }
 
@@ -73,10 +73,10 @@ public class MonthHandlerTest {
                                            nrOfActsEachDay, searchControl);
     
     final short testMonthIdKey = 1;
-    Month testMonthKey = tyf.getMonth(testMonthIdKey, yearConfig);
+    Month testMonthKey = yf.getMonth(testMonthIdKey, yearConfig);
     
     StringBuilder sb = new StringBuilder();
-    final String testMonthString = tyf.getXmlMonth(nrOfMonths, yearConfig, sb);
+    final String testMonthString = yf.getXmlMonth(nrOfMonths, yearConfig, sb);
     monthInput = new StringReader(testMonthString); 
     
     testHandler.setHandlerToTest(monthHandler);
@@ -96,10 +96,10 @@ public class MonthHandlerTest {
                                            nrOfActsEachDay, searchControl);
     
     final short testMonthIdKey = 1;
-    Month testMonthKey = tyf.getMonth(testMonthIdKey, yearConfig);
+    Month testMonthKey = yf.getMonth(testMonthIdKey, yearConfig);
     
     StringBuilder sb = new StringBuilder();
-    final String testMonthString = tyf.getXmlMonth(nrOfMonths, yearConfig, sb);
+    final String testMonthString = yf.getXmlMonth(nrOfMonths, yearConfig, sb);
     monthInput = new StringReader(testMonthString); 
     
     testHandler.setHandlerToTest(monthHandler);
