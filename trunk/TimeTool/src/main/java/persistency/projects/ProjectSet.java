@@ -4,9 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import persistency.ItemAlreadyDefinedException;
-
 public class ProjectSet {
+	private int id;
   private Map<Integer, Company> companies;
   
   public ProjectSet() {
@@ -46,6 +45,14 @@ public class ProjectSet {
   public void addCompanyWithId(final Company company, final int id) {
     companies.put(id, company);
   }
+  
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
   
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
