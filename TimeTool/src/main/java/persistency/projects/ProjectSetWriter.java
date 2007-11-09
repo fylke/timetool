@@ -14,7 +14,8 @@ public class ProjectSetWriter {
                               final OutputStream projectsStream) 
   {
     String indent = xmlUtils.indent(0);
-    StringBuilder pb = xmlUtils.getHeader(ns + "projectSet");
+    StringBuilder pb = xmlUtils.getHeader(ns + "projectSet", "id=\"" + 
+                                          projectSet.getId() + "\"");
     indent = xmlUtils.incIndent(indent);
 
     for (Company comp : projectSet.getCompanies()) {
