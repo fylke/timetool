@@ -1,18 +1,17 @@
 package persistency;
 
-import java.io.File;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.Set;
 import java.util.TreeSet;
-
 
 import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 import org.junit.After;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import persistency.projects.ProjSetConfig;
@@ -21,23 +20,23 @@ import persistency.projects.ProjectsFactory;
 import persistency.settings.Settings;
 import persistency.settings.SettingsFactory;
 import persistency.year.SearchControl;
-import persistency.year.YearFactory;
 import persistency.year.Year;
 import persistency.year.YearConfig;
+import persistency.year.YearFactory;
 
 public final class PersistencyHandlerTest {
-  private transient ProjectsFactory pf;
-  private transient YearFactory yf;
-  private transient SettingsFactory sf;
-  private transient PersistencyHandler ph;
-  private transient ByteArrayInputStream bais;
-  private transient ByteArrayOutputStream baos;
+  private ProjectsFactory pf;
+  private YearFactory yf;
+  private SettingsFactory sf;
+  private PersistencyHandler ph;
+  private ByteArrayInputStream bais;
+  private ByteArrayOutputStream baos;
 
-  @Before
+  @BeforeClass
   public void setUpBeforeClass() throws Exception {
-    pf = ProjectsFactory.getInstance();
-    yf = YearFactory.getInstance();
-    sf = SettingsFactory.getInstance();
+    pf = new ProjectsFactory();
+    yf = new YearFactory();
+    sf = new SettingsFactory();
     ph = PersistencyHandler.getInstance();
     baos = new ByteArrayOutputStream();
   }
