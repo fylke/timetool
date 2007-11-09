@@ -2,14 +2,14 @@ package persistency.year;
 
 
 public class YearConfig {
-  final transient int year;
-  final transient short nrOfMonths;
-  final transient short nrOfDaysEachMonth;
-  final transient int nrOfActsEachDay;
-  final transient SearchControl searchControl;
+  final int year;
+  final int nrOfMonths;
+  final int nrOfDaysEachMonth;
+  final int nrOfActsEachDay;
+  final SearchControl searchControl;
   
-  public YearConfig(final int year, final short nrOfMonths, 
-                    final short nrOfDaysEachMonth, 
+  public YearConfig(final int year, final int nrOfMonths, 
+                    final int nrOfDaysEachMonth, 
                     final int nrOfActsEachDay,
                     final SearchControl searchControl) {
     super();
