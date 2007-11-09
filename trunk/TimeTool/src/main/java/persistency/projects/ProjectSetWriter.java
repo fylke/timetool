@@ -6,8 +6,9 @@ import java.io.PrintWriter;
 import persistency.XmlUtils;
 
 public class ProjectSetWriter {
-  private transient XmlUtils xmlUtils = XmlUtils.getInstance();
-  private static transient final String ns = "";
+	private static final String ns = "";
+	
+  private XmlUtils xmlUtils = new XmlUtils();
   
   public void writeProjectSet(final ProjectSet projectSet, 
                               final OutputStream projectsStream) 
