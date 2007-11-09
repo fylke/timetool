@@ -32,7 +32,7 @@ public class WorkDay {
   private OvertimeType treatOvertimeAs;
   private Settings userSettings;
   
-  public WorkDay(final int year, final short month, final short dateInMonth) {
+  public WorkDay(final int year, final int month, final int dateInMonth) {
     this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0));
   }
   
