@@ -2,8 +2,6 @@ package persistency.projects;
 
 import static org.junit.Assert.assertEquals;
 
-import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.ContentHandler;
@@ -18,7 +16,7 @@ public class ActivityHandlerTest{
 	private XMLReader dummyReader;
 	
 	@Before
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		dummyHandler = new ProjectHandler(null, null, null, null, "");
 		dummyReader = FileParserFactory.getParser("projectSet");
 		act = new Activity();
