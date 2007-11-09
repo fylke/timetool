@@ -104,7 +104,7 @@ public class YearFactory {
     return sb.toString() + "</" + ns + "year>"; 
   }
   
-  public String getXmlMonth(final short month, final YearConfig yearConfig,
+  public String getXmlMonth(final int month, final YearConfig yearConfig,
                             final StringBuilder sb) {
     String indent = xmlUtils.indent(1);
 
@@ -121,7 +121,7 @@ public class YearFactory {
     return sb.toString();
   }
   
-  public void getXmlWorkDay(final short dateInMonth, final short month,
+  public void getXmlWorkDay(final int dateInMonth, final int month,
                             final YearConfig yearConfig,
                             final StringBuilder sb) {  
     String indent = xmlUtils.indent(2);
