@@ -4,21 +4,8 @@ import org.joda.time.LocalTime;
 import org.joda.time.ReadableDateTime;
 
 public class XmlUtils {
-  private static XmlUtils XmlUtilsInstance;
-  
   private static final int indentSize = 2;
   private static final String indentationToken = "  ";
-      
-  private XmlUtils() {
-    super();
-  }
-  
-  public static XmlUtils getInstance() {
-    if (XmlUtilsInstance == null) {
-      XmlUtilsInstance = new XmlUtils();
-    }
-    return XmlUtilsInstance;
-  }
   
   public ReadableDateTime stringToTime(final String hhmm, 
                                        final ReadableDateTime date) {
