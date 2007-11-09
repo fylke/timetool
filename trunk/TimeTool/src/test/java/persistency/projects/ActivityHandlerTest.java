@@ -1,5 +1,7 @@
 package persistency.projects;
 
+import static org.junit.Assert.assertEquals;
+
 import junit.framework.TestCase;
 
 import org.junit.Before;
@@ -9,7 +11,7 @@ import org.xml.sax.XMLReader;
 
 import persistency.FileParserFactory;
 
-public class ActivityHandlerTest extends TestCase {
+public class ActivityHandlerTest{
 	private ActivityHandler handler;
 	private Activity act;
 	private ContentHandler dummyHandler;
