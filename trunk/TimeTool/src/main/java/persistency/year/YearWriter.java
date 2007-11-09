@@ -3,12 +3,10 @@ package persistency.year;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
-import org.joda.time.DurationFieldType;
-
 import persistency.XmlUtils;
 
 public class YearWriter {
-  private transient XmlUtils xmlUtils = XmlUtils.getInstance();
+  private XmlUtils xmlUtils = new XmlUtils();
   private static transient final String ns = "";
   
   public void writeYear(final Year year, final OutputStream yearStream) 
