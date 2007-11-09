@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -17,7 +17,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import persistency.MockHandler;
 
 public class ProjectHandlerTest {
-  private transient ProjectsFactory tpf;
+  private transient ProjectsFactory pf;
   private transient Reader projectInput;
   private transient XMLReader reader;
   private transient MockHandler testHandler;
@@ -26,9 +26,9 @@ public class ProjectHandlerTest {
   private transient final int testProjId = 10;
   private transient final String ns = "";
 
-  @Before
-  public void setUp() throws Exception {
-    tpf = ProjectsFactory.getInstance();
+  @BeforeClass
+  public void setUpBeforeClass() throws Exception {
+    pf = new ProjectsFactory();
     
     try {
       reader = 
@@ -52,7 +52,7 @@ public class ProjectHandlerTest {
                                         testProject, ns);
   }
 
-  @After
+  @AfterClass
   public void tearDown() throws Exception {
     projectInput.close();
   }
@@ -71,9 +71,9 @@ public class ProjectHandlerTest {
     StringBuilder sb = new StringBuilder();
         
     final String simpleTestProject = 
-      tpf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
+      pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
     final Project simpleProjectKey = 
-      tpf.getProject(testProjId, projDepth, projSetConfig);
+      pf.getProject(testProjId, projDepth, projSetConfig);
     
     projectInput = new StringReader(simpleTestProject);
     
@@ -99,9 +99,9 @@ public class ProjectHandlerTest {
     StringBuilder sb = new StringBuilder();
 
     final String nestedTestProject = 
-      tpf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
+      pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
     final Project nestedProjectKey = 
-      tpf.getProject(testProjId, projDepth, projSetConfig);
+      pf.getProject(testProjId, projDepth, projSetConfig);
     
     projectInput = new StringReader(nestedTestProject); 
     
@@ -127,9 +127,9 @@ public class ProjectHandlerTest {
     StringBuilder sb = new StringBuilder();
         
     final String nestedTestProject = 
-      tpf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
+      pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
     final Project nestedProjectKey = 
-      tpf.getProject(testProjId, projDepth, projSetConfig);
+      pf.getProject(testProjId, projDepth, projSetConfig);
     
     projectInput = new StringReader(nestedTestProject); 
     
