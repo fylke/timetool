@@ -6,11 +6,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Month {
-  private final short id;
+  private final int id;
   private final int enclosingYear;
   private Map<Integer, WorkDay> workDays;
   
-  public Month(final short id, final int enclosingYear) {
+  public Month(final int id, final int enclosingYear) {
     super();
     this.id = id;
     this.enclosingYear = enclosingYear;
@@ -20,7 +20,7 @@ public class Month {
   /**
    * @return the id
    */
-  public short getId() {
+  public int getId() {
     return id;
   }
 
@@ -34,7 +34,7 @@ public class Month {
   /**
    * @return the indicated work day
    */
-  public WorkDay getWorkDay(final short date) {
+  public WorkDay getWorkDay(final int date) {
     assert(date > 0 && date <= 31);
     return workDays.get(date);
   }
@@ -42,9 +42,9 @@ public class Month {
   /**
    * @return the indicated work days
    */
-  public Collection<WorkDay> getWorkDays(final Collection<Short> workDayIds) {
+  public Collection<WorkDay> getWorkDays(final Collection<Integer> workDayIds) {
     Collection<WorkDay> workDays = new ArrayList<WorkDay>();
-    for (Short workDayId : workDayIds) {
+    for (Integer workDayId : workDayIds) {
       workDays.add(this.workDays.get(workDayId));
     }
     
