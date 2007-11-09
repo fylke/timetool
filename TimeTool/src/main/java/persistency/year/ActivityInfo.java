@@ -1,11 +1,7 @@
 package persistency.year;
 
-import org.joda.time.DurationFieldType;
 import org.joda.time.LocalTime;
-import org.joda.time.PeriodType;
 import org.joda.time.ReadableDateTime;
-import org.joda.time.ReadablePeriod;
-import org.joda.time.Period;
 
 import persistency.XmlUtils;
 
@@ -17,11 +13,8 @@ public class ActivityInfo {
   private ReadableDateTime endTime;
   private int lunchLenght;
 
-  private final transient XmlUtils xmlUtils;
-
   ActivityInfo(final int id) {
     this.id = id;
-    xmlUtils = XmlUtils.getInstance();
     //FIXME How to fetch the default from Settings?
     lunchLenght = 40;
   }
@@ -50,12 +43,14 @@ public class ActivityInfo {
   
   public void setActivityStartTime(final ReadableDateTime date,
                                    final String startTime) {
+  	final XmlUtils xmlUtils = new XmlUtils();
     this.startTime = xmlUtils.stringToTime(startTime, date);
   }
   
   public void setActivityEndTime(final ReadableDateTime date,
                                  final String endTime) {
-    this.endTime = xmlUtils.stringToTime(endTime, date);
+  	final XmlUtils xmlUtils = new XmlUtils();
+  	this.endTime = xmlUtils.stringToTime(endTime, date);
   }
   
   /* (non-Javadoc)
