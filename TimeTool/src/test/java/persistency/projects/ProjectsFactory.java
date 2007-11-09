@@ -4,31 +4,18 @@ import persistency.ItemAlreadyDefinedException;
 import persistency.XmlUtils;
 
 public class ProjectsFactory {
-  private static transient final String compName = "testCompany";
-  private static transient final String compShortName = "testComp";
-  private static transient final String empId = "testId";
-  private static transient final String projName = "testProject";
-  private static transient final String projShortName = "testProj";
-  private static transient final String projCode = "testCode";
-  private static transient final String actName = "activityName";
-  private static transient final String actShortName = "actName";
-  private static transient final String actRepCode = "actRepCode";
-  private static transient final String ns = "";
+  private static final String compName = "testCompany";
+  private static final String compShortName = "testComp";
+  private static final String empId = "testId";
+  private static final String projName = "testProject";
+  private static final String projShortName = "testProj";
+  private static final String projCode = "testCode";
+  private static final String actName = "activityName";
+  private static final String actShortName = "actName";
+  private static final String actRepCode = "actRepCode";
+  private static final String ns = "";
   
-  private static ProjectsFactory factoryInstance;
-  private transient XmlUtils xmlUtils;
-  
-  private ProjectsFactory() {
-    super();
-    xmlUtils = XmlUtils.getInstance();
-  }
-  
-  public static ProjectsFactory getInstance() {
-    if (factoryInstance == null) {
-      factoryInstance = new ProjectsFactory();
-    }
-    return factoryInstance;
-  }
+  private XmlUtils xmlUtils = new XmlUtils();
   
   public ProjectSet getProjSetWithConfig(final ProjSetConfig projSetConfig) 
       throws Exception {
