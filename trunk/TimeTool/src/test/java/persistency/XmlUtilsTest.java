@@ -1,6 +1,6 @@
 package persistency;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals; 
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
@@ -8,7 +8,7 @@ import org.joda.time.ReadableDateTime;
 import org.junit.Before;
 import org.junit.Test;
 
-public class XmlUtilsTest extends TestCase {
+public class XmlUtilsTest {
 	private transient XmlUtils xmlUtils;
 	
 	@Before
