@@ -11,23 +11,22 @@ import org.junit.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import persistency.MockHandler;
 
 public class MonthHandlerTest {
-  private YearFactory yf;
-  private Reader monthInput;
-  private XMLReader reader;
-  private MockHandler testHandler;
-  private Month month;
-  private MonthHandler monthHandler;
+  private static YearFactory yf;
+  private static Reader monthInput;
+  private static XMLReader reader;
+  private static MockHandler testHandler;
+  private static Month month;
+  private static MonthHandler monthHandler;
   // We won't bother with SearchControl in these tests
-  private SearchControl sc = null;
+  private static SearchControl sc = null;
 
   @BeforeClass
-  public void setUpBeforeClass() throws Exception {
+  public static void setUpBeforeClass() throws Exception {
     yf = new YearFactory();
     
     try {
@@ -47,19 +46,15 @@ public class MonthHandlerTest {
     final int monthId = 1;
     final int yearId = 1;
     
-    final AttributesImpl attr = new AttributesImpl();
-    attr.addAttribute("", "", "id", "String", Integer.toString(monthId));
-    
     testHandler = new MockHandler(reader);
     month = new Month(monthId, yearId);
     
     reader.setContentHandler(testHandler); 
-    monthHandler = 
-      new MonthHandler(attr, reader, testHandler, month, sc);
+    monthHandler = new MonthHandler(reader, testHandler, month, sc);
   }
 
   @AfterClass
-  public void tearDownAfterClass() throws Exception {
+  public static void tearDownAfterClass() throws Exception {
     monthInput.close();
   }
 
