@@ -21,10 +21,10 @@ public class MonthHandlerTest {
   private Reader monthInput;
   private XMLReader reader;
   private MockHandler testHandler;
-  private Month testMonth;
+  private Month month;
   private MonthHandler monthHandler;
   // We won't bother with SearchControl in these tests
-  private SearchControl searchControl = null;
+  private SearchControl sc = null;
 
   @BeforeClass
   public void setUpBeforeClass() throws Exception {
@@ -44,18 +44,18 @@ public class MonthHandlerTest {
     
     /* We can't really test the enclosing year ID as it is set 
      * before entering the handler we're testing. */
-    final short testMonthId = 1;
-    final short testYearId = 1;
+    final int monthId = 1;
+    final int yearId = 1;
     
     final AttributesImpl attr = new AttributesImpl();
-    attr.addAttribute("", "", "id", "String", Short.toString(testMonthId));
+    attr.addAttribute("", "", "id", "String", Integer.toString(monthId));
     
     testHandler = new MockHandler(reader);
-    testMonth = new Month(testMonthId, testYearId);
+    month = new Month(monthId, yearId);
     
     reader.setContentHandler(testHandler); 
     monthHandler = 
-      new MonthHandler(attr, reader, testHandler, testMonth, searchControl);
+      new MonthHandler(attr, reader, testHandler, month, sc);
   }
 
   @AfterClass
@@ -65,47 +65,47 @@ public class MonthHandlerTest {
 
   @Test
   public final void testMonthHandlerSimple() throws Exception {
-    int year = 1;
-    short nrOfMonths = 1;
-    short nrOfDaysEachMonth = 1;
-    int nrOfActsEachDay = 1; 
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
-                                           nrOfActsEachDay, searchControl);
+    final int year = 1;
+    final int nrOfMonths = 1;
+    final int nrOfDaysEachMonth = 1;
+    final int nrOfActsEachDay = 1; 
+    final YearConfig yc = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
+                                         nrOfActsEachDay, sc);
     
     final short testMonthIdKey = 1;
-    Month testMonthKey = yf.getMonth(testMonthIdKey, yearConfig);
+    final Month testMonthKey = yf.getMonth(testMonthIdKey, yc);
     
-    StringBuilder sb = new StringBuilder();
-    final String testMonthString = yf.getXmlMonth(nrOfMonths, yearConfig, sb);
+    final StringBuilder sb = new StringBuilder();
+    final String testMonthString = yf.getXmlMonth(nrOfMonths, yc, sb);
     monthInput = new StringReader(testMonthString); 
     
     testHandler.setHandlerToTest(monthHandler);
     reader.parse(new InputSource(monthInput));
     
     assertEquals("Generated test object and key not equal!", 
-                 testMonthKey, testMonth);  
+                 testMonthKey, month);  
   }
   
   @Test
   public final void testMonthHandlerHarder() throws Exception {
-    int year = 1;
-    short nrOfMonths = 1;
-    short nrOfDaysEachMonth = 6;
-    int nrOfActsEachDay = 6; 
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
-                                           nrOfActsEachDay, searchControl);
+  	final int year = 1;
+    final int nrOfMonths = 1;
+    final int nrOfDaysEachMonth = 6;
+    final int nrOfActsEachDay = 6; 
+    final YearConfig yc = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth, 
+                                           nrOfActsEachDay, sc);
     
     final short testMonthIdKey = 1;
-    Month testMonthKey = yf.getMonth(testMonthIdKey, yearConfig);
+    final Month testMonthKey = yf.getMonth(testMonthIdKey, yc);
     
-    StringBuilder sb = new StringBuilder();
-    final String testMonthString = yf.getXmlMonth(nrOfMonths, yearConfig, sb);
+    final StringBuilder sb = new StringBuilder();
+    final String testMonthString = yf.getXmlMonth(nrOfMonths, yc, sb);
     monthInput = new StringReader(testMonthString); 
     
     testHandler.setHandlerToTest(monthHandler);
     reader.parse(new InputSource(monthInput));
     
     assertEquals("Generated test object and key not equal!", 
-                 testMonthKey, testMonth);  
+                 testMonthKey, month);  
   }
 }
