@@ -11,6 +11,7 @@ import java.util.TreeSet;
 import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,26 +26,29 @@ import persistency.year.YearConfig;
 import persistency.year.YearFactory;
 
 public final class PersistencyHandlerTest {
-  private ProjectsFactory pf;
-  private YearFactory yf;
-  private SettingsFactory sf;
-  private PersistencyHandler ph;
-  private ByteArrayInputStream bais;
-  private ByteArrayOutputStream baos;
+  private static ProjectsFactory pf;
+  private static YearFactory yf;
+  private static SettingsFactory sf;
+  private static PersistencyHandler ph;
+  private static ByteArrayOutputStream baos;
 
   @BeforeClass
-  public void setUpBeforeClass() throws Exception {
+  public static void setUpBeforeClass() throws Exception {
     pf = new ProjectsFactory();
     yf = new YearFactory();
     sf = new SettingsFactory();
     ph = PersistencyHandler.getInstance();
-    baos = new ByteArrayOutputStream();
   }
 
-  @After
-  public void tearDownAfterClass() throws Exception {
-    baos.close();
-  }
+	@Before
+	public void setUp() throws Exception {
+		baos = new ByteArrayOutputStream();
+	}
+	
+	@After
+	public void tearDown() throws Exception {
+		baos.close();
+	}
   
   @Test
   public final void testReadYearWithSearchControlSimple() throws Exception {
@@ -83,7 +87,8 @@ public final class PersistencyHandlerTest {
     final String settingsString = sf.getXmlSettings();
     final Settings userSettingsKey = sf.getUserSettings();
     
-    bais = new ByteArrayInputStream(settingsString.getBytes("UTF-8"));
+    final ByteArrayInputStream bais =
+    	new ByteArrayInputStream(settingsString.getBytes("UTF-8"));
     final Settings testUserSettings = ph.readUserSettings(bais);
   
     assertEquals("Generated test stream and output key not equal!", 
@@ -115,7 +120,7 @@ public final class PersistencyHandlerTest {
     final String projSetString = pf.getXmlProjSetWithConfig(projSetConfig);
     final ProjectSet projSetKey = pf.getProjSetWithConfig(projSetConfig);
 
-    bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
+    final ByteArrayInputStream bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
     final ProjectSet testProjSet = ph.readProjectSet(bais);
 
     assertEquals("Generated test stream and output key not equal!", 
@@ -136,7 +141,7 @@ public final class PersistencyHandlerTest {
     final String projSetString = pf.getXmlProjSetWithConfig(projSetConfig);
     final ProjectSet projSetKey = pf.getProjSetWithConfig(projSetConfig);
     
-    bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
+    final ByteArrayInputStream bais = new ByteArrayInputStream(projSetString.getBytes("UTF-8"));
     final ProjectSet testProjectSet = ph.readProjectSet(bais);
   
     assertEquals("Generated test stream and output key not equal!", 
@@ -158,7 +163,7 @@ public final class PersistencyHandlerTest {
     final String projSetKey = pf.getXmlProjSetWithConfig(projSetConfig);
 
     ph.writeProjectSet(projSetInput, baos);
-
+    
     assertEquals("Generated test string and key string not equal!", 
                  projSetKey, baos.toString());
   }
@@ -286,10 +291,10 @@ public final class PersistencyHandlerTest {
   public final void testSetAndGetStorageDir() throws Exception {
     final String testDir = System.getProperty("user.home") + File.separator + "test";
     ph.setStorageDir(testDir);
-    
+    System.err.println(System.getProperty("Storage dir"));
     final String result = ph.getStorageDir();
-    
-    assertEquals("The dir set and dir gotten back were not equal!", 
-                 testDir, result);
+    System.err.println(testDir);
+    System.out.println(result);
+    assertEquals("The dir set and dir gotten back were not equal!", testDir, result);
   }
 }
