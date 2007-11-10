@@ -7,7 +7,7 @@ import java.util.TreeSet;
 import org.joda.time.ReadableDateTime;
 
 public class SearchControl {
-  private SortedSet<Integer> hits;
+  SortedSet<Integer> hits;
   
   public SearchControl() {
     super();
@@ -28,7 +28,7 @@ public class SearchControl {
     }
   }
   
-  public boolean isHit(ReadableDateTime date) {
+  public boolean isHit(final ReadableDateTime date) {
     return hits.contains(date.getDayOfYear());
   }
 }
