@@ -28,8 +28,7 @@ import persistency.year.YearParser;
 import persistency.year.YearWriter;
 
 public final class PersistencyHandler {
-  private final Preferences userPrefs = 
-    Preferences.userRoot().node("/timetool");
+  private final Preferences userPrefs = Preferences.userRoot().node("/timetool");
   private static PersistencyHandler instance;
   
   private PersistencyHandler() {
