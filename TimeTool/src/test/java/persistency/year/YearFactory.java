@@ -54,8 +54,8 @@ public class YearFactory {
     return myMonth;
   }
   
-  public WorkDay getWorkDay(final YearConfig yearConfig, final short month,
-                            final short dateInMonth) {  
+  public WorkDay getWorkDay(final YearConfig yearConfig, final int month,
+                            final int dateInMonth) {  
     WorkDay workDay = new WorkDay(yearConfig.year, month, dateInMonth);
     
     workDay.setStartTime(new LocalTime(START_HOUR, START_MINUTE));
