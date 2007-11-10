@@ -180,8 +180,8 @@ public final class PersistencyHandler {
    * @return the absolute path of the directory to store files in
    */
   public String getStorageDir() {
-    return userPrefs.get("Storage dir", System.getProperty("user.home")) + 
-                         File.separator + ".timetool";
+    return userPrefs.get("storage_dir", System.getProperty("user.home") + 
+                         								File.separator + ".timetool");
   }
   
   /**
@@ -190,6 +190,6 @@ public final class PersistencyHandler {
    * @param absPath the absolute path to the directory
    */
   public void setStorageDir(final String absPath) {
-    userPrefs.put("Storage dir", absPath);
+    userPrefs.put("storage_dir", absPath);
   }
 }
