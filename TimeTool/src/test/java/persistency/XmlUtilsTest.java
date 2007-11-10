@@ -9,10 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class XmlUtilsTest {
-	private transient XmlUtils xmlUtils;
+	private XmlUtils xmlUtils;
 	
 	@Before
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		xmlUtils = new XmlUtils();
 	}
 
