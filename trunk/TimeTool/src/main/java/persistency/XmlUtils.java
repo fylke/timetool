@@ -15,9 +15,8 @@ public class XmlUtils {
   }
   
   public String xmlify(final String stringToXmlify) {
-    return stringToXmlify.replace("<", "&lt;").replace("'", "&apos;")
-                         .replace(">", "&gt;").replace("&", "&amp;")
-                         .replace("\"", "&quot;"); 
+    return stringToXmlify.replace("&", "&amp;").replace("<", "&lt;").replace("'", "&apos;")
+                         .replace(">", "&gt;").replace("\"", "&quot;"); 
   }
   
   public String indent(final int level) {
