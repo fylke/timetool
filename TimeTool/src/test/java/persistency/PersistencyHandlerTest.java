@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -285,16 +284,5 @@ public final class PersistencyHandlerTest {
     
     assertEquals("Generated test stream and output key not equal!", 
                  yearOutputKey, yearStream.toString());
-  }
-  
-  @Test
-  public final void testSetAndGetStorageDir() throws Exception {
-    final String testDir = System.getProperty("user.home") + File.separator + "test";
-    ph.setStorageDir(testDir);
-    System.err.println(System.getProperty("Storage dir"));
-    final String result = ph.getStorageDir();
-    System.err.println(testDir);
-    System.out.println(result);
-    assertEquals("The dir set and dir gotten back were not equal!", testDir, result);
   }
 }
