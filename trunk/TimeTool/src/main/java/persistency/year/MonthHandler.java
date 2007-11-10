@@ -12,11 +12,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class MonthHandler extends DefaultHandler {
   private CharArrayWriter text;
-  private final transient XMLReader reader;
-  private final transient ContentHandler parentHandler;
-  private final transient Month currentMonth;
-  private final transient SearchControl wanted;
-  private final transient boolean searchActive;
+  private final XMLReader reader;
+  private final ContentHandler parentHandler;
+  private final Month currentMonth;
+  private final SearchControl wanted;
+  private final boolean searchActive;
 
   public MonthHandler(final Attributes attributes, final XMLReader reader, 
                       final ContentHandler parentHandler, 
@@ -42,8 +42,8 @@ public class MonthHandler extends DefaultHandler {
     if ("workDay".equals(qName)) {
       assert(currentMonth != null);
       final int year = currentMonth.getEnclosingYear();
-      final short month = currentMonth.getId();
-      final short dayInMonth = Short.parseShort(attrs.getValue("date"));
+      final int month = currentMonth.getId();
+      final int dayInMonth = Integer.parseInt(attrs.getValue("date"));
       final WorkDay workDay = new WorkDay(year, month, dayInMonth);
       
       if (!searchActive ||
@@ -51,7 +51,7 @@ public class MonthHandler extends DefaultHandler {
         currentMonth.addWorkDay(workDay);
             
         final ContentHandler workDayHandler = 
-          new WorkDayHandler(attrs, reader, this, workDay);
+          new WorkDayHandler(reader, this, workDay);
 
         reader.setContentHandler(workDayHandler);
       }
