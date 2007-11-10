@@ -9,16 +9,14 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-
 public class MonthHandler extends DefaultHandler {
   private CharArrayWriter text;
   private final XMLReader reader;
   private final ContentHandler parentHandler;
   private final Month currentMonth;
   private final SearchControl wanted;
-  private final boolean searchActive;
 
-  public MonthHandler(final Attributes attributes, final XMLReader reader, 
+  public MonthHandler(final XMLReader reader, 
                       final ContentHandler parentHandler, 
                       final Month currentMonth,
                       final SearchControl wanted)  
@@ -29,8 +27,6 @@ public class MonthHandler extends DefaultHandler {
     this.reader = reader;
     
     text = new CharArrayWriter();
-    
-    searchActive = (wanted != null) ? true : false; 
   }
 
   @Override
@@ -46,8 +42,7 @@ public class MonthHandler extends DefaultHandler {
       final int dayInMonth = Integer.parseInt(attrs.getValue("date"));
       final WorkDay workDay = new WorkDay(year, month, dayInMonth);
       
-      if (!searchActive ||
-          (searchActive && wanted.isHit(workDay.getDate()))) {   
+      if (wanted == null || wanted.isHit(workDay.getDate())) {   
         currentMonth.addWorkDay(workDay);
             
         final ContentHandler workDayHandler = 
