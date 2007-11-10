@@ -9,11 +9,11 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 public class WorkDayHandler extends DefaultHandler {
-  private transient final XMLReader reader;
-  private transient final ContentHandler parentHandler;
-  private transient final WorkDay currentWorkDay;
+  private final XMLReader reader;
+  private final ContentHandler parentHandler;
+  private final WorkDay currentWorkDay;
 
-  public WorkDayHandler(final Attributes attributes, final XMLReader reader, 
+  public WorkDayHandler(final XMLReader reader, 
                         final ContentHandler parentHandler, 
                         final WorkDay currentWorkDay)  
       throws SAXException {
@@ -27,14 +27,14 @@ public class WorkDayHandler extends DefaultHandler {
                            final String qName, final Attributes attributes) 
       throws SAXException {
     if ("activity".equals(qName)) {
-      final int actId = Integer.parseInt(attributes.getValue("id"));
       assert(currentWorkDay != null);
+      final int actId = Integer.parseInt(attributes.getValue("id"));
       ActivityInfo actInfo = new ActivityInfo(actId);
       currentWorkDay.addActivity(actInfo);
       
       final ContentHandler activityHandler = 
-        new ActivityInfoHandler(attributes, reader, this, currentWorkDay.getDate(), 
-                            actInfo);
+        new ActivityInfoHandler(attributes, reader, this, 
+                                currentWorkDay.getDate(), actInfo);
       
       reader.setContentHandler(activityHandler);
     } else if ("duration".equals(qName)) {
