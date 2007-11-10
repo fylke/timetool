@@ -48,7 +48,7 @@ public class YearParser extends DefaultHandler {
       final Month month = new Month(Integer.parseInt(attrs.getValue("id")), year.getId());
       year.addMonth(month);
            
-      final ContentHandler monthHandler = new MonthHandler(attrs, reader, this, month, wanted);
+      final ContentHandler monthHandler = new MonthHandler(reader, this, month, wanted);
       reader.setContentHandler(monthHandler);
     }
   }
