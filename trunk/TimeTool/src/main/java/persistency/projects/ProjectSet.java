@@ -4,7 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class ProjectSet {
+import persistency.Persistable;
+import persistency.PersistableType;
+
+public class ProjectSet implements Persistable {
 	private int id;
   private Map<Integer, Company> companies;
   
@@ -69,6 +72,11 @@ public class ProjectSet {
     
     return objRep.toString();
   }
+  
+	@Override
+	public PersistableType getPersistableType() {
+		return PersistableType.PROJ_SET;
+	}
 
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
