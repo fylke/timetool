@@ -90,7 +90,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
   void storeUser(final Settings user) {
     user.setFirstName(firstNameTF.getText());
     user.setLastName(lastNameTF.getText());
-    user.setEmployedAt(((Company) compCoB.getSelected()).getId());
+    user.setEmployerId(((Company) compCoB.getSelected()).getId());
 
     try {
 			user.store();
