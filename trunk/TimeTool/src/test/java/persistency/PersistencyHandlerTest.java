@@ -14,28 +14,19 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import persistency.projects.ProjSetConfig;
-import persistency.projects.ProjectSet;
-import persistency.projects.ProjectsFactory;
-import persistency.settings.Settings;
-import persistency.settings.SettingsFactory;
 import persistency.year.SearchControl;
 import persistency.year.Year;
 import persistency.year.YearConfig;
 import persistency.year.YearFactory;
 
 public final class PersistencyHandlerTest {
-  private static ProjectsFactory pf;
   private static YearFactory yf;
-  private static SettingsFactory sf;
   private static PersistencyUtils ph;
   private static ByteArrayOutputStream baos;
 
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
-    pf = new ProjectsFactory();
     yf = new YearFactory();
-    sf = new SettingsFactory();
     ph = new PersistencyUtils();
   }
 
@@ -121,45 +112,5 @@ public final class PersistencyHandlerTest {
     final Year testYear = ph.readYear(testYearStream, searchControl);
 
     assertEquals("Generated test object and key not equal!", testYear, yearKey);
-  }
-
-  @Test
-  public final void testWriteYearSimple() throws Exception {
-    int year = 1;
-    short nrOfMonths = 1;
-    short nrOfDaysEachMonth = 1;
-    int nrOfActsEachDay = 1;
-    SearchControl searchControl = null; // Makes no sense when writing
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
-                                           nrOfActsEachDay, searchControl);
-
-    final Year yearToWrite = yf.getYearWithConfig(yearConfig);
-    final String yearOutputKey = yf.getXmlYearWithConfig(yearConfig);
-    final ByteArrayOutputStream yearStream = new ByteArrayOutputStream();
-
-    ph.writeYear(yearToWrite, yearStream);
-
-    assertEquals("Generated test stream and output key not equal!",
-                 yearOutputKey, yearStream.toString());
-  }
-
-  @Test
-  public final void testWriteYearHarder() throws Exception {
-    int year = 1;
-    short nrOfMonths = 6;
-    short nrOfDaysEachMonth = 6;
-    int nrOfActsEachDay = 6;
-    SearchControl searchControl = null; // Makes no sense when writing
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
-                                           nrOfActsEachDay, searchControl);
-
-    final Year yearToWrite = yf.getYearWithConfig(yearConfig);
-    final String yearOutputKey = yf.getXmlYearWithConfig(yearConfig);
-    final ByteArrayOutputStream yearStream = new ByteArrayOutputStream();
-
-    ph.writeYear(yearToWrite, yearStream);
-
-    assertEquals("Generated test stream and output key not equal!",
-                 yearOutputKey, yearStream.toString());
   }
 }
