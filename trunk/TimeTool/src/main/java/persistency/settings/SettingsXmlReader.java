@@ -14,21 +14,20 @@ import org.xml.sax.XMLReader;
 
 import persistency.FileParserFactory;
 import persistency.PersistencyException;
-import persistency.PersistencyUtils;
 
 public class SettingsXmlReader implements SettingsFileReader {
 	/* (non-Javadoc)
 	 * @see persistency.settings.SettingsReader#populate(persistency.settings.Settings)
 	 */
-  public void populate(final Settings settings, final String filename) throws FileNotFoundException, PersistencyException {
-    PersistencyUtils ph = new PersistencyUtils();
+  public void populate(final Settings settings, final File absPath)
+  		throws FileNotFoundException, PersistencyException {
+//    PersistencyUtils ph = new PersistencyUtils();
 
-    File storDir = ph.getStorageDir();
-    storDir.mkdir();
-    File storageFile = new File(storDir, filename);
+//    File storDir = ph.getStorageDir();
+//    storDir.mkdir();
+//    File storageFile = new File(storDir, absFilename);
 
-    final Reader fr = new FileReader(storageFile);
-
+    final Reader fr = new FileReader(absPath);
     XMLReader settingsParser;
 		try {
 			settingsParser = FileParserFactory.getParser("settings");
@@ -53,9 +52,7 @@ public class SettingsXmlReader implements SettingsFileReader {
 		} finally {
       try {
         fr.close();
-      } catch (final IOException e) {
-        // We don't care if closing fails...
-      }
+      } catch (final IOException e) { /* We don't care if closing fails... */ }
     }
   }
 }

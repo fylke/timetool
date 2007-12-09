@@ -42,7 +42,7 @@ public class SettingsParser extends DefaultHandler implements ContentHandler {
       userSettings.setFirstName(attrs.getValue("first"));
       userSettings.setLastName(attrs.getValue("last"));
     } else if ((ns + "employedAt").equals(qName)) {
-      userSettings.setEmployedAt(attrs.getValue("id")); 
+      userSettings.setEmployerId(attrs.getValue("id")); 
     } else if ((ns + "projectSet").equals(qName)) {
       userSettings.setProjectSetId(attrs.getValue("id"));
     } else if ((ns + "lunchBreak").equals(qName)) {
