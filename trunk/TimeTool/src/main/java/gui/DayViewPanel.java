@@ -80,7 +80,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
           }
         );
     } else if (e.getSource().equals(createNewTabBT)) {
-      activityPanel.add(new ActivityPanel(currentDay));
+      activityPanel.add(new ActivityPanel(currentDay, user));
     }
   }
 
@@ -110,7 +110,7 @@ public class DayViewPanel extends JPanel implements ActionListener {
     add(dateLabel, "d");
 
     activityPanel = new JTabbedPane();
-    activityPanel.add(new ActivityPanel(currentDay));
+    activityPanel.add(new ActivityPanel(currentDay, user));
     add(activityPanel, "a");
 
     commonSettingsUpperLeftPanel = new JPanel();
