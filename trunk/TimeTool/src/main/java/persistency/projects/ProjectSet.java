@@ -12,8 +12,6 @@ import persistency.Persistable;
 import persistency.PersistencyException;
 import persistency.PersistencyUtils;
 import persistency.XmlUtils;
-import persistency.settings.SettingsFileReader;
-import persistency.settings.SettingsXmlReader;
 
 public class ProjectSet implements Persistable {
 	private static final String FILE_NAME = "projectSet.xml";
