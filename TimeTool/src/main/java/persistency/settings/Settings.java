@@ -9,11 +9,12 @@
 
 package persistency.settings;
 
+import persistency.Persistable;
 import persistency.projects.Company;
 import persistency.projects.ProjectSet;
 
 
-public interface Settings {
+public interface Settings extends Persistable {
     Company getEmployedAt();
 
     int getEmployerId();
@@ -35,8 +36,6 @@ public interface Settings {
     void setEmployedAt(final int employedAt);
 
     void setFirstName(final String userFirstName);
-
-    void setInstance(final Settings settings);
 
     void setLastName(final String userLastName);
 
