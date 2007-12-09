@@ -15,7 +15,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class YearParser extends DefaultHandler {
   private XMLReader reader;
   private Year year;
-  private SearchControl wanted;
+  public SearchControl wanted;
   
   public YearParser(final XMLReader reader) {
     this.reader = reader;
@@ -23,10 +23,6 @@ public class YearParser extends DefaultHandler {
   
   public void setTargetObject(final Year year) {
     this.year = year;
-  }
-  
-  public void setSearchControl(final SearchControl wanted) {
-    this.wanted = wanted;
   }
 
   public Year parse(final InputSource is) throws SAXException, IOException, 
@@ -42,10 +38,10 @@ public class YearParser extends DefaultHandler {
                            final String qName, final Attributes attrs) 
       throws SAXException {
     if ("year".equals(qName)) {
-      year.setId(Integer.parseInt(attrs.getValue("id")));
+    	year.setId(Integer.parseInt(attrs.getValue("id")));
     } else if ("month".equals(qName)) {
       assert(year != null);
-      final Month month = new Month(Integer.parseInt(attrs.getValue("id")), year.getId());
+      final Month month = new Month(Integer.parseInt(attrs.getValue("id")), year.id);
       year.addMonth(month);
            
       final ContentHandler monthHandler = new MonthHandler(reader, this, month, wanted);

@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Year {
-  private int id;
-  private Map<Integer, Month> months;
+  int id;
+  Map<Integer, Month> months;
   
   public Year() {
     super();
@@ -18,15 +18,15 @@ public class Year {
     months = new TreeMap<Integer, Month>();
   }
   
-  public void setId(final int id) {
-    this.id = id;
-  }
-  
   public int getId() {
-    return id;
-  }
-  
-  /**
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
    * @return the indicated month
    */
   public Month getMonth(final int monthId) {

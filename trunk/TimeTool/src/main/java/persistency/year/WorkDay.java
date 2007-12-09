@@ -29,17 +29,13 @@ public class WorkDay {
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
   private OvertimeType treatOvertimeAs;
-  private Settings userSettings;
 
-  public WorkDay(final int year, final int month, final int dateInMonth, Settings user) {
-    this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0), user);
+  public WorkDay(final int year, final int month, final int dateInMonth) {
+    this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0));
   }
 
-  public WorkDay(final ReadableDateTime date, Settings user) {
+  public WorkDay(final ReadableDateTime date) {
     super();
-
-    userSettings = user;
-    treatOvertimeAs = userSettings.getTreatOvertimeAs();
     this.date = date;
     activities = new TreeMap<Integer, ActivityInfo>();
   }
@@ -70,13 +66,6 @@ public class WorkDay {
    */
   public ReadableDuration getDuration() {
     return new Duration(startTime, endTime);
-  }
-
-  /**
-   * @return the settings
-   */
-  public Settings getUserSettings() {
-    return userSettings;
   }
 
   /**
