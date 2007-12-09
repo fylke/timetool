@@ -1,34 +1,45 @@
 package persistency.settings;
 
 import static java.lang.Integer.parseInt;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+
+import persistency.PersistencyException;
+import persistency.PersistencyUtils;
+import persistency.XmlUtils;
 import persistency.projects.Company;
 import persistency.projects.ProjectSet;
 
 public class UserSettings implements Settings {
+	private static final String FILE_NAME = "settings.xml";
+
   public enum OvertimeType {
-    FLEX("flex"), 
-    COMP("comp"), 
+    FLEX("flex"),
+    COMP("comp"),
     PAID("paid");
-    
+
     private final String stringRepr;
-    
+
     OvertimeType(String stringRepr) {
       this.stringRepr = stringRepr;
     }
-    
+
     public static OvertimeType transOvertimeType(String overtimeType) {
       if (OvertimeType.FLEX.toString().equalsIgnoreCase(overtimeType)) {
         return OvertimeType.FLEX;
       } else if (OvertimeType.COMP.toString().equalsIgnoreCase(overtimeType)) {
         return OvertimeType.COMP;
       } else if (OvertimeType.PAID.toString().equalsIgnoreCase(overtimeType)) {
-        return OvertimeType.PAID; 
+        return OvertimeType.PAID;
       } else {
-        throw new IllegalArgumentException("Argument \"" + overtimeType + 
+        throw new IllegalArgumentException("Argument \"" + overtimeType +
                                            "\" is not an overtime type!");
       }
     }
-    
+
     /* (non-Javadoc)
      * @see java.lang.Enum#toString()
      */
@@ -37,9 +48,9 @@ public class UserSettings implements Settings {
       return stringRepr;
     }
   }
-  
-  private static Settings instance;
-  
+
+  private String ns = "";
+
   private String userFirstName;
   private String userLastName;
   private int employedAt;
@@ -47,25 +58,64 @@ public class UserSettings implements Settings {
   private ProjectSet projectSet;
   private int lunchBreak;
   private OvertimeType treatOvertimeAs;
-  
-  private UserSettings() {
+
+  public UserSettings() {
     lunchBreak = 40;
     treatOvertimeAs = OvertimeType.FLEX;
     projectSet = new ProjectSet();
   }
-  
-  public static Settings getInstance() {
-    if (instance == null) {
-      return new UserSettings();
-    } 
-    return instance;
-  }
-  
-  public void setInstance(final Settings settings) {
-    instance = settings;
-  }
-    
-  /* (non-Javadoc)
+
+	@Override
+	public void populate() throws PersistencyException, FileNotFoundException {
+		final SettingsFileReader sr = new SettingsXmlReader();
+		sr.populate(this, FILE_NAME);
+	}
+
+	@Override
+	public synchronized void store() throws PersistencyException {
+		PersistencyUtils ph = new PersistencyUtils();
+		final String absFilename = ph.getStorageDir() + File.separator + FILE_NAME;
+		PrintWriter pw;
+			try {
+				pw = new PrintWriter(new FileOutputStream(absFilename));
+			} catch (FileNotFoundException e) {
+				try {
+					pw = new PrintWriter(new FileOutputStream(absFilename));
+				} catch (FileNotFoundException e1) {
+					throw new PersistencyException("Could not create file " + absFilename +
+		                                     e.getMessage(), e);
+				}
+			}
+
+
+		pw.write(getXml());
+		pw.close();
+	}
+
+	String getXml() {
+  	final XmlUtils xmlUtils = new XmlUtils();
+    String indent = xmlUtils.indent(0);
+    final StringBuilder sb = xmlUtils.getHeader("settings");
+    indent = xmlUtils.incIndent(indent);
+
+    sb.append(indent + "<" + ns + "userName first=\"" + getFirstName() +
+                                        "\" last=\"" + getLastName() + "\"/>\n");
+    sb.append(indent + "<" + ns + "employedAt id=\"" + getEmployerId() + "\"/>\n");
+    sb.append(indent + "<" + ns + "projectSet id=\"" + getProjectSetId() + "\"/>\n");
+    sb.append(indent + "<" + ns + "lunchBreak duration=\"" + getLunchBreak() + "\"/>\n");
+    sb.append(indent + "<" + ns + "overtime treatAs=\"" + getTreatOvertimeAs() + "\"/>\n");
+
+    indent = xmlUtils.decIndent(indent);
+    sb.append(indent + "</" + ns + "settings>");
+
+    return sb.toString();
+	}
+
+	public void setNamespace(final String ns) {
+		this.ns = ns;
+	}
+
+	/* (non-Javadoc)
    * @see persistency.settings.Settings#getUserFirstName()
    */
   public String getFirstName() {
@@ -99,7 +149,7 @@ public class UserSettings implements Settings {
   public int getEmployerId() {
     return employedAt;
   }
-  
+
   /* (non-Javadoc)
    * @see persistency.settings.Settings#getEmployedAt()
    */
@@ -148,7 +198,7 @@ public class UserSettings implements Settings {
   public void setProjectSetId(final int projectSetId) {
     this.projectSetId = projectSetId;
   }
-  
+
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setProjectSetId(java.lang.String)
    */
@@ -162,7 +212,7 @@ public class UserSettings implements Settings {
   public void setLunchBreak(final int lunchBreak) {
     this.lunchBreak = lunchBreak;
   }
-  
+
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setLunchBreak(java.lang.String)
    */
@@ -190,7 +240,7 @@ public class UserSettings implements Settings {
   public void setEmployedAt(final int employedAt) {
     this.employedAt = employedAt;
   }
-  
+
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setEmployedAt(java.lang.String)
    */
@@ -213,7 +263,7 @@ public class UserSettings implements Settings {
     objRep.append("projectSetId: " + projectSetId + "\n");
     objRep.append("lunchBreak: " + lunchBreak + "\n");
     objRep.append("ProjectSet:\n" + projectSet);
-    
+
     return objRep.toString().trim();
   }
 
