@@ -1,41 +1,18 @@
 package persistency.year;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDate;
+import org.joda.time.ReadableDateTime;
 
 public class Week {
-  private List<WorkDay> workDays;
-  private LocalDate startDate;
+  public final List<WorkDay> workDays;
+  public final ReadableDateTime startDate;
+  public final int weekNumber;
   
-  public Week(LocalDate startDate) {
+  public Week(final ReadableDateTime startDate, final List<WorkDay> workDays) {
     super();
     this.startDate = startDate;
-  }
-
-  /**
-   * 
-   * @return the number of this week
-   */
-  public int getWeekNumber() {
-    return startDate.getWeekOfWeekyear();
-  }
-
-  /**
-   * @return the workDays
-   */
-  public List<WorkDay> getWorkDays() {
-    return workDays;
-  }
-
-  /**
-   * @param workDays the workDays to set
-   */
-  public void addWorkDay(final WorkDay workDay) {
-    if (workDays == null) {
-      workDays = new ArrayList<WorkDay>();
-    }
-    this.workDays.add(workDay);
+    this.workDays = workDays;
+    weekNumber = startDate.getWeekOfWeekyear();
   }
 }
