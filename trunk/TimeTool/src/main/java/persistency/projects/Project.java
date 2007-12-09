@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import persistency.ItemAlreadyDefinedException;
-
 
 public class Project implements MyComboBoxDisplayable {
   private String name;
