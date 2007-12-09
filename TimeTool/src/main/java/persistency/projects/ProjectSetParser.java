@@ -11,8 +11,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import persistency.ItemAlreadyDefinedException;
-
 public class ProjectSetParser extends DefaultHandler {
   private static transient final String ns = "";
   private transient XMLReader reader;

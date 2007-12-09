@@ -8,8 +8,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import persistency.ItemAlreadyDefinedException;
-
 
 public class CompanyHandler extends DefaultHandler {
   private final transient CharArrayWriter text;
