@@ -17,17 +17,18 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import persistency.MockHandler;
 
 public class ProjectHandlerTest {
-  private transient ProjectsFactory pf;
-  private transient Reader projectInput;
-  private transient XMLReader reader;
-  private transient MockHandler testHandler;
-  private transient Project testProject;
-  private transient ProjectHandler projectHandler;
-  private transient final int testProjId = 10;
-  private transient final String ns = "";
+  private static ProjectsFactory pf;
+  private static Reader projectInput;
+  private static XMLReader reader;
+  private static MockHandler testHandler;
+  private static Project testProject;
+  private static ProjectHandler projectHandler;
+  
+  private static final int testProjId = 10;
+  private static final String ns = "";
 
   @BeforeClass
-  public void setUpBeforeClass() throws Exception {
+  public static void setUpBeforeClass() throws Exception {
     pf = new ProjectsFactory();
     
     try {
@@ -53,7 +54,7 @@ public class ProjectHandlerTest {
   }
 
   @AfterClass
-  public void tearDown() throws Exception {
+  public static void tearDownAfterClass() throws Exception {
     projectInput.close();
   }
 
