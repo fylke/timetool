@@ -31,9 +31,9 @@ public interface Settings extends Persistable {
 
     UserSettings.OvertimeType getTreatOvertimeAs();
 
-    void setEmployedAt(final String employedAt);
+    void setEmployerId(final String employedAt);
 
-    void setEmployedAt(final int employedAt);
+    void setEmployerId(final int employedAt);
 
     void setFirstName(final String userFirstName);
 
@@ -51,5 +51,5 @@ public interface Settings extends Persistable {
 
     void setTreatOvertimeAs(UserSettings.OvertimeType treatOvertimeAs);
 
-    void setTreatOvertimeAs(String treatOvertimeAs);   
+    void setTreatOvertimeAs(String treatOvertimeAs);
 }

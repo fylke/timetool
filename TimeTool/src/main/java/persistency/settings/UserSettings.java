@@ -62,13 +62,15 @@ public class UserSettings implements Settings {
   public UserSettings() {
     lunchBreak = 40;
     treatOvertimeAs = OvertimeType.FLEX;
-    projectSet = new ProjectSet();
   }
 
 	@Override
 	public void populate() throws PersistencyException, FileNotFoundException {
+		PersistencyUtils ph = new PersistencyUtils();
+		final File absPath = new File(ph.getStorageDir() + File.separator + FILE_NAME);
+
 		final SettingsFileReader sr = new SettingsXmlReader();
-		sr.populate(this, FILE_NAME);
+		sr.populate(this, absPath);
 	}
 
 	@Override
@@ -76,17 +78,16 @@ public class UserSettings implements Settings {
 		PersistencyUtils ph = new PersistencyUtils();
 		final String absFilename = ph.getStorageDir() + File.separator + FILE_NAME;
 		PrintWriter pw;
+		try {
+			pw = new PrintWriter(new FileOutputStream(absFilename));
+		} catch (FileNotFoundException e) {
 			try {
 				pw = new PrintWriter(new FileOutputStream(absFilename));
-			} catch (FileNotFoundException e) {
-				try {
-					pw = new PrintWriter(new FileOutputStream(absFilename));
-				} catch (FileNotFoundException e1) {
-					throw new PersistencyException("Could not create file " + absFilename +
-		                                     e.getMessage(), e);
-				}
+			} catch (FileNotFoundException e1) {
+				throw new PersistencyException("Could not create file " + absFilename
+																				+ e.getMessage(), e);
 			}
-
+		}
 
 		pw.write(getXml());
 		pw.close();
@@ -113,6 +114,10 @@ public class UserSettings implements Settings {
 
 	public void setNamespace(final String ns) {
 		this.ns = ns;
+	}
+
+	public String getNamespace() {
+		return ns;
 	}
 
 	/* (non-Javadoc)
@@ -144,7 +149,7 @@ public class UserSettings implements Settings {
   }
 
   /* (non-Javadoc)
-   * @see persistency.settings.Settings#getEmployerId()
+   * @see persistency.settings.Settings#getEmployedAt()
    */
   public int getEmployerId() {
     return employedAt;
@@ -237,14 +242,14 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setEmployedAt(int)
    */
-  public void setEmployedAt(final int employedAt) {
+  public void setEmployerId(final int employedAt) {
     this.employedAt = employedAt;
   }
 
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setEmployedAt(java.lang.String)
    */
-  public void setEmployedAt(final String employedAt) {
+  public void setEmployerId(final String employedAt) {
     this.employedAt = parseInt(employedAt);
   }
 
