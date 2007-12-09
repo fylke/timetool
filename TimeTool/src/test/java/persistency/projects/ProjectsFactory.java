@@ -1,6 +1,5 @@
 package persistency.projects;
 
-import persistency.ItemAlreadyDefinedException;
 import persistency.XmlUtils;
 
 public class ProjectsFactory {
@@ -29,8 +28,7 @@ public class ProjectsFactory {
     return projSet;
   }
   
-  public Company getCompany(final int id, final ProjSetConfig projSetConfig) 
-      throws Exception {
+  public Company getCompany(final int id, final ProjSetConfig projSetConfig) {
     final Company comp = new Company();
     comp.setName(COMP_NAME + id);
     comp.setShortName(COMP_SHORT_NAME + id);
@@ -45,8 +43,7 @@ public class ProjectsFactory {
   }
   
   public Project getProject(final int id, final int depth, 
-                            final ProjSetConfig projSetConfig) 
-      throws ItemAlreadyDefinedException {
+                            final ProjSetConfig projSetConfig) {
     Project child = new Project();
     child.setName(PROJ_NAME + id);
     child.setShortName(PROJ_SHORT_NAME + id);
