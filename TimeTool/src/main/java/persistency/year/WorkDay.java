@@ -16,30 +16,29 @@ import org.joda.time.ReadablePeriod;
 
 import persistency.XmlUtils;
 import persistency.settings.Settings;
-import persistency.settings.UserSettings;
 import persistency.settings.UserSettings.OvertimeType;
 
 public class WorkDay {
   public boolean isReported;
   public boolean journalWritten;
-  
+
   private static int nextActId = 0;
-  
+
   private Map<Integer, ActivityInfo> activities;
   private ReadableDateTime date;
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
   private OvertimeType treatOvertimeAs;
   private Settings userSettings;
-  
-  public WorkDay(final int year, final int month, final int dateInMonth) {
-    this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0));
+
+  public WorkDay(final int year, final int month, final int dateInMonth, Settings user) {
+    this(new DateTime(year, month, dateInMonth, 0, 0, 0, 0), user);
   }
-  
-  public WorkDay(final ReadableDateTime date) {
+
+  public WorkDay(final ReadableDateTime date, Settings user) {
     super();
-    
-    userSettings = UserSettings.getInstance();
+
+    userSettings = user;
     treatOvertimeAs = userSettings.getTreatOvertimeAs();
     this.date = date;
     activities = new TreeMap<Integer, ActivityInfo>();
@@ -72,7 +71,7 @@ public class WorkDay {
   public ReadableDuration getDuration() {
     return new Duration(startTime, endTime);
   }
-  
+
   /**
    * @return the settings
    */
@@ -85,7 +84,7 @@ public class WorkDay {
    */
   public void setEndTime(String endTime) {
   	final XmlUtils xmlUtils = new XmlUtils();
-    this.endTime = xmlUtils.stringToTime(endTime, date); 
+    this.endTime = xmlUtils.stringToTime(endTime, date);
   }
 
   /**
@@ -93,9 +92,9 @@ public class WorkDay {
    */
   public void setStartTime(String startTime) {
   	final XmlUtils xmlUtils = new XmlUtils();
-    this.startTime = xmlUtils.stringToTime(startTime, date); 
+    this.startTime = xmlUtils.stringToTime(startTime, date);
   }
-  
+
   /**
    * @param endTime the endTime to set
    */
@@ -116,7 +115,7 @@ public class WorkDay {
   public boolean isReported() {
     return isReported;
   }
-  
+
   /**
    * @return the journalWritten property
    */
@@ -144,9 +143,9 @@ public class WorkDay {
   public void setTreatOvertimeAs(String treatOvertimeAs) {
     this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
   }
-  
+
   /**
-   * Adds an activity to this work day, assumes that the activity is already 
+   * Adds an activity to this work day, assumes that the activity is already
    * properly defined.
    * @param actId
    */
@@ -157,45 +156,45 @@ public class WorkDay {
   public ActivityInfo getActivity(final int actId) {
     return activities.get(actId);
   }
-  
+
   public Collection<ActivityInfo> getAllActivities() {
     return activities.values();
   }
-    
+
   public LocalTime getDayBalanceAsLocalTime() {
     ReadablePeriod dayBalance = getDayBalance();
-    
-    return new LocalTime(dayBalance.get(DurationFieldType.hours()), 
-                         dayBalance.get(DurationFieldType.minutes())); 
+
+    return new LocalTime(dayBalance.get(DurationFieldType.hours()),
+                         dayBalance.get(DurationFieldType.minutes()));
   }
-  
+
   public int getNewActId() {
     int max = Collections.max(activities.keySet());
     while (activities.keySet().contains(WorkDay.nextActId)) {
       WorkDay.nextActId++;
     }
-    
+
     return WorkDay.nextActId;
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder(); 
+    StringBuilder objRep = new StringBuilder();
     objRep.append("date: " + date.toString("d/M") + "\n");
     objRep.append("startTime: " + startTime.toString("kk:mm") + "\n");
     objRep.append("endTime: " + endTime.toString("kk:mm") + "\n");
     objRep.append("treatOvertimeAs: " + treatOvertimeAs + "\n");
     objRep.append("isReported: " + isReported + "\n");
     objRep.append("journalWritten: " + journalWritten + "\n");
-    
+
     for (ActivityInfo act : activities.values()) {
       objRep.append("Activities:\n");
       objRep.append(act.toString() + "\n");
     }
-    
+
     return objRep.toString();
   }
 
@@ -259,17 +258,17 @@ public class WorkDay {
       return false;
     return true;
   }
-  
+
   private ReadablePeriod getDayBalance() {
     Duration dayBalance = new Duration(Duration.ZERO);
     for (final ActivityInfo actInfo : activities.values()) {
-      dayBalance.plus(new Duration(actInfo.getStartTime(), 
+      dayBalance.plus(new Duration(actInfo.getStartTime(),
                                    actInfo.getEndTime()));
       if (actInfo.includeLunch) {
         dayBalance.plus(actInfo.getLunchLenght());
       }
     }
-    
+
     return dayBalance.toPeriod(PeriodType.minutes());
   }
 }
