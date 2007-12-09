@@ -163,7 +163,7 @@ public class ActivityPanel extends JPanel implements ActionListener,
   private Vector<MyComboBoxDisplayable> getComboContents() {
     final Vector<MyComboBoxDisplayable> acts =
       new Vector<MyComboBoxDisplayable>();
-    for (Company comp : currentDay.getUserSettings().getProjectSet().getCompanies()) {
+    for (Company comp : user.getProjectSet().getCompanies()) {
       for(Project proj : comp.getProjects()) {
         acts.addAll(proj.getActivities());
       }

@@ -17,7 +17,6 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
-import persistency.projects.ActAdder;
 import persistency.projects.Company;
 import persistency.projects.Project;
 import persistency.projects.ProjectSet;
@@ -104,13 +103,13 @@ public class CreateActFrame extends JFrame implements
       if (validInput()) {
         final Company comp = (Company) compCoB.getSelected();
         final Project proj = (Project) projCoB.getSelected();
-        java.awt.EventQueue.invokeLater(new ActAdder(this,
-                                                     comp.getId(),
-                                                     proj.getId(),
-                                                     nameTF.getText(),
-                                                     shortNameTF.getText(),
-                                                     reportCodeTF.getText(),
-                                                     projectSet));
+//        java.awt.EventQueue.invokeLater(new ActAdder(this,
+//                                                     comp.getId(),
+//                                                     proj.getId(),
+//                                                     nameTF.getText(),
+//                                                     shortNameTF.getText(),
+//                                                     reportCodeTF.getText(),
+//                                                     projectSet));
       setVisible(false);
       dispose();
       }
@@ -124,13 +123,13 @@ public class CreateActFrame extends JFrame implements
         reportCodeTF.setText("");
         final Company comp = (Company) compCoB.getSelected();
         final Project proj = (Project) projCoB.getSelected();
-        java.awt.EventQueue.invokeLater(new ActAdder(this,
-                                                     comp.getId(),
-                                                     proj.getId(),
-                                                     nameTF.getText(),
-                                                     shortNameTF.getText(),
-                                                     reportCodeTF.getText(),
-                                                     projectSet));
+//        java.awt.EventQueue.invokeLater(new ActAdder(this,
+//                                                     comp.getId(),
+//                                                     proj.getId(),
+//                                                     nameTF.getText(),
+//                                                     shortNameTF.getText(),
+//                                                     reportCodeTF.getText(),
+//                                                     projectSet));
       }
     }
   }
