@@ -132,7 +132,7 @@ public class CreateCompanyFrame extends JFrame implements ActionListener {
   }
 
   private boolean validInput() {
-    StringBuilder errorMsg = new StringBuilder();
+    final StringBuilder errorMsg = new StringBuilder();
     if (nameTF.getText().isEmpty()) {
        errorMsg.append("Företagets namn\n");
     }

@@ -25,11 +25,11 @@ import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 public class DayViewPanel extends JPanel implements ActionListener {
   private static final long serialVersionUID = 1L;
 
-  private WorkDay currentDay;
-  private Settings user;
+  private final WorkDay currentDay;
+  private final Settings user;
 
   private ZoneLayout layout;
-  private ReadableDateTime date;
+  private final ReadableDateTime date;
   private JLabel dateLabel;
   private JTabbedPane activityPanel;
   private Font font;

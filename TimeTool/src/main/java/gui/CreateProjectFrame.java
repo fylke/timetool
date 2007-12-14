@@ -38,7 +38,7 @@ public class CreateProjectFrame extends JFrame implements
 
   private JLabel compLabel;
   private MyComboBox compCoB;
-  private String compCoBEmptyMsg = "Inga företag definierade";
+  private final String compCoBEmptyMsg = "Inga företag definierade";
 
   private JLabel nameLabel;
   private JTextField nameTF;
@@ -67,7 +67,7 @@ public class CreateProjectFrame extends JFrame implements
     compCoB.setContents(getComboContents());
   }
 
-  public void focusLost(FocusEvent e) {}
+  public void focusLost(final FocusEvent e) {}
 
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(okBT)) {
@@ -169,7 +169,7 @@ public class CreateProjectFrame extends JFrame implements
   }
 
   private Vector<MyComboBoxDisplayable> getComboContents() {
-    Vector<MyComboBoxDisplayable> comps = new Vector<MyComboBoxDisplayable>();
+    final Vector<MyComboBoxDisplayable> comps = new Vector<MyComboBoxDisplayable>();
     if (projectSet.getCompanies() != null) {
       comps.addAll(projectSet.getCompanies());
     }
@@ -177,7 +177,7 @@ public class CreateProjectFrame extends JFrame implements
   }
 
   private boolean validInput() {
-    StringBuilder errorMsg = new StringBuilder();
+    final StringBuilder errorMsg = new StringBuilder();
     if (nameTF.getText().isEmpty()) {
        errorMsg.append("Projektets namn\n");
     }

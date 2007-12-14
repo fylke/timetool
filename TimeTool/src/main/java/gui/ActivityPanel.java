@@ -39,7 +39,7 @@ public class ActivityPanel extends JPanel implements ActionListener,
   private JPanel upperPanel;
   private JLabel activityLabel;
   private MyComboBox actCoB;
-  private String actCoBEmptyMsg = "Inga aktiviteter definerade";
+  private final String actCoBEmptyMsg = "Inga aktiviteter definerade";
   private JButton createNewActBT;
 
   private TimePanel timePanel;
@@ -52,14 +52,14 @@ public class ActivityPanel extends JPanel implements ActionListener,
   private JButton deleteTabBT;
   private JButton saveTabBT;
 
-  public ActivityPanel(final WorkDay currentDay, Settings user) {
+  public ActivityPanel(final WorkDay currentDay, final Settings user) {
     super();
     this.currentDay = currentDay;
     this.user = user;
     initComponents();
   }
 
-  public ActivityPanel(final WorkDay currentDay, Settings user, final int actId) {
+  public ActivityPanel(final WorkDay currentDay, final Settings user, final int actId) {
     this(currentDay, user);
     this.actId = actId;
   }
@@ -163,8 +163,8 @@ public class ActivityPanel extends JPanel implements ActionListener,
   private Vector<MyComboBoxDisplayable> getComboContents() {
     final Vector<MyComboBoxDisplayable> acts =
       new Vector<MyComboBoxDisplayable>();
-    for (Company comp : user.getProjectSet().getCompanies()) {
-      for(Project proj : comp.getProjects()) {
+    for (final Company comp : user.getProjectSet().getCompanies()) {
+      for(final Project proj : comp.getProjects()) {
         acts.addAll(proj.getActivities());
       }
     }

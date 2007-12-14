@@ -10,16 +10,16 @@ import javax.swing.JButton;
 public class TriangleButton extends JButton {
   public static final int LEFT = -1;
   public static final int RIGHT = 1;
-    
+
   private static final long serialVersionUID = 751707230340153858L;
   private final int direction;
   private Polygon button;
-  
+
   public TriangleButton(final int direction) {
     super();
 
     this.direction = direction;
-        
+
     // These statements enlarge the button so that it
     // becomes a circle rather than an oval.
     final Dimension size = getPreferredSize();
@@ -32,17 +32,17 @@ public class TriangleButton extends JButton {
     setContentAreaFilled(false);
   }
 
-  protected void buildTriangle(final Dimension size) {    
+  protected void buildTriangle(final Dimension size) {
     final int[] x3Points = { 0, size.width/2, size.width/2 };
     final int[] y3Points = { size.height/2, 0, size.height };
 
     if (direction == RIGHT) {
       x3Points[0] = size.width;
     }
-        
+
     button = new Polygon(x3Points, y3Points, 3);
   }
-  
+
   // Paint the round background and label.
   @Override
   protected void paintComponent(final Graphics g) {
@@ -62,7 +62,7 @@ public class TriangleButton extends JButton {
   @Override
   protected void paintBorder(final Graphics g) {
     g.setColor(getForeground());
-    g.drawPolygon(button); 
+    g.drawPolygon(button);
   }
 
   @Override

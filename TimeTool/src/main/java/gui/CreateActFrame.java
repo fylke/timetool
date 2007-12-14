@@ -49,12 +49,12 @@ public class CreateActFrame extends JFrame implements
 
   private JLabel compLabel;
   private MyComboBox compCoB;
-  private String compEmptyMsg = "Inga företag definierade";
+  private final String compEmptyMsg = "Inga företag definierade";
   private JButton newCompBT;
 
   private JLabel projLabel;
   private MyComboBox projCoB;
-  private String projEmptyMsg = "Inga projekt definierade";
+  private final String projEmptyMsg = "Inga projekt definierade";
   private JButton newProjBT;
 
   private JButton cancelBT;
@@ -76,7 +76,7 @@ public class CreateActFrame extends JFrame implements
     projCoB.setContents(getComboContents("projects"));
   }
 
-  public void focusLost(FocusEvent e) {}
+  public void focusLost(final FocusEvent e) {}
 
   public void actionPerformed(final ActionEvent e) {
     if (e.getSource().equals(newCompBT)) {
@@ -216,13 +216,13 @@ public class CreateActFrame extends JFrame implements
   }
 
   private Vector<MyComboBoxDisplayable> getComboContents(final String kind) {
-    Vector<MyComboBoxDisplayable> disps = new Vector<MyComboBoxDisplayable>();
-    if ("company".equalsIgnoreCase(kind) && projectSet.getCompanies() != null) {
+    final Vector<MyComboBoxDisplayable> disps = new Vector<MyComboBoxDisplayable>();
+    if ("company".equalsIgnoreCase(kind) && (projectSet.getCompanies() != null)) {
       disps.addAll(projectSet.getCompanies());
     } else if ("project".equalsIgnoreCase(kind)) {
       final Company currComp = (Company) compCoB.getSelected();
 
-      if (currComp != null && currComp.getProjects() != null) {
+      if ((currComp != null) && (currComp.getProjects() != null)) {
         disps.addAll(currComp.getProjects());
       }
     }
@@ -230,7 +230,7 @@ public class CreateActFrame extends JFrame implements
   }
 
   private boolean validInput() {
-    StringBuilder errorMsg = new StringBuilder();
+    final StringBuilder errorMsg = new StringBuilder();
     if (nameTF.getText().isEmpty()) {
        errorMsg.append("Aktivitetens namn\n");
     }

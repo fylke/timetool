@@ -17,7 +17,7 @@ public class TimeTool extends JFrame {
   private JTabbedPane background;
   private JPanel dayViewPane;
   private JPanel weekViewPane;
-  private Settings user;
+  private final Settings user;
 
   public TimeTool(final Settings userSettings) {
     super();
@@ -27,12 +27,12 @@ public class TimeTool extends JFrame {
   }
 
   public static void main(final String... args) {
-  	Settings userSettings = new UserSettings();
+  	final Settings userSettings = new UserSettings();
     try {
 			userSettings.populate();
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			new CreateUserFrame(userSettings).setVisible(true);
-		} catch (PersistencyException e) {
+		} catch (final PersistencyException e) {
 			throw new RuntimeException("Exception in initialization: " +  e.getMessage(), e);
 		}
 

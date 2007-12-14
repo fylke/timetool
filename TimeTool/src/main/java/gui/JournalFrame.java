@@ -20,27 +20,27 @@ import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
 public class JournalFrame extends JFrame {
   private static final long serialVersionUID = 1L;
-  
+
   private JPanel basePanel;
   private ZoneLayout layout;
-  
+
   private JLabel heading;
   private Font font;
   private LocalDateTime date;
-  
+
   private JScrollPane textAreaPanel;
   private JTextArea journalTA;
-  
+
   private JButton cancelBT;
   private JButton applyBT;
   private JButton okBT;
-  
+
   public JournalFrame() {
     super();
     initComponents();
     pack();
   }
-  
+
   private void initComponents() {
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
@@ -49,10 +49,10 @@ public class JournalFrame extends JFrame {
     setLocationRelativeTo(null); // Centers the window on the screen.
 
     font = new Font("Arial", 1, 20);
-    
+
     basePanel = new JPanel();
     basePanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-      
+
     layout = ZoneLayoutFactory.newZoneLayout();
     layout.addRow("h<h...........");
     layout.addRow("......6.......");
@@ -62,28 +62,28 @@ public class JournalFrame extends JFrame {
     layout.addRow("......6.......");
     layout.addRow("b...........>b");
     basePanel.setLayout(layout);
-    
+
     date = new LocalDateTime();
-    heading = new JLabel(date.dayOfWeek().getAsText() + " " + 
+    heading = new JLabel(date.dayOfWeek().getAsText() + " " +
                          date.getDayOfMonth() + "/" +
                          date.getMonthOfYear() + " v." +
                          date.getWeekOfWeekyear() + " " +
                          date.getYear());
     heading.setFont(font);
     basePanel.add(heading, "h");
-    
+
     journalTA = new JTextArea();
     textAreaPanel = new JScrollPane(journalTA);
     textAreaPanel.setPreferredSize(new Dimension(400, 200));
     basePanel.add(textAreaPanel, "t");
-    
+
     applyBT = new JButton("Spara");
     basePanel.add(applyBT, "b");
     cancelBT = new JButton("Avbryt");
     basePanel.add(cancelBT, "b");
     okBT = new JButton("OK");
     basePanel.add(okBT, "b");
-    
+
     add(basePanel);
   }
 }
