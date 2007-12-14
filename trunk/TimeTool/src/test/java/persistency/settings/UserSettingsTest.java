@@ -22,7 +22,7 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetNamespace() {
-		String testNs = "testNameSpace";
+		final String testNs = "testNameSpace";
 		final UserSettings testSettings = SF.getSettings();
 		testSettings.setNamespace(testNs);
 
@@ -31,7 +31,7 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetFirstName() {
-		String testName = "testName";
+		final String testName = "testName";
 		final UserSettings testSettings = SF.getSettings();
 		testSettings.setFirstName(testName);
 
@@ -40,7 +40,7 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetLastName() {
-		String testName = "testName";
+		final String testName = "testName";
 		final UserSettings testSettings = SF.getSettings();
 		testSettings.setLastName(testName);
 
@@ -49,8 +49,8 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetEmployerId() {
-		int testEmpId = 9;
-		String testEmpStringId = "9";
+		final int testEmpId = 9;
+		final String testEmpStringId = "9";
 		final UserSettings testSettings = SF.getSettings();
 
 		testSettings.setEmployerId(testEmpId);
@@ -62,12 +62,12 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetEmployedAt() {
-		ProjSetConfig config = new ProjSetConfig(1, 1, 0, 0, 0);
-		ProjectsFactory pf = new ProjectsFactory();
-		Company testComp = pf.getCompany(1, config);
-		int testCompId = testComp.getId();
+		final ProjSetConfig config = new ProjSetConfig(1, 1, 0, 0, 0);
+		final ProjectsFactory pf = new ProjectsFactory();
+		final Company testComp = pf.getCompany(1, config);
+		final int testCompId = testComp.getId();
 
-		ProjectSet ps = new ProjectSet();
+		final ProjectSet ps = new ProjectSet();
 		ps.addCompany(testComp);
 		final UserSettings testSettings = SF.getSettings();
 		testSettings.setProjectSet(ps);
@@ -78,8 +78,8 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetLunchBreak() {
-		int testLunchBreak = 9;
-		String testLunchBreakString = "9";
+		final int testLunchBreak = 9;
+		final String testLunchBreakString = "9";
 		final UserSettings testSettings = SF.getSettings();
 
 		testSettings.setLunchBreak(testLunchBreak);
@@ -91,9 +91,9 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetProjectSet() throws Exception {
-		ProjSetConfig config = new ProjSetConfig(1, 1, 0, 0, 0);
-		ProjectsFactory pf = new ProjectsFactory();
-		ProjectSet testProjSet = pf.getProjSetWithConfig(config);
+		final ProjSetConfig config = new ProjSetConfig(1, 1, 0, 0, 0);
+		final ProjectsFactory pf = new ProjectsFactory();
+		final ProjectSet testProjSet = pf.getProjSetWithConfig(config);
 
 		final UserSettings testSettings = SF.getSettings();
 		testSettings.setProjectSet(testProjSet);
@@ -102,8 +102,8 @@ public class UserSettingsTest {
 	}
 
 	public final void testGetAndSetTreatOvertimeAs() {
-		OvertimeType testOvertimeType = OvertimeType.COMP;
-		String testOvertimeTypeString = "comp";
+		final OvertimeType testOvertimeType = OvertimeType.COMP;
+		final String testOvertimeTypeString = "comp";
 		final UserSettings testSettings = SF.getSettings();
 
 		testSettings.setTreatOvertimeAs(testOvertimeType);
@@ -115,8 +115,8 @@ public class UserSettingsTest {
 
 	@Test
 	public final void testGetAndSetProjectSetId() {
-		int testProjSetId = 9;
-		String testProjSetIdString = "9";
+		final int testProjSetId = 9;
+		final String testProjSetIdString = "9";
 		final UserSettings testSettings = SF.getSettings();
 
 		testSettings.setProjectSetId(testProjSetId);
