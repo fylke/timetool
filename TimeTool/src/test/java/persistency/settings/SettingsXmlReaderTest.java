@@ -33,7 +33,7 @@ public class SettingsXmlReaderTest {
 	@Test
 	public final void testPopulate() throws Exception {
 		final SettingsXmlReader sxr = new SettingsXmlReader();
-		Settings user = SF.getSettings();
+		final Settings user = SF.getSettings();
 		sxr.populate(user, absPath);
 		assertEquals("Read settings didn't match the expected ones!", SF.getSettings(), user);
 	}
