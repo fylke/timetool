@@ -22,7 +22,7 @@ public class WeekViewPanel extends JPanel {
   private TriangleButton previous;
   private TriangleButton next;
 
-  private Settings user;
+  private final Settings user;
 
   public WeekViewPanel(final Settings user) {
     super();

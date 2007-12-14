@@ -9,19 +9,19 @@ import javax.swing.MutableComboBoxModel;
 
 public class MyComboBox extends JComboBox {
   public boolean dispLong = true;
-  
+
   private static final long serialVersionUID = 1L;
-  
-  private Vector<MyComboBoxDisplayable> contents;
-  private String emptyMsg;
+
+  private final Vector<MyComboBoxDisplayable> contents;
+  private final String emptyMsg;
   private static final String defEmptyMsg = "Inget definerat";
   private boolean isEmpty;
-  
+
   public MyComboBox() {
     this(new Vector<MyComboBoxDisplayable>(), defEmptyMsg);
   }
-  
-  public MyComboBox(final Vector<MyComboBoxDisplayable> contents, 
+
+  public MyComboBox(final Vector<MyComboBoxDisplayable> contents,
                     final String emptyMsg) {
     super();
     this.contents = contents;
@@ -31,49 +31,49 @@ public class MyComboBox extends JComboBox {
       makeEmpty();
     }
   }
-  
-  public void setContents(Collection<MyComboBoxDisplayable> contents) {
-    if (contents != null && !contents.isEmpty()) {
+
+  public void setContents(final Collection<MyComboBoxDisplayable> contents) {
+    if ((contents != null) && !contents.isEmpty()) {
       makeEmpty();
-      for (MyComboBoxDisplayable element : contents) {
+      for (final MyComboBoxDisplayable element : contents) {
         addContents(element);
       }
     }
   }
-  
-  public void addContents(Collection<MyComboBoxDisplayable> contents) {
-    if (contents != null && !contents.isEmpty()) {
-      for (MyComboBoxDisplayable element : contents) {
+
+  public void addContents(final Collection<MyComboBoxDisplayable> contents) {
+    if ((contents != null) && !contents.isEmpty()) {
+      for (final MyComboBoxDisplayable element : contents) {
         addContents(element);
       }
     }
   }
-  
-  public void addContents(MyComboBoxDisplayable element) {
+
+  public void addContents(final MyComboBoxDisplayable element) {
     if (element != null) {
       if (isEmpty) {
         makeUnEmpty();
       }
       contents.add(element);
-      String strToShow = dispLong ? element.getLongDispString() : 
+      final String strToShow = dispLong ? element.getLongDispString() :
                                     element.getShortDispString();
       ((MutableComboBoxModel) dataModel).addElement(strToShow);
     }
   }
-  
-  public void removeContents(Collection<MyComboBoxDisplayable> contents) {
-    if (contents != null && !contents.isEmpty()) {
+
+  public void removeContents(final Collection<MyComboBoxDisplayable> contents) {
+    if ((contents != null) && !contents.isEmpty()) {
       contents.removeAll(contents);
-      for (MyComboBoxDisplayable element : contents) {
+      for (final MyComboBoxDisplayable element : contents) {
         removeContents(element);
       }
     }
   }
-  
-  public void removeContents(MyComboBoxDisplayable element) {
-    if (element != null && contents.contains(element)) {
+
+  public void removeContents(final MyComboBoxDisplayable element) {
+    if ((element != null) && contents.contains(element)) {
       contents.remove(element);
-      String strToRem = dispLong ? element.getLongDispString() : 
+      final String strToRem = dispLong ? element.getLongDispString() :
                                    element.getShortDispString();
       ((MutableComboBoxModel) dataModel).removeElement(strToRem);
     }
@@ -81,18 +81,18 @@ public class MyComboBox extends JComboBox {
       makeEmpty();
     }
   }
-  
+
   public MyComboBoxDisplayable getSelected() {
     return isEmpty ? null : contents.get(getSelectedIndex());
   }
-  
+
   private void makeEmpty() {
     contents.clear();
     removeAllItems();
     ((MutableComboBoxModel) dataModel).addElement(emptyMsg);
     isEmpty = true;
   }
-  
+
   private void makeUnEmpty() {
     contents.clear();
     removeAllItems();

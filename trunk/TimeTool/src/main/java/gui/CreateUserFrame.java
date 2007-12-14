@@ -41,16 +41,16 @@ public class CreateUserFrame extends JFrame implements ActionListener {
 
   private JLabel compLabel;
   private MyComboBox compCoB;
-  private String compEmptyMsg = "Inga företag definierade";
+  private final String compEmptyMsg = "Inga företag definierade";
   private JButton newCompBT;
 
   private JButton cancelBT;
   private JButton applyBT;
   private JButton okBT;
 
-  private Settings userSettings;
+  private final Settings userSettings;
 
-  public CreateUserFrame(Settings userSettings) {
+  public CreateUserFrame(final Settings userSettings) {
     super();
     this.userSettings = userSettings;
     initComponents();
@@ -94,7 +94,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
 
     try {
 			user.store();
-		} catch (PersistencyException e) {
+		} catch (final PersistencyException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(),
                                     "File error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -166,8 +166,8 @@ public class CreateUserFrame extends JFrame implements ActionListener {
   }
 
   private Vector<MyComboBoxDisplayable> getComboContents() {
-    Vector<MyComboBoxDisplayable> disps = new Vector<MyComboBoxDisplayable>();
-    ProjectSet ps = userSettings.getProjectSet();
+    final Vector<MyComboBoxDisplayable> disps = new Vector<MyComboBoxDisplayable>();
+    final ProjectSet ps = userSettings.getProjectSet();
     if (ps.getCompanies() != null) {
       disps.addAll(ps.getCompanies());
     }
@@ -175,7 +175,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
   }
 
   private boolean isValidInput() {
-    StringBuilder errorMsg = new StringBuilder();
+    final StringBuilder errorMsg = new StringBuilder();
     if (firstNameTF.getText().isEmpty()) {
        errorMsg.append("Förnamn\n");
     }
