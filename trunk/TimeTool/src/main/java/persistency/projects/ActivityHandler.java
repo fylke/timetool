@@ -15,27 +15,27 @@ public class ActivityHandler extends DefaultHandler {
   final Activity currentActivity;
   final String ns;
 
-  public ActivityHandler(final Attributes attributes, final XMLReader reader, 
-                         final ContentHandler parentHandler, 
-                         final Activity currentActivity, final String ns)  
+  public ActivityHandler(final Attributes attributes, final XMLReader reader,
+                         final ContentHandler parentHandler,
+                         final Activity currentActivity, final String ns)
       throws SAXException {
     this.currentActivity = currentActivity;
     this.parentHandler = parentHandler;
     this.reader = reader;
     this.ns = ns;
-    
+
     text = new CharArrayWriter();
   }
-  
+
   @Override
-  public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attributes) 
+  public void startElement(final String uri, final String localName,
+                           final String qName, final Attributes attributes)
       throws SAXException {
     text.reset();
   }
 
   @Override
-  public void endElement(final String uri, final String localName, 
+  public void endElement(final String uri, final String localName,
                          final String qName)
       throws SAXException {
     if ((ns + "actName").equals(qName)) {
@@ -46,14 +46,14 @@ public class ActivityHandler extends DefaultHandler {
       currentActivity.setReportCode(getText());
     } else if ((ns + "activity").equals(qName)) {
       reader.setContentHandler(parentHandler);
-    } 
+    }
   }
 
   @Override
   public void characters(final char[] ch, final int start, final int length) {
     text.write(ch, start, length);
   }
-  
+
   String getText() {
     return text.toString().trim();
   }

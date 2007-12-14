@@ -8,7 +8,7 @@ public class Week {
   public final List<WorkDay> workDays;
   public final ReadableDateTime startDate;
   public final int weekNumber;
-  
+
   public Week(final ReadableDateTime startDate, final List<WorkDay> workDays) {
     super();
     this.startDate = startDate;

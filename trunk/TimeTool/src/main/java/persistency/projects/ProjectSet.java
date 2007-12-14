@@ -17,7 +17,7 @@ public class ProjectSet implements Persistable {
 	private static final String FILE_NAME = "projectSet.xml";
 
 	private int id;
-  private Map<Integer, Company> companies;
+  private final Map<Integer, Company> companies;
   private String ns = "";
 
   public ProjectSet() {
@@ -35,7 +35,7 @@ public class ProjectSet implements Persistable {
 
   @Override
 	public void populate() throws PersistencyException, FileNotFoundException {
-		PersistencyUtils ph = new PersistencyUtils();
+		final PersistencyUtils ph = new PersistencyUtils();
 		final File absPath = new File(ph.getStorageDir(), FILE_NAME);
 
 		final ProjectSetFileReader sr = new ProjectSetXmlReader();
@@ -44,14 +44,14 @@ public class ProjectSet implements Persistable {
 
 	@Override
 	public void store() throws PersistencyException {
-		PersistencyUtils ph = new PersistencyUtils();
+		final PersistencyUtils ph = new PersistencyUtils();
 		if (!ph.getStorageDir().exists()) ph.getStorageDir().mkdirs();
 
 		final File absPath = new File(ph.getStorageDir(), FILE_NAME);
 		PrintWriter pw;
 		try {
 			pw = new PrintWriter(new FileOutputStream(absPath));
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			throw new PersistencyException("Could not create file " + absPath
 																		 + e.getMessage(), e);
 		}
@@ -61,7 +61,7 @@ public class ProjectSet implements Persistable {
 	}
 
 	public Company getCompanyByName(final String name) {
-    for (Company comp : companies.values()) {
+    for (final Company comp : companies.values()) {
       if (comp.getName() == name) {
         return comp;
       }
@@ -93,7 +93,7 @@ public class ProjectSet implements Persistable {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 		this.id = id;
 	}
 
@@ -102,10 +102,10 @@ public class ProjectSet implements Persistable {
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder();
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("id: " + hashCode() + "\n");
 
-    for (Company company : companies.values()) {
+    for (final Company company : companies.values()) {
       objRep.append("Companies:\n");
       objRep.append(company.toString());
     }
@@ -128,7 +128,7 @@ public class ProjectSet implements Persistable {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)
@@ -147,10 +147,10 @@ public class ProjectSet implements Persistable {
   String getXml() {
   	final XmlUtils xmlUtils = new XmlUtils();
     String indent = xmlUtils.indent(0);
-    StringBuilder pb = xmlUtils.getHeader(ns + "projectSet", "id=\"" + getId() + "\"");
+    final StringBuilder pb = xmlUtils.getHeader(ns + "projectSet", "id=\"" + getId() + "\"");
     indent = xmlUtils.incIndent(indent);
 
-    for (Company comp : getCompanies()) {
+    for (final Company comp : getCompanies()) {
       pb.append(indent + "<" + ns + "company id=\"" + comp.getId() + "\">\n");
       indent = xmlUtils.incIndent(indent);
       pb.append(indent + "<" + ns + "compName>" + comp.getName() + "</" + ns + "compName>\n");
@@ -160,7 +160,7 @@ public class ProjectSet implements Persistable {
       }
       pb.append(indent + "<" + ns + "employeeId>" + comp.getEmployeeId() +
                          "</" + ns + "employeeId>\n");
-      for (Project project : comp.getProjects()) {
+      for (final Project project : comp.getProjects()) {
         getXmlProject(project, pb, indent);
       }
 
@@ -189,7 +189,7 @@ public class ProjectSet implements Persistable {
     pb.append(indent + "<" + ns + "code>" + proj.getCode() + "</code>\n");
 
     if (proj.getActivities() != null) {
-      for (Activity act : proj.getActivities()) {
+      for (final Activity act : proj.getActivities()) {
         pb.append(indent + "<" + ns + "activity id=\"" + act.getId() + "\">\n");
         indent = xmlUtils.incIndent(indent);
         pb.append(indent + "<" + ns + "actName>" + act.getName() + "</" + ns + "actName>\n");
@@ -203,7 +203,7 @@ public class ProjectSet implements Persistable {
     }
 
     if (proj.getSubProjects() != null) {
-      for (Project subProject : proj.getSubProjects()) {
+      for (final Project subProject : proj.getSubProjects()) {
         getXmlProject(subProject, pb, indent);
       }
     }

@@ -8,8 +8,8 @@ import java.util.TreeMap;
 public class Month {
   private final int id;
   private final int enclosingYear;
-  private Map<Integer, WorkDay> workDays;
-  
+  private final Map<Integer, WorkDay> workDays;
+
   public Month(final int id, final int enclosingYear) {
     super();
     this.id = id;
@@ -35,50 +35,50 @@ public class Month {
    * @return the indicated work day
    */
   public WorkDay getWorkDay(final int date) {
-    assert(date > 0 && date <= 31);
+    assert((date > 0) && (date <= 31));
     return workDays.get(date);
   }
-  
+
   /**
    * @return the indicated work days
    */
   public Collection<WorkDay> getWorkDays(final Collection<Integer> workDayIds) {
-    Collection<WorkDay> workDays = new ArrayList<WorkDay>();
-    for (Integer workDayId : workDayIds) {
+    final Collection<WorkDay> workDays = new ArrayList<WorkDay>();
+    for (final Integer workDayId : workDayIds) {
       workDays.add(this.workDays.get(workDayId));
     }
-    
+
     return workDays;
   }
 
   public Collection<WorkDay> getAllWorkDays() {
     return workDays.values();
   }
-  
-  public void addWorkDay(WorkDay workDay) {
+
+  public void addWorkDay(final WorkDay workDay) {
     workDays.put(workDay.getDate().getDayOfMonth(), workDay);
   }
-  
-  public void addWorkDays(Collection<WorkDay> workDays) {
-    for (WorkDay workDay : workDays) {
+
+  public void addWorkDays(final Collection<WorkDay> workDays) {
+    for (final WorkDay workDay : workDays) {
       this.workDays.put(workDay.getDate().getDayOfMonth(), workDay);
     }
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder();
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("id: " + id + "\n");
     objRep.append("enclosingYear: " + enclosingYear + "\n");
-    
-    for (WorkDay workDay : workDays.values()) {
+
+    for (final WorkDay workDay : workDays.values()) {
       objRep.append("WorkDays:\n");
       objRep.append(workDay.toString());
     }
-    
+
     return objRep.toString().trim();
   }
 
@@ -99,7 +99,7 @@ public class Month {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)

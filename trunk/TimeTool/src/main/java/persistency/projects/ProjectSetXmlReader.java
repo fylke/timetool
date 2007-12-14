@@ -18,7 +18,7 @@ import persistency.PersistencyException;
 public class ProjectSetXmlReader implements ProjectSetFileReader {
 
 	@Override
-	public void populate(ProjectSet projSet, File absPath)
+	public void populate(final ProjectSet projSet, final File absPath)
 			throws FileNotFoundException,	PersistencyException {
 	  final Reader fr = new FileReader(absPath);
 

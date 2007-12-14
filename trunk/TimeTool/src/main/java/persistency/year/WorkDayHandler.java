@@ -13,29 +13,29 @@ public class WorkDayHandler extends DefaultHandler {
   private final ContentHandler parentHandler;
   private final WorkDay currentWorkDay;
 
-  public WorkDayHandler(final XMLReader reader, 
-                        final ContentHandler parentHandler, 
-                        final WorkDay currentWorkDay)  
+  public WorkDayHandler(final XMLReader reader,
+                        final ContentHandler parentHandler,
+                        final WorkDay currentWorkDay)
       throws SAXException {
     this.currentWorkDay = currentWorkDay;
     this.parentHandler = parentHandler;
     this.reader = reader;
   }
-  
+
   @Override
-  public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attributes) 
+  public void startElement(final String uri, final String localName,
+                           final String qName, final Attributes attributes)
       throws SAXException {
     if ("activity".equals(qName)) {
       assert(currentWorkDay != null);
       final int actId = Integer.parseInt(attributes.getValue("id"));
-      ActivityInfo actInfo = new ActivityInfo(actId);
+      final ActivityInfo actInfo = new ActivityInfo(actId);
       currentWorkDay.addActivity(actInfo);
-      
-      final ContentHandler activityHandler = 
-        new ActivityInfoHandler(attributes, reader, this, 
+
+      final ContentHandler activityHandler =
+        new ActivityInfoHandler(attributes, reader, this,
                                 currentWorkDay.getDate(), actInfo);
-      
+
       reader.setContentHandler(activityHandler);
     } else if ("duration".equals(qName)) {
       currentWorkDay.setStartTime(attributes.getValue("start"));
@@ -46,7 +46,7 @@ public class WorkDayHandler extends DefaultHandler {
   }
 
   @Override
-  public void endElement(final String uri, final String localName, 
+  public void endElement(final String uri, final String localName,
                          final String qName)
       throws SAXException {
     if ("isReported".equals(qName)) {

@@ -15,34 +15,34 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class SettingsParser extends DefaultHandler implements ContentHandler {
   private static transient final String ns = "";
-  private XMLReader reader;
+  private final XMLReader reader;
   private Settings userSettings;
-  
+
   public SettingsParser(final XMLReader reader) {
     this.reader = reader;
   }
-  
+
   public void setTargetObject(final Settings userSettings) {
     this.userSettings = userSettings;
   }
 
-  public Settings parse(final InputSource is) 
+  public Settings parse(final InputSource is)
       throws SAXException, IOException, ParserConfigurationException {
     reader.setContentHandler(this);
     reader.parse(is);
-    
+
     return userSettings;
   }
 
   @Override
-  public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attrs) 
+  public void startElement(final String uri, final String localName,
+                           final String qName, final Attributes attrs)
       throws SAXException {
     if ((ns + "userName").equals(qName)) {
       userSettings.setFirstName(attrs.getValue("first"));
       userSettings.setLastName(attrs.getValue("last"));
     } else if ((ns + "employedAt").equals(qName)) {
-      userSettings.setEmployerId(attrs.getValue("id")); 
+      userSettings.setEmployerId(attrs.getValue("id"));
     } else if ((ns + "projectSet").equals(qName)) {
       userSettings.setProjectSetId(attrs.getValue("id"));
     } else if ((ns + "lunchBreak").equals(qName)) {

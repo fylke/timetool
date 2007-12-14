@@ -15,32 +15,32 @@ public class ActivityInfoHandler extends DefaultHandler {
   private transient final ReadableDateTime currentDate;
   private transient final ActivityInfo currentActInfo;
 
-  public ActivityInfoHandler(final Attributes attributes, 
-                             final XMLReader reader, 
-                             final ContentHandler parentHandler, 
+  public ActivityInfoHandler(final Attributes attributes,
+                             final XMLReader reader,
+                             final ContentHandler parentHandler,
                              final ReadableDateTime currentDate,
-                             final ActivityInfo currentActInfo)  
+                             final ActivityInfo currentActInfo)
       throws SAXException {
     this.currentActInfo = currentActInfo;
     this.currentDate = currentDate;
     this.parentHandler = parentHandler;
     this.reader = reader;
   }
-  
+
   @Override
-  public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attributes) 
+  public void startElement(final String uri, final String localName,
+                           final String qName, final Attributes attributes)
       throws SAXException {
     if ("duration".equals(qName)) {
-      currentActInfo.setActivityStartTime(currentDate, 
+      currentActInfo.setActivityStartTime(currentDate,
                                           attributes.getValue("start"));
-      currentActInfo.setActivityStartTime(currentDate, 
+      currentActInfo.setActivityStartTime(currentDate,
                                           attributes.getValue("end"));
     }
   }
 
   @Override
-  public void endElement(final String uri, final String localName, 
+  public void endElement(final String uri, final String localName,
                          final String qName)
       throws SAXException {
     if ("lunchBreak".equals(qName)) {
