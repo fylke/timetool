@@ -1,6 +1,6 @@
 package persistency;
 
-import static org.junit.Assert.assertEquals; 
+import static org.junit.Assert.assertEquals;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class XmlUtilsTest {
 	private XmlUtils xmlUtils;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		xmlUtils = new XmlUtils();
@@ -23,7 +23,7 @@ public class XmlUtilsTest {
 		final ReadableDateTime key = new LocalTime(4, 30).toDateTimeToday();
 
 		final ReadableDateTime result = xmlUtils.stringToTime(hhmm, today);
-		
+
 		assertEquals("Hours didn't match!", key.getHourOfDay(), result.getHourOfDay());
 		assertEquals("Minutes didn't match!", key.getMinuteOfHour(), result.getMinuteOfHour());
 	}
@@ -34,7 +34,7 @@ public class XmlUtilsTest {
 
 		final String expResult = "&amp;&lt;&apos;&gt;&quot;";
 		final String result = xmlUtils.xmlify(stringToXmlify);
-		
+
 		assertEquals("String not translated correctly!", expResult, result);
 	}
 
@@ -44,7 +44,7 @@ public class XmlUtilsTest {
 
 		final String expResult = "  ";
 		final String result = xmlUtils.indent(level);
-		
+
 		assertEquals("Indent level not correct!", expResult, result);
 	}
 
@@ -76,13 +76,13 @@ public class XmlUtilsTest {
 		final StringBuilder result = xmlUtils.getHeader(type);
 		assertEquals("Header not correct!", expResult, result.toString());
 	}
-	
+
 	@Test
 	public void testGetHeaderWithAttrs() {
 		final String type = "test";
 		final String attr1 = "attr1=\"1\"";
 		final String attr2 = "attr2=\"2\"";
-		
+
 		final String expResult =  "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
 															"<!DOCTYPE " + type + " SYSTEM \"" + type + ".dtd\">\n" +
 															"<" + type + " " + attr1 + " " + attr2 + ">\n";

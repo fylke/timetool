@@ -42,24 +42,24 @@ public final class PersistencyHandlerTest {
 
   @Test
   public final void testReadYearWithSearchControlSimple() throws Exception {
-    int year = 1;
-    short nrOfMonths = 1;
-    short nrOfDaysEachMonth = 10;
-    int nrOfActsEachDay = 0;
-    SearchControl searchControl = new SearchControl();
+    final int year = 1;
+    final short nrOfMonths = 1;
+    final short nrOfDaysEachMonth = 10;
+    final int nrOfActsEachDay = 0;
+    final SearchControl searchControl = new SearchControl();
     final int month = 1;
     final int day = 5;
     final int hours = 0;
     final int minutes = 0;
     final int seconds = 0;
     final int millis = 0;
-    DateTime dateToFind = new DateTime(year, month, day, hours,
+    final DateTime dateToFind = new DateTime(year, month, day, hours,
                                        minutes, seconds, millis);
-    Set<ReadableDateTime> dates = new TreeSet<ReadableDateTime>();
+    final Set<ReadableDateTime> dates = new TreeSet<ReadableDateTime>();
     dates.add(dateToFind);
     searchControl.setDates(dates);
 
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
+    final YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
                                            nrOfActsEachDay, searchControl);
 
     final Year yearKey = yf.getYearWithConfig(yearConfig);
@@ -76,12 +76,12 @@ public final class PersistencyHandlerTest {
 
   @Test
   public final void testReadYearSimple() throws Exception {
-    int year = 1;
-    short nrOfMonths = 1;
-    short nrOfDaysEachMonth = 1;
-    int nrOfActsEachDay = 1;
-    SearchControl searchControl = null; // We won't bother with SearchControl
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
+    final int year = 1;
+    final short nrOfMonths = 1;
+    final short nrOfDaysEachMonth = 1;
+    final int nrOfActsEachDay = 1;
+    final SearchControl searchControl = null; // We won't bother with SearchControl
+    final YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
                                            nrOfActsEachDay, searchControl);
 
     final Year yearKey = yf.getYearWithConfig(yearConfig);
@@ -96,12 +96,12 @@ public final class PersistencyHandlerTest {
 
   @Test
   public final void testReadYearHarder() throws Exception {
-    int year = 1;
-    short nrOfMonths = 6;
-    short nrOfDaysEachMonth = 6;
-    int nrOfActsEachDay = 6;
-    SearchControl searchControl = null; // We won't bother with SearchControl
-    YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
+    final int year = 1;
+    final short nrOfMonths = 6;
+    final short nrOfDaysEachMonth = 6;
+    final int nrOfActsEachDay = 6;
+    final SearchControl searchControl = null; // We won't bother with SearchControl
+    final YearConfig yearConfig = new YearConfig(year, nrOfMonths, nrOfDaysEachMonth,
                                            nrOfActsEachDay, searchControl);
 
     final Year yearKey = yf.getYearWithConfig(yearConfig);
