@@ -21,7 +21,7 @@ public class ProjectSetStoreTest {
 	public void tearDown() throws Exception {
 		absPath.delete();
 	}
-	
+
   @Test
   public final void testStoreSingleCompany() throws Exception {
     final int projSetId = 1;
@@ -83,10 +83,10 @@ public class ProjectSetStoreTest {
   }
 
   private String readFile() throws Exception {
-  	BufferedReader br = new BufferedReader(new FileReader(absPath));
+  	final BufferedReader br = new BufferedReader(new FileReader(absPath));
 
   	String line;
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     while ((line = br.readLine()) != null) {
     	sb.append(line);
     	sb.append("\n");
