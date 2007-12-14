@@ -19,7 +19,7 @@ public class YearWriterTest {
 		yf = new YearFactory();
 		yw = new YearWriter();
 	}
-	
+
 	@Before
 	public void setUp() throws Exception {
 		baos = new ByteArrayOutputStream();
@@ -37,19 +37,19 @@ public class YearWriterTest {
     final int nrOfDaysEachMonth = 1;
     final int nrOfActsEachDay = 1;
     final SearchControl sc = null;
-    final YearConfig yc = new YearConfig(year, nrOfMonths, 
+    final YearConfig yc = new YearConfig(year, nrOfMonths,
                                          nrOfDaysEachMonth,
                                          nrOfActsEachDay,
                                          sc);
     final Year yearInput = yf.getYearWithConfig(yc);
     final String yearKey = yf.getXmlYearWithConfig(yc);
-    
+
     yw.writeYear(yearInput, baos);
-    
-    assertEquals("Generated test string and key string not equal!", 
+
+    assertEquals("Generated test string and key string not equal!",
                  yearKey, baos.toString());
 	}
-	
+
 	@Test
 	public final void testWriteYearHard() {
     final int year = 1;
@@ -57,16 +57,16 @@ public class YearWriterTest {
     final int nrOfDaysEachMonth = 28;
     final int nrOfActsEachDay = 3;
     final SearchControl sc = null;
-    final YearConfig yc = new YearConfig(year, nrOfMonths, 
+    final YearConfig yc = new YearConfig(year, nrOfMonths,
                                          nrOfDaysEachMonth,
                                          nrOfActsEachDay,
                                          sc);
     final Year yearInput = yf.getYearWithConfig(yc);
     final String yearKey = yf.getXmlYearWithConfig(yc);
-    
+
     yw.writeYear(yearInput, baos);
 
-    assertEquals("Generated test string and key string not equal!", 
+    assertEquals("Generated test string and key string not equal!",
                  yearKey, baos.toString());
-	}	
+	}
 }
