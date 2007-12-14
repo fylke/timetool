@@ -16,11 +16,11 @@ import persistency.settings.SettingsParser;
 import persistency.year.YearParser;
 
 public class FileParserFactory {
-  public static XMLReader getParser(final String kind) throws SAXException, 
+  public static XMLReader getParser(final String kind) throws SAXException,
       ParserConfigurationException {
     XMLReader reader;
     try {
-      reader = 
+      reader =
         XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
     } catch (final SAXException e) {
       try {
@@ -29,12 +29,12 @@ public class FileParserFactory {
         throw new NoClassDefFoundError("No SAX parser is available.");
       }
     }
-    
+
     final EntityResolver resolver = new JarResolver();
     reader.setEntityResolver(resolver);
 
     DefaultHandler handler = null;
-    
+
     if (kind.equalsIgnoreCase("projectSet")) {
       handler = new ProjectSetParser(reader);
     } else if (kind.equalsIgnoreCase("year")) {
@@ -44,24 +44,24 @@ public class FileParserFactory {
     } else {
       throw new ParserConfigurationException("Unknown parser type requested!");
     }
-    
+
     reader.setContentHandler(handler);
-    return reader;    
+    return reader;
   }
 
   private static final class JarResolver implements EntityResolver {
-    public InputSource resolveEntity(final String publicId, 
+    public InputSource resolveEntity(final String publicId,
                                      final String systemId) {
       if ("projectSet.dtd".equals(systemId)) {
-        final InputStream is = 
+        final InputStream is =
           getClass().getResourceAsStream("projectSet.dtd");
         return new InputSource(is);
       } else if ("year.dtd".equals(systemId)) {
-        final InputStream is = 
+        final InputStream is =
           getClass().getResourceAsStream("year.dtd");
         return new InputSource(is);
       } else if ("settings.dtd".equals(systemId)) {
-        final InputStream is = 
+        final InputStream is =
           getClass().getResourceAsStream("settings.dtd");
         return new InputSource(is);
       }

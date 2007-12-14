@@ -11,7 +11,7 @@ public class Activity implements MyComboBoxDisplayable {
   public String getLongDispString() {
     return name;
   }
-  
+
   public String getShortDispString() {
     return shortName;
   }
@@ -22,7 +22,7 @@ public class Activity implements MyComboBoxDisplayable {
   public int getId() {
     return hashCode();
   }
-  
+
   /**
    * @return the name
    */
@@ -36,7 +36,7 @@ public class Activity implements MyComboBoxDisplayable {
   public String getShortName() {
     return shortName;
   }
-  
+
   public String getReportCode() {
     return reportCode;
   }
@@ -61,18 +61,18 @@ public class Activity implements MyComboBoxDisplayable {
   public void setShortName(final String shortName) {
     this.shortName = shortName;
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    final StringBuilder objRep = new StringBuilder(); 
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("id: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("reportCode: " + reportCode);
-    
+
     return objRep.toString();
   }
 

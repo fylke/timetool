@@ -15,41 +15,41 @@ public class CompanyHandler extends DefaultHandler {
   private final transient ContentHandler parentHandler;
   private final transient Company currComp;
   private final transient String ns;
-  
+
   private transient Project proj;
 
-  public CompanyHandler(final Attributes attrs, final XMLReader reader, 
-                        final ContentHandler parentHandler, 
-                        final Company currComp, final String ns)  
+  public CompanyHandler(final Attributes attrs, final XMLReader reader,
+                        final ContentHandler parentHandler,
+                        final Company currComp, final String ns)
       throws SAXException {
     this.currComp = currComp;
     this.parentHandler = parentHandler;
     this.reader = reader;
     this.ns = ns;
-    
+
     text = new CharArrayWriter();
   }
 
   @Override
-  public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attrs) 
+  public void startElement(final String uri, final String localName,
+                           final String qName, final Attributes attrs)
       throws SAXException {
     text.reset();
- 
+
     if ((ns + "project").equals(qName)) {
       assert(currComp != null);
       proj = new Project();
-      currComp.addProjectWithId(proj, Integer.parseInt(attrs.getValue("id")));    
-      
-      final ContentHandler projectHandler = 
+      currComp.addProjectWithId(proj, Integer.parseInt(attrs.getValue("id")));
+
+      final ContentHandler projectHandler =
         new ProjectHandler(attrs, reader, this, proj, ns);
 
-      reader.setContentHandler(projectHandler);     
+      reader.setContentHandler(projectHandler);
     }
   }
 
   @Override
-  public void endElement(final String uri, final String localName, 
+  public void endElement(final String uri, final String localName,
                          final String qName)
       throws SAXException {
     if ((ns + "compName").equals(qName)) {

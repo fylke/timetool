@@ -11,23 +11,23 @@ public class Company implements MyComboBoxDisplayable {
   private String shortName;
   private String employeeId;
   private final Map<Integer, Project> projects;
-  
+
   public Company() {
     projects = new TreeMap<Integer, Project>();
   }
-  
+
   public String getLongDispString() {
     return name;
   }
-  
+
   public String getShortDispString() {
     return shortName;
   }
-  
+
   public int getId() {
     return hashCode();
-  }  
-  
+  }
+
   public String getName() {
     return name;
   }
@@ -35,7 +35,7 @@ public class Company implements MyComboBoxDisplayable {
   public String getShortName() {
     return shortName;
   }
-  
+
   public String getEmployeeId() {
     return employeeId;
   }
@@ -43,20 +43,20 @@ public class Company implements MyComboBoxDisplayable {
   public Project getProject(final int id) {
     return projects.get(id);
   }
-  
+
   public Project getProjectByName(final String name) {
-    for (Project proj : projects.values()) {
+    for (final Project proj : projects.values()) {
       if (name.equals(proj.getName())) {
         return proj;
       }
     }
     return null;
   }
-  
+
   public Collection<Project> getProjects() {
     return projects.values();
   }
- 
+
   public void setName(final String name) {
     this.name = name;
   }
@@ -68,15 +68,15 @@ public class Company implements MyComboBoxDisplayable {
   public void setEmployeeId(final String employeeId) {
     this.employeeId = employeeId;
   }
-  
+
   public void addProject(final Project project) {
     addProjectWithId(project, project.getId());
   }
-  
+
   public void addProjectWithId(final Project project, final int id) {
     projects.put(id, project);
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
@@ -87,12 +87,12 @@ public class Company implements MyComboBoxDisplayable {
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("employeeId: " + employeeId + "\n");
-        
-    for (Project project : projects.values()) {
+
+    for (final Project project : projects.values()) {
       objRep.append("Projects:\n");
       objRep.append(project.toString());
     }
-    
+
     return objRep.toString().trim();
   }
 

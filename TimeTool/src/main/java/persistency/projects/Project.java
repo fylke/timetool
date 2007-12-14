@@ -11,9 +11,9 @@ public class Project implements MyComboBoxDisplayable {
   private String name;
   private String shortName;
   private String code;
-  private Map<Integer, Activity> activities;
-  private Map<Integer, Project> subProjects;
-  
+  private final Map<Integer, Activity> activities;
+  private final Map<Integer, Project> subProjects;
+
   public Project() {
     activities = new TreeMap<Integer, Activity>();
     subProjects = new TreeMap<Integer, Project>();
@@ -22,15 +22,15 @@ public class Project implements MyComboBoxDisplayable {
   public String getLongDispString() {
     return name;
   }
-  
+
   public String getShortDispString() {
     return shortName;
   }
-  
+
   public int getId() {
     return hashCode();
   }
-  
+
   public String getName() {
     return name;
   }
@@ -44,15 +44,15 @@ public class Project implements MyComboBoxDisplayable {
   }
 
   /**
-   * 
+   *
    * @return the activities in this project
    */
   public Collection<Activity> getActivities() {
     return activities.values();
   }
-  
+
   /**
-   * 
+   *
    * @return the subprojects to this project
    */
   public Collection<Project> getSubProjects() {
@@ -60,7 +60,7 @@ public class Project implements MyComboBoxDisplayable {
   }
 
   public void setName(final String name) {
-    if (name == null || name == "") {
+    if ((name == null) || (name == "")) {
       throw new IllegalArgumentException("Name cannot be empty!");
     } else {
       this.name = name;
@@ -76,7 +76,7 @@ public class Project implements MyComboBoxDisplayable {
   }
 
   public void setCode(final String code) {
-    if (code == null || code == "") {
+    if ((code == null) || (code == "")) {
       throw new IllegalArgumentException("Project report code cannot be empty!");
     } else {
       this.code = code;
@@ -86,7 +86,7 @@ public class Project implements MyComboBoxDisplayable {
   public void addSubProject(final Project subProject) {
     addSubProjectWithId(subProject, subProject.getId());
   }
-  
+
   public void addSubProjectWithId(final Project subProject, final int id) {
     subProjects.put(id, subProject);
   }
@@ -94,32 +94,32 @@ public class Project implements MyComboBoxDisplayable {
   public void addActivity(final Activity act) {
     addActivityWithId(act, act.getId());
   }
-  
+
   public void addActivityWithId(final Activity act, final int id) {
     activities.put(id, act);
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder();
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("projId: " + hashCode() + "\n");
     objRep.append("name: " + name + "\n");
     objRep.append("shortName: " + shortName + "\n");
     objRep.append("code: " + code + "\n");
-        
-    for (Project subProject : subProjects.values()) {
+
+    for (final Project subProject : subProjects.values()) {
       objRep.append("Subprojects for " + name + ":\n");
       objRep.append(subProject.toString() + "\n");
     }
 
-    for (Activity activity : activities.values()) {
+    for (final Activity activity : activities.values()) {
       objRep.append("Activities for " + name + ":\n");
       objRep.append(activity.toString() + "\n");
     }
-    
+
     return objRep.toString().trim();
   }
 
@@ -139,7 +139,7 @@ public class Project implements MyComboBoxDisplayable {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)

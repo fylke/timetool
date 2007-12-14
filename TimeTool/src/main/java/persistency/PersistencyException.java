@@ -6,11 +6,11 @@ public class PersistencyException extends Exception {
   public PersistencyException(final String message) {
     super(message);
   }
-  
+
   public PersistencyException(final Exception cause) {
     super(cause);
   }
-  
+
   public PersistencyException(final String message, final Exception cause) {
     super(message, cause);
   }

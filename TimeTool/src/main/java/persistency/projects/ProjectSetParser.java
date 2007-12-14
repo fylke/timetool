@@ -13,36 +13,36 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ProjectSetParser extends DefaultHandler {
   private static transient final String ns = "";
-  private transient XMLReader reader;
+  private transient final XMLReader reader;
   private transient ProjectSet projSet;
   private transient Company comp;
-  
+
   public ProjectSetParser(final XMLReader reader) {
     this.reader = reader;
   }
-  
+
   public void setTargetObject(final ProjectSet projSet) {
     this.projSet = projSet;
   }
 
-  public ProjectSet parse(final InputSource is) throws SAXException, IOException, 
+  public ProjectSet parse(final InputSource is) throws SAXException, IOException,
       ParserConfigurationException {
     reader.setContentHandler(this);
     reader.parse(is);
-    
+
     return projSet;
   }
 
   @Override
-  public void startElement(final String uri, final String localName, 
-                           final String qName, final Attributes attrs) 
+  public void startElement(final String uri, final String localName,
+                           final String qName, final Attributes attrs)
       throws SAXException {
     if ((ns + "company").equals(qName)) {
       assert(projSet != null);
       comp = new Company();
       projSet.addCompanyWithId(comp, Integer.parseInt(attrs.getValue("id")));
-           
-      final ContentHandler compHandler = 
+
+      final ContentHandler compHandler =
         new CompanyHandler(attrs, reader, this, comp, ns);
       reader.setContentHandler(compHandler);
     }

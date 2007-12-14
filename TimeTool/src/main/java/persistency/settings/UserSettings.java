@@ -23,11 +23,11 @@ public class UserSettings implements Settings {
 
     private final String stringRepr;
 
-    OvertimeType(String stringRepr) {
+    OvertimeType(final String stringRepr) {
       this.stringRepr = stringRepr;
     }
 
-    public static OvertimeType transOvertimeType(String overtimeType) {
+    public static OvertimeType transOvertimeType(final String overtimeType) {
       if (OvertimeType.FLEX.toString().equalsIgnoreCase(overtimeType)) {
         return OvertimeType.FLEX;
       } else if (OvertimeType.COMP.toString().equalsIgnoreCase(overtimeType)) {
@@ -66,7 +66,7 @@ public class UserSettings implements Settings {
 
 	@Override
 	public void populate() throws PersistencyException, FileNotFoundException {
-		PersistencyUtils ph = new PersistencyUtils();
+		final PersistencyUtils ph = new PersistencyUtils();
 		final File absPath = new File(ph.getStorageDir() + File.separator + FILE_NAME);
 
 		final SettingsFileReader sr = new SettingsXmlReader();
@@ -75,15 +75,15 @@ public class UserSettings implements Settings {
 
 	@Override
 	public synchronized void store() throws PersistencyException {
-		PersistencyUtils ph = new PersistencyUtils();
+		final PersistencyUtils ph = new PersistencyUtils();
 		final String absFilename = ph.getStorageDir() + File.separator + FILE_NAME;
 		PrintWriter pw;
 		try {
 			pw = new PrintWriter(new FileOutputStream(absFilename));
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			try {
 				pw = new PrintWriter(new FileOutputStream(absFilename));
-			} catch (FileNotFoundException e1) {
+			} catch (final FileNotFoundException e1) {
 				throw new PersistencyException("Could not create file " + absFilename
 																				+ e.getMessage(), e);
 			}
@@ -186,7 +186,7 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setTreatOvertimeAs(java.lang.String)
    */
-  public void setTreatOvertimeAs(String treatOvertimeAs) {
+  public void setTreatOvertimeAs(final String treatOvertimeAs) {
     this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
   }
 
@@ -228,14 +228,14 @@ public class UserSettings implements Settings {
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setProjectSet(persistency.projects.ProjectSet)
    */
-  public void setProjectSet(ProjectSet projectSet) {
+  public void setProjectSet(final ProjectSet projectSet) {
     this.projectSet = projectSet;
   }
 
   /* (non-Javadoc)
    * @see persistency.settings.Settings#setTreatOvertimeAs(persistency.settings.UserSettings.OvertimeType)
    */
-  public void setTreatOvertimeAs(OvertimeType treatOvertimeAs) {
+  public void setTreatOvertimeAs(final OvertimeType treatOvertimeAs) {
     this.treatOvertimeAs = treatOvertimeAs;
   }
 
@@ -261,7 +261,7 @@ public class UserSettings implements Settings {
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder();
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("userFirstName: " + userFirstName + "\n");
     objRep.append("userLastName: " + userLastName + "\n");
     objRep.append("employedAt: " + employedAt + "\n");
@@ -299,7 +299,7 @@ public class UserSettings implements Settings {
    * @see persistency.settings.Settings#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)

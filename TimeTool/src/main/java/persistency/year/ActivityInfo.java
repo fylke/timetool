@@ -7,7 +7,7 @@ import persistency.XmlUtils;
 
 public class ActivityInfo {
   public boolean includeLunch;
-  
+
   private final int id;
   private ReadableDateTime startTime;
   private ReadableDateTime endTime;
@@ -18,7 +18,7 @@ public class ActivityInfo {
     //FIXME How to fetch the default from Settings?
     lunchLenght = 40;
   }
-    
+
   public int getId() {
     return id;
   }
@@ -31,40 +31,40 @@ public class ActivityInfo {
     return startTime;
   }
 
-  public void setActivityStartTime(final ReadableDateTime date, 
+  public void setActivityStartTime(final ReadableDateTime date,
                                    final LocalTime startTime) {
     this.startTime = startTime.toDateTime(date);
   }
 
-  public void setActivityEndTime(final ReadableDateTime date, 
+  public void setActivityEndTime(final ReadableDateTime date,
                                  final LocalTime endTime) {
     this.endTime = endTime.toDateTime(date);
   }
-  
+
   public void setActivityStartTime(final ReadableDateTime date,
                                    final String startTime) {
   	final XmlUtils xmlUtils = new XmlUtils();
     this.startTime = xmlUtils.stringToTime(startTime, date);
   }
-  
+
   public void setActivityEndTime(final ReadableDateTime date,
                                  final String endTime) {
   	final XmlUtils xmlUtils = new XmlUtils();
   	this.endTime = xmlUtils.stringToTime(endTime, date);
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#toString()
    */
   @Override
   public String toString() {
-    StringBuilder objRep = new StringBuilder();
+    final StringBuilder objRep = new StringBuilder();
     objRep.append("id: " + id + "\n");
     objRep.append("startTime: " + startTime.toString("kk:mm") + "\n");
     objRep.append("endTime: " + endTime.toString("kk:mm") + "\n");
     objRep.append("includeLunch: " + includeLunch + "\n");
     objRep.append("lunchLength: " + lunchLenght + "\n");
-    
+
     return objRep.toString();
   }
 
@@ -81,7 +81,7 @@ public class ActivityInfo {
   public void setLunchLenght(final int lunchLenght) {
     this.lunchLenght = lunchLenght;
   }
-  
+
   /* (non-Javadoc)
    * @see java.lang.Object#hashCode()
    */
@@ -97,7 +97,7 @@ public class ActivityInfo {
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(final Object obj) {
     if (this == obj)
       return true;
     if (obj == null)

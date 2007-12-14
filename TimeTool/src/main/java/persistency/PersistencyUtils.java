@@ -63,7 +63,7 @@ public final class PersistencyUtils {
   public synchronized void writeYear(final Year year,
                                      final OutputStream yearStream)
   {
-    YearWriter yw = new YearWriter();
+    final YearWriter yw = new YearWriter();
     yw.writeYear(year, yearStream);
   }
 
