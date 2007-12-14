@@ -69,7 +69,7 @@ public class ProjectHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
 
     final String simpleTestProject =
       pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
@@ -97,7 +97,7 @@ public class ProjectHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
 
     final String nestedTestProject =
       pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
@@ -125,7 +125,7 @@ public class ProjectHandlerTest {
                                                           nrOfProjsPerComp,
                                                           nrOfActsPerProj,
                                                           projDepth);
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
 
     final String nestedTestProject =
       pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);

@@ -45,7 +45,7 @@ public class ProjectSetXmlReaderTest {
     final ProjectSet projSetKey = PF.getProjSetWithConfig(projSetConfig);
     final ProjectSetXmlReader testProjSetXmlReader = new ProjectSetXmlReader();
 
-    ProjectSet testProjSet = new ProjectSet();
+    final ProjectSet testProjSet = new ProjectSet();
     testProjSetXmlReader.populate(testProjSet, absPath);
     assertEquals("Read proj set doesn't match the expected one!", projSetKey, testProjSet);
 	}
@@ -69,7 +69,7 @@ public class ProjectSetXmlReaderTest {
     final ProjectSet projSetKey = PF.getProjSetWithConfig(projSetConfig);
     final ProjectSetXmlReader testProjSetXmlReader = new ProjectSetXmlReader();
 
-    ProjectSet testProjSet = new ProjectSet();
+    final ProjectSet testProjSet = new ProjectSet();
     testProjSetXmlReader.populate(testProjSet, absPath);
     assertEquals("Read proj set doesn't match the expected one!", projSetKey, testProjSet);
 	}
@@ -93,7 +93,7 @@ public class ProjectSetXmlReaderTest {
     final ProjectSet projSetKey = PF.getProjSetWithConfig(projSetConfig);
     final ProjectSetXmlReader testProjSetXmlReader = new ProjectSetXmlReader();
 
-    ProjectSet testProjSet = new ProjectSet();
+    final ProjectSet testProjSet = new ProjectSet();
     testProjSetXmlReader.populate(testProjSet, absPath);
     assertEquals("Read proj set doesn't match the expected one!", projSetKey, testProjSet);
 	}
