@@ -13,39 +13,39 @@ import org.xml.sax.helpers.DefaultHandler;
 
 
 public class YearParser extends DefaultHandler {
-  private final XMLReader reader;
-  private Year year;
-  public SearchControl wanted;
+	private final XMLReader reader;
+	private Year year;
+	public SearchControl wanted;
 
-  public YearParser(final XMLReader reader) {
-    this.reader = reader;
-  }
+	public YearParser(final XMLReader reader) {
+		this.reader = reader;
+	}
 
-  public void setTargetObject(final Year year) {
-    this.year = year;
-  }
+	public void setTargetObject(final Year year) {
+		this.year = year;
+	}
 
-  public Year parse(final InputSource is) throws SAXException, IOException,
-      ParserConfigurationException {
-    reader.setContentHandler(this);
-    reader.parse(is);
+	public Year parse(final InputSource is) throws SAXException, IOException,
+			ParserConfigurationException {
+		reader.setContentHandler(this);
+		reader.parse(is);
 
-    return year;
-  }
+		return year;
+	}
 
-  @Override
-  public void startElement(final String uri, final String localName,
-                           final String qName, final Attributes attrs)
-      throws SAXException {
-    if ("year".equals(qName)) {
-    	year.setId(Integer.parseInt(attrs.getValue("id")));
-    } else if ("month".equals(qName)) {
-      assert(year != null);
-      final Month month = new Month(Integer.parseInt(attrs.getValue("id")), year.id);
-      year.addMonth(month);
+	@Override
+	public void startElement(final String uri, final String localName,
+													 final String qName, final Attributes attrs)
+			throws SAXException {
+		if ("year".equals(qName)) {
+			year.setId(Integer.parseInt(attrs.getValue("id")));
+		} else if ("month".equals(qName)) {
+			assert(year != null);
+			final Month month = new Month(Integer.parseInt(attrs.getValue("id")), year.id);
+			year.addMonth(month);
 
-      final ContentHandler monthHandler = new MonthHandler(reader, this, month, wanted);
-      reader.setContentHandler(monthHandler);
-    }
-  }
+			final ContentHandler monthHandler = new MonthHandler(reader, this, month, wanted);
+			reader.setContentHandler(monthHandler);
+		}
+	}
 }
