@@ -15,7 +15,7 @@ import persistency.PersistencyUtils;
 import persistency.XmlUtils;
 
 public class Year implements Persistable {
-	int year;
+	int id;
 	Map<Integer, Month> months;
 	private String ns = "";
 
@@ -29,11 +29,11 @@ public class Year implements Persistable {
 	}
 
 	public int getId() {
-		return year;
+		return id;
 	}
 
 	public void setId(final int id) {
-		this.year = id;
+		this.id = id;
 	}
 
 	public void populate() throws PersistencyException, FileNotFoundException {
@@ -63,7 +63,7 @@ public class Year implements Persistable {
 
 	@Override
 	public String getFilename() {
-		return "year" + year + ".xml";
+		return "year" + id + ".xml";
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class Year implements Persistable {
 	@Override
 	public String toString() {
 		final StringBuilder objRep = new StringBuilder();
-		objRep.append("id: " + year + "\n");
+		objRep.append("id: " + id + "\n");
 
 		for (final Month month : months.values()) {
 			objRep.append("Months:\n");
@@ -122,7 +122,7 @@ public class Year implements Persistable {
 	public int hashCode() {
 		final int PRIME = 31;
 		int result = 1;
-		result = PRIME * result + year;
+		result = PRIME * result + id;
 		result = PRIME * result + ((months == null) ? 0 : months.hashCode());
 		return result;
 	}
@@ -139,7 +139,7 @@ public class Year implements Persistable {
 		if (getClass() != obj.getClass())
 			return false;
 		final Year other = (Year) obj;
-		if (year != other.year)
+		if (id != other.id)
 			return false;
 		if (months == null) {
 			if (other.months != null)
@@ -153,7 +153,7 @@ public class Year implements Persistable {
 		XmlUtils xmlUtils = new XmlUtils();
 		String indent = xmlUtils.indent(0);
 		final StringBuilder sb =
-			xmlUtils.getHeader(ns + "year", "id=\"" + year + "\"");
+			xmlUtils.getHeader(ns + "year", "id=\"" + id + "\"");
 		indent = xmlUtils.incIndent(indent);
 
 		for (final Month month : getAllMonths()) {
