@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ProjectSetXmlReaderTest {
