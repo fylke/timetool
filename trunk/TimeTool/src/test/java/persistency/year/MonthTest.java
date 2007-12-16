@@ -118,13 +118,15 @@ public class MonthTest {
 
 	@Test
 	public void testToString() {
-		final String expected = "id: " + MONTH + "\nyear: " + YEAR + "\nWorkDays:" +
-														"\ndate: " + testMonth.getWorkDay(WORK_DAY).getDate().toString("d/M") +
-														"\nstartTime: not specified" +
-														"\nendTime: not specified" +
-														"\ntreatOvertimeAs: not specified" +
-														"\nisReported: " + testMonth.getWorkDay(WORK_DAY).isReported +
-														"\njournalWritten: " + testMonth.getWorkDay(WORK_DAY).journalWritten;
+		final String expected = "id: " + MONTH + "\n" +
+														"year: " + YEAR + "\n" +
+														"WorkDays:" + "\n" +
+														"date: " + testMonth.getWorkDay(WORK_DAY).getDate().toString("d/M") + "\n" +
+														"startTime: not specified" + "\n" +
+														"endTime: not specified" + "\n" +
+														"treatOvertimeAs: not specified" + "\n" +
+														"isReported: " + testMonth.getWorkDay(WORK_DAY).isReported + "\n" +
+														"journalWritten: " + testMonth.getWorkDay(WORK_DAY).journalWritten;
 		assertEquals(expected, testMonth.toString());
 	}
 
