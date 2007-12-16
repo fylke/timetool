@@ -227,7 +227,7 @@ public class WorkDay {
 		return true;
 	}
 
-	private ReadablePeriod getDayBalance() {
+	ReadablePeriod getDayBalance() {
 		final Duration dayBalance = new Duration(Duration.ZERO);
 		for (final ActivityInfo actInfo : activities.values()) {
 			dayBalance.plus(new Duration(actInfo.getStartTime(),
