@@ -12,39 +12,39 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class ProjectSetParser extends DefaultHandler {
-  private static transient final String ns = "";
-  private transient final XMLReader reader;
-  private transient ProjectSet projSet;
-  private transient Company comp;
+	private static final String ns = "";
+	private final XMLReader reader;
+	private ProjectSet projSet;
+	private Company comp;
 
-  public ProjectSetParser(final XMLReader reader) {
-    this.reader = reader;
-  }
+	public ProjectSetParser(final XMLReader reader) {
+		this.reader = reader;
+	}
 
-  public void setTargetObject(final ProjectSet projSet) {
-    this.projSet = projSet;
-  }
+	public void setTargetObject(final ProjectSet projSet) {
+		this.projSet = projSet;
+	}
 
-  public ProjectSet parse(final InputSource is) throws SAXException, IOException,
-      ParserConfigurationException {
-    reader.setContentHandler(this);
-    reader.parse(is);
+	public ProjectSet parse(final InputSource is) throws SAXException, IOException,
+			ParserConfigurationException {
+		reader.setContentHandler(this);
+		reader.parse(is);
 
-    return projSet;
-  }
+		return projSet;
+	}
 
-  @Override
-  public void startElement(final String uri, final String localName,
-                           final String qName, final Attributes attrs)
-      throws SAXException {
-    if ((ns + "company").equals(qName)) {
-      assert(projSet != null);
-      comp = new Company();
-      projSet.addCompanyWithId(comp, Integer.parseInt(attrs.getValue("id")));
+	@Override
+	public void startElement(final String uri, final String localName,
+													 final String qName, final Attributes attrs)
+			throws SAXException {
+		if ((ns + "company").equals(qName)) {
+			assert(projSet != null);
+			comp = new Company();
+			projSet.addCompanyWithId(comp, Integer.parseInt(attrs.getValue("id")));
 
-      final ContentHandler compHandler =
-        new CompanyHandler(attrs, reader, this, comp, ns);
-      reader.setContentHandler(compHandler);
-    }
-  }
+			final ContentHandler compHandler =
+				new CompanyHandler(attrs, reader, this, comp, ns);
+			reader.setContentHandler(compHandler);
+		}
+	}
 }
