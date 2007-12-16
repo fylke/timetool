@@ -13,15 +13,17 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import persistency.PersistencyException;
-import persistency.XmlReader;
+import persistency.XmlReaderUtils;
+import persistency.XmlUtils;
 
-public class SettingsXmlReader extends XmlReader implements SettingsFileReader {
+public class SettingsXmlReader extends XmlReaderUtils implements SettingsFileReader {
 	/* (non-Javadoc)
 	 * @see persistency.settings.SettingsReader#populate(persistency.settings.Settings)
 	 */
 	public void populate(final Settings settings, final File absPath)
 			throws FileNotFoundException, PersistencyException {
-		final XMLReader xmlReader = initXmlReader();
+		final XmlUtils xmlUtils = new XmlUtils();
+		final XMLReader xmlReader = xmlUtils.getXmlReader();
 
 		final SettingsParser sp = new SettingsParser(xmlReader);
 		sp.setTargetObject(settings);

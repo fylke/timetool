@@ -16,16 +16,18 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import persistency.PersistencyException;
-import persistency.XmlReader;
+import persistency.XmlReaderUtils;
+import persistency.XmlUtils;
 
-public class YearXmlReader extends XmlReader implements YearFileReader {
+public class YearXmlReader extends XmlReaderUtils implements YearFileReader {
 	/* (non-Javadoc)
 	 * @see persistency.year.YearFileReader#populate(persistency.projects.ProjectSet, java.io.File)
 	 */
 	@Override
 	public void populate(Year year, File absPath)
 			throws FileNotFoundException, PersistencyException {
-		final XMLReader xmlReader = initXmlReader();
+		final XmlUtils xmlUtils = new XmlUtils();
+		final XMLReader xmlReader = xmlUtils.getXmlReader();
 
 		final YearParser yp = new YearParser(xmlReader);
 		yp.setTargetObject(year);

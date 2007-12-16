@@ -13,14 +13,16 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import persistency.PersistencyException;
-import persistency.XmlReader;
+import persistency.XmlReaderUtils;
+import persistency.XmlUtils;
 
-public class ProjectSetXmlReader extends XmlReader implements ProjectSetFileReader {
+public class ProjectSetXmlReader extends XmlReaderUtils implements ProjectSetFileReader {
 
 	@Override
 	public void populate(final ProjectSet projSet, final File absPath)
 			throws FileNotFoundException,	PersistencyException {
-		final XMLReader xmlReader = initXmlReader();
+		final XmlUtils xmlUtils = new XmlUtils();
+		final XMLReader xmlReader = xmlUtils.getXmlReader();
 
 		final ProjectSetParser pp = new ProjectSetParser(xmlReader);
 		pp.setTargetObject(projSet);
