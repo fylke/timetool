@@ -15,7 +15,6 @@ import org.xml.sax.helpers.DefaultHandler;
 public class YearParser extends DefaultHandler {
 	private final XMLReader reader;
 	private Year year;
-	public SearchControl wanted;
 
 	public YearParser(final XMLReader reader) {
 		this.reader = reader;
@@ -44,7 +43,7 @@ public class YearParser extends DefaultHandler {
 			final Month month = new Month(Integer.parseInt(attrs.getValue("id")), year.id);
 			year.addMonth(month);
 
-			final ContentHandler monthHandler = new MonthHandler(reader, this, month, wanted);
+			final ContentHandler monthHandler = new MonthHandler(reader, this, month);
 			reader.setContentHandler(monthHandler);
 		}
 	}
