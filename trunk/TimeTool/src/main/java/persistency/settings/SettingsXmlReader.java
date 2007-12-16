@@ -13,10 +13,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import persistency.PersistencyException;
-import persistency.XmlReaderUtils;
 import persistency.XmlUtils;
 
-public class SettingsXmlReader extends XmlReaderUtils implements SettingsFileReader {
+public class SettingsXmlReader implements SettingsFileReader {
 	/* (non-Javadoc)
 	 * @see persistency.settings.SettingsReader#populate(persistency.settings.Settings)
 	 */
