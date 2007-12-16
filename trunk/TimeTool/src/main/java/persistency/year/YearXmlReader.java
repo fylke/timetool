@@ -15,27 +15,24 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import persistency.FileParserFactory;
 import persistency.PersistencyException;
+import persistency.XmlReader;
 
-public class YearXmlReader implements YearFileReader {
-
+public class YearXmlReader extends XmlReader implements YearFileReader {
 	/* (non-Javadoc)
 	 * @see persistency.year.YearFileReader#populate(persistency.projects.ProjectSet, java.io.File)
 	 */
 	@Override
 	public void populate(Year year, File absPath)
 			throws FileNotFoundException, PersistencyException {
+		final XMLReader xmlReader = initXmlReader();
+
+		final YearParser yp = new YearParser(xmlReader);
+		yp.setTargetObject(year);
+
 		final Reader fr = new FileReader(absPath);
-		XMLReader settingsParser;
 		try {
-			settingsParser = FileParserFactory.getParser("year");
-
-			// Sending in the object we want to populate.
-			final YearParser sp = ((YearParser) settingsParser.getContentHandler());
-			sp.setTargetObject(year);
-
-			settingsParser.parse(new InputSource(fr));
+			yp.parse(new InputSource(fr));
 		} catch (final SAXException e) {
 			throw new PersistencyException("There was a parser problem when " +
 																		 "reading the settings file. " +
