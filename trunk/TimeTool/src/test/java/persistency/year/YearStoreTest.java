@@ -27,11 +27,9 @@ public class YearStoreTest {
 		final int nrOfMonths = 1;
 		final int nrOfDaysEachMonth = 1;
 		final int nrOfActsEachDay = 1;
-		final SearchControl sc = null;
 		final YearConfig yc = new YearConfig(year, nrOfMonths,
 																				 nrOfDaysEachMonth,
-																				 nrOfActsEachDay,
-																				 sc);
+																				 nrOfActsEachDay);
 		final Year yearInput = YF.getYearWithConfig(yc);
 		final String yearKey = YF.getXmlYearWithConfig(yc);
 
@@ -49,11 +47,9 @@ public class YearStoreTest {
 		final int nrOfMonths = 8;
 		final int nrOfDaysEachMonth = 28;
 		final int nrOfActsEachDay = 3;
-		final SearchControl sc = null;
 		final YearConfig yc = new YearConfig(year, nrOfMonths,
 																				 nrOfDaysEachMonth,
-																				 nrOfActsEachDay,
-																				 sc);
+																				 nrOfActsEachDay);
 		final Year yearInput = YF.getYearWithConfig(yc);
 		final String yearKey = YF.getXmlYearWithConfig(yc);
 		absPath = new File(PU.getStorageDir(), yearInput.getFilename());
