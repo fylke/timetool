@@ -16,10 +16,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import persistency.PersistencyException;
-import persistency.XmlReaderUtils;
 import persistency.XmlUtils;
 
-public class YearXmlReader extends XmlReaderUtils implements YearFileReader {
+public class YearXmlReader implements YearFileReader {
 	/* (non-Javadoc)
 	 * @see persistency.year.YearFileReader#populate(persistency.projects.ProjectSet, java.io.File)
 	 */
