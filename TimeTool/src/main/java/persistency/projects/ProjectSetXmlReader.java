@@ -13,10 +13,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import persistency.PersistencyException;
-import persistency.XmlReaderUtils;
 import persistency.XmlUtils;
 
-public class ProjectSetXmlReader extends XmlReaderUtils implements ProjectSetFileReader {
+public class ProjectSetXmlReader implements ProjectSetFileReader {
 
 	@Override
 	public void populate(final ProjectSet projSet, final File absPath)
