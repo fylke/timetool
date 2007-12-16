@@ -261,27 +261,22 @@ public class UserSettings implements Settings {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#toString()
-	 */
 	@Override
 	public String toString() {
 		final StringBuilder objRep = new StringBuilder();
-		objRep.append("userFirstName: " + userFirstName + "\n");
-		objRep.append("userLastName: " + userLastName + "\n");
+		objRep.append("userFirstName: " + (userFirstName != null ?  userFirstName : "not specified") + "\n");
+		objRep.append("userLastName: " + (userLastName != null ?  userLastName : "not specified") + "\n");
 		objRep.append("employedAt: " + employedAt + "\n");
 		objRep.append("projectSetId: " + projectSetId + "\n");
 		objRep.append("lunchBreak: " + lunchBreak + "\n");
-		objRep.append("ProjectSet:\n" + projectSet);
+		objRep.append("treatOvertimeAs: " + (treatOvertimeAs != null ?  treatOvertimeAs : "not specified") + "\n");
+		objRep.append("ProjectSet:\n" + (projectSet != null ?  projectSet : "not specified"));
 
-		return objRep.toString().trim();
+		return objRep.toString();
 	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
-	 */
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#hashCode()
 	 */
 	@Override
 	public int hashCode() {
@@ -299,9 +294,6 @@ public class UserSettings implements Settings {
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(final Object obj) {
