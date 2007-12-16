@@ -12,41 +12,38 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import persistency.FileParserFactory;
 import persistency.PersistencyException;
+import persistency.XmlReader;
 
-public class ProjectSetXmlReader implements ProjectSetFileReader {
+public class ProjectSetXmlReader extends XmlReader implements ProjectSetFileReader {
 
 	@Override
 	public void populate(final ProjectSet projSet, final File absPath)
 			throws FileNotFoundException,	PersistencyException {
-	  final Reader fr = new FileReader(absPath);
+		final XMLReader xmlReader = initXmlReader();
 
-	  XMLReader projSetParser;
-    try {
-      projSetParser = FileParserFactory.getParser("projectSet");
+		final ProjectSetParser pp = new ProjectSetParser(xmlReader);
+		pp.setTargetObject(projSet);
 
-      // Sending in the object we want to contain the result of the parsing.
-      final ProjectSetParser pp = ((ProjectSetParser) projSetParser.getContentHandler());
-      pp.setTargetObject(projSet);
-
-      projSetParser.parse(new InputSource(fr));
-    } catch (final SAXException e) {
-      throw new PersistencyException("There was a parser problem when " +
-                                     "reading the projects file." +
-                                     e.getMessage(), e);
-    } catch (final IOException e) {
-      throw new PersistencyException("There was an I/O problem when " +
-                                     "reading the projects file. " +
-                                     e.getMessage(), e);
-    } catch (final ParserConfigurationException e) {
-      throw new PersistencyException("There was a problem initializing " +
-                                     "a parser while reading the projects " +
-                                     "file. " + e.getMessage(), e);
-    } finally {
-      try {
-        fr.close();
-      } catch (final IOException e) { /* We don't care if closing fails... */ }
-    }
+		final Reader fr = new FileReader(absPath);
+		try {
+			pp.parse(new InputSource(fr));
+		} catch (final SAXException e) {
+			throw new PersistencyException("There was a parser problem when " +
+																		 "reading the projects file." +
+																		 e.getMessage(), e);
+		} catch (final IOException e) {
+			throw new PersistencyException("There was an I/O problem when " +
+																		 "reading the projects file. " +
+																		 e.getMessage(), e);
+		} catch (final ParserConfigurationException e) {
+			throw new PersistencyException("There was a problem initializing " +
+																		 "a parser while reading the projects " +
+																		 "file. " + e.getMessage(), e);
+		} finally {
+			try {
+				fr.close();
+			} catch (final IOException e) { /* We don't care if closing fails... */ }
+		}
 	}
 }
