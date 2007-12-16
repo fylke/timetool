@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.XMLReader;
 
-import persistency.FileParserFactory;
+import persistency.XmlUtils;
 
 public class ActivityHandlerTest{
 	private ActivityHandler handler;
@@ -18,7 +18,8 @@ public class ActivityHandlerTest{
 	@Before
 	public void setUp() throws Exception {
 		dummyHandler = new ProjectHandler(null, null, null, null, "");
-		dummyReader = FileParserFactory.getParser("projectSet");
+		final XmlUtils xmlUtils = new XmlUtils();
+		dummyReader = xmlUtils.getXmlReader();
 		act = new Activity();
 		handler = new ActivityHandler(null, dummyReader, dummyHandler, act, "");
 
