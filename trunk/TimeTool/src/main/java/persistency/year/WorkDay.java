@@ -233,7 +233,7 @@ public class WorkDay {
 			dayBalance.plus(new Duration(actInfo.getStartTime(),
 																	 actInfo.getEndTime()));
 			if (actInfo.includeLunch) {
-				dayBalance.plus(actInfo.getLunchLenght());
+				dayBalance.plus(actInfo.getLunchLength());
 			}
 		}
 
