@@ -76,7 +76,7 @@ public class YearFactory {
 		actInfo.setActivityEndTime(workDay.getDate(),
 															 actEndTime.toLocalTime());
 		actInfo.includeLunch = true;
-		actInfo.setLunchLenght(LUNCH_LENGTH);
+		actInfo.setLunchLength(LUNCH_LENGTH);
 		workDay.addActivity(actInfo);
 
 		return actInfo;
