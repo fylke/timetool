@@ -188,7 +188,7 @@ public class Year implements Persistable {
 										actInfo.getEndTime().toString("kk:mm") + "\"/>\n");
 					if (actInfo.includeLunch) {
 						sb.append(indent + "<" + ns + "lunchBreak duration=\"" +
-											actInfo.getLunchLenght() + "\"/>\n");
+											actInfo.getLunchLength() + "\"/>\n");
 					}
 
 					indent = xmlUtils.decIndent(indent);
