@@ -12,9 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistency.projects.Company;
-import persistency.projects.CompanyConfig;
-import persistency.projects.CompanyFactory;
+import persistency.company.Company;
+import persistency.company.CompanyConfig;
+import persistency.company.CompanyFactory;
 import persistency.settings.UserSettings.OvertimeType;
 
 public class UserSettingsTest {
