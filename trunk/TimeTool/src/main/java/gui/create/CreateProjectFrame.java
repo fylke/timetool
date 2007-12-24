@@ -20,8 +20,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 
-import persistency.projects.Company;
-import persistency.projects.ProjectSet;
+import persistency.company.Company;
+import persistency.company.ProjectSet;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;

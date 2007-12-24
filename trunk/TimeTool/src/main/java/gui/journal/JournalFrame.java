@@ -1,4 +1,4 @@
-package gui;
+package gui.journal;
 
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
