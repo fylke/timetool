@@ -12,7 +12,7 @@ import java.util.Map;
 import persistency.PersistencyException;
 import persistency.PersistencyUtils;
 import persistency.XmlUtils;
-import persistency.projects.Company;
+import persistency.company.Company;
 
 public class UserSettings implements Settings {
 	private static final String FILE_NAME = "settings.xml";
