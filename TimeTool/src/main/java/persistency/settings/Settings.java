@@ -12,7 +12,7 @@ package persistency.settings;
 import java.util.Map;
 
 import persistency.Persistable;
-import persistency.projects.Company;
+import persistency.company.Company;
 
 
 public interface Settings extends Persistable {
