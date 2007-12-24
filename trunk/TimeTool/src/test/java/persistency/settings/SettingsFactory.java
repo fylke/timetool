@@ -6,7 +6,6 @@ public class SettingsFactory {
 	static final String USER_FIRST_NAME = "testUserFirstName";
 	static final String USER_LAST_NAME = "testUserLastName";
 	static final int EMPLOYED_AT = 1;
-	static final int PROJ_SET_ID = 1;
 	static final int LUNCH_BREAK = 40;
 	static final String OVERTIME_TYPE = "flex";
 	static final String NS = "";
@@ -17,7 +16,6 @@ public class SettingsFactory {
 		userSettings.setFirstName(USER_FIRST_NAME);
 		userSettings.setLastName(USER_LAST_NAME);
 		userSettings.setEmployerId(EMPLOYED_AT);
-		userSettings.setProjectSetId(PROJ_SET_ID);
 		userSettings.setLunchBreak(LUNCH_BREAK);
 		userSettings.setTreatOvertimeAs(OVERTIME_TYPE);
 
@@ -33,7 +31,6 @@ public class SettingsFactory {
 		sb.append(indent + "<" + NS + "userName first=\"" + USER_FIRST_NAME +
 																				"\" last=\"" + USER_LAST_NAME + "\"/>\n");
 		sb.append(indent + "<" + NS + "employedAt id=\"" + EMPLOYED_AT + "\"/>\n");
-		sb.append(indent + "<" + NS + "projectSet id=\"" + PROJ_SET_ID + "\"/>\n");
 		sb.append(indent + "<" + NS + "lunchBreak duration=\"" + LUNCH_BREAK  + "\"/>\n");
 		sb.append(indent + "<" + NS + "overtime treatAs=\"" + OVERTIME_TYPE  + "\"/>\n");
 
