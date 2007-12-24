@@ -17,128 +17,116 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import persistency.DummyHandler;
 
 public class ProjectHandlerTest {
-  private static ProjectsFactory pf;
-  private static Reader projectInput;
-  private static XMLReader reader;
-  private static DummyHandler testHandler;
-  private static Project testProject;
-  private static ProjectHandler projectHandler;
+	private static CompanyFactory pf;
+	private static Reader compInput;
+	private static XMLReader reader;
+	private static DummyHandler testHandler;
+	private static Project testProj;
+	private static ProjectHandler projHandler;
 
-  private static final int testProjId = 10;
-  private static final String ns = "";
+	private static final int testProjId = 10;
+	private static final String ns = "";
 
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    pf = new ProjectsFactory();
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		pf = new CompanyFactory();
 
-    try {
-      reader =
-        XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
-    }
-    catch (final SAXException e) {
-      try {
-        reader = XMLReaderFactory.createXMLReader();
-      } catch (final SAXException e1) {
-        throw new NoClassDefFoundError("No SAX parser is available.");
-      }
-    }
+		try {
+			reader =
+				XMLReaderFactory.createXMLReader("org.apache.xerces.parsers.SAXParser");
+		}
+		catch (final SAXException e) {
+			try {
+				reader = XMLReaderFactory.createXMLReader();
+			} catch (final SAXException e1) {
+				throw new NoClassDefFoundError("No SAX parser is available.");
+			}
+		}
 
-    testProject = new Project();
-    testHandler = new DummyHandler(reader);
+		testProj = new Project();
+		testHandler = new DummyHandler(reader);
 
-    reader.setContentHandler(testHandler);
+		reader.setContentHandler(testHandler);
 
-    final AttributesImpl dummyAttr = new AttributesImpl();
-    projectHandler = new ProjectHandler(dummyAttr, reader, testHandler,
-                                        testProject, ns);
-  }
+		final AttributesImpl dummyAttr = new AttributesImpl();
+		projHandler = new ProjectHandler(dummyAttr, reader, testHandler,
+																				testProj, ns);
+	}
 
-  @AfterClass
-  public static void tearDownAfterClass() throws Exception {
-    projectInput.close();
-  }
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		compInput.close();
+	}
 
-  @Test
-  public final void testProjectHandlerSimple() throws Exception {
-    final int projSetId = 1; // These first three aren't relevant in this test.
-    final int nrOfComps = 1;
-    final int nrOfProjsPerComp = 1;
-    final int nrOfActsPerProj = 1;
-    final int projDepth = 0;
-    final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
-                                                          nrOfProjsPerComp,
-                                                          nrOfActsPerProj,
-                                                          projDepth);
-    final StringBuilder sb = new StringBuilder();
+	@Test
+	public final void testProjectHandlerSimple() throws Exception {
+		final int compId = 1;
+		final int nrOfProjsPerComp = 1;
+		final int nrOfActsPerComp = 1;
+		final int projDepth = 0;
+		final CompanyConfig compConfig = new CompanyConfig(compId,
+																											 nrOfProjsPerComp,
+																											 nrOfActsPerComp,
+																											 projDepth);
+		final StringBuilder sb = new StringBuilder();
 
-    final String simpleTestProject =
-      pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
-    final Project simpleProjectKey =
-      pf.getProject(testProjId, projDepth, projSetConfig);
+		final String testProjInput = pf.getXmlProject(testProjId, projDepth, compConfig, sb);
+		final Project projKey = pf.getProject(testProjId, projDepth, compConfig);
 
-    projectInput = new StringReader(simpleTestProject);
+		compInput = new StringReader(testProjInput);
 
-    testHandler.setHandlerToTest(projectHandler);
+		testHandler.setHandlerToTest(projHandler);
 
-    reader.parse(new InputSource(projectInput));
+		reader.parse(new InputSource(compInput));
 
-    assertEquals("Generated test object and key not equal!",
-                 simpleProjectKey, testProject);
-  }
+		assertEquals(projKey, testProj);
+	}
 
-  @Test
-  public final void testProjectHandlerNested() throws Exception {
-    final int projSetId = 1; // These first three aren't relevant in this test.
-    final int nrOfComps = 1;
-    final int nrOfProjsPerComp = 1;
-    final int nrOfActsPerProj = 1;
-    final int projDepth = 1;
-    final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
-                                                          nrOfProjsPerComp,
-                                                          nrOfActsPerProj,
-                                                          projDepth);
-    final StringBuilder sb = new StringBuilder();
+	@Test
+	public final void testProjectHandlerNested() throws Exception {
+		final int compId = 1;
+		final int nrOfProjsPerComp = 1;
+		final int nrOfActsPerComp = 1;
+		final int projDepth = 1;
+		final CompanyConfig compConfig = new CompanyConfig(compId,
+																											 nrOfProjsPerComp,
+																											 nrOfActsPerComp,
+																											 projDepth);
+		final StringBuilder sb = new StringBuilder();
 
-    final String nestedTestProject =
-      pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
-    final Project nestedProjectKey =
-      pf.getProject(testProjId, projDepth, projSetConfig);
+		final String testProjInput = pf.getXmlProject(testProjId, projDepth, compConfig, sb);
+		final Project projKey = pf.getProject(testProjId, projDepth, compConfig);
 
-    projectInput = new StringReader(nestedTestProject);
+		compInput = new StringReader(testProjInput);
 
-    testHandler.setHandlerToTest(projectHandler);
+		testHandler.setHandlerToTest(projHandler);
 
-    reader.parse(new InputSource(projectInput));
+		reader.parse(new InputSource(compInput));
 
-    assertEquals("Generated test object and key not equal!",
-                 nestedProjectKey, testProject);
-  }
+		assertEquals(projKey, testProj);
+	}
 
-  @Test
-  public final void testProjectHandlerDeeplyNested() throws Exception {
-    final int projSetId = 1; // These first three aren't relevant in this test.
-    final int nrOfComps = 1;
-    final int nrOfProjsPerComp = 1;
-    final int nrOfActsPerProj = 1;
-    final int projDepth = 3;
-    final ProjSetConfig projSetConfig = new ProjSetConfig(projSetId, nrOfComps,
-                                                          nrOfProjsPerComp,
-                                                          nrOfActsPerProj,
-                                                          projDepth);
-    final StringBuilder sb = new StringBuilder();
+	@Test
+	public final void testProjectHandlerDeeplyNested() throws Exception {
+		final int compId = 1;
+		final int nrOfProjsPerComp = 1;
+		final int nrOfActsPerComp = 1;
+		final int projDepth = 5;
+		final CompanyConfig compConfig = new CompanyConfig(compId,
+																											 nrOfProjsPerComp,
+																											 nrOfActsPerComp,
+																											 projDepth);
+		final StringBuilder sb = new StringBuilder();
 
-    final String nestedTestProject =
-      pf.getXmlProject(testProjId, projDepth, projSetConfig, sb);
-    final Project nestedProjectKey =
-      pf.getProject(testProjId, projDepth, projSetConfig);
+		final String testProjInput = pf.getXmlProject(testProjId, projDepth, compConfig, sb);
+		final Project projKey = pf.getProject(testProjId, projDepth, compConfig);
 
-    projectInput = new StringReader(nestedTestProject);
+		compInput = new StringReader(testProjInput);
 
-    testHandler.setHandlerToTest(projectHandler);
+		testHandler.setHandlerToTest(projHandler);
 
-    reader.parse(new InputSource(projectInput));
+		reader.parse(new InputSource(compInput));
 
-    assertEquals("Generated test object and key not equal!",
-                 nestedProjectKey, testProject);
-  }
+		assertEquals(projKey, testProj);
+	}
 }
