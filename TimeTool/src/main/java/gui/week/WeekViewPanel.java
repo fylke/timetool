@@ -1,4 +1,6 @@
-package gui;
+package gui.week;
+
+import gui.TriangleButton;
 
 import java.awt.Font;
 

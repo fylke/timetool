@@ -1,7 +1,7 @@
 package gui.day;
 
 import gui.ActivityPanel;
-import gui.JournalFrame;
+import gui.journal.JournalFrame;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;

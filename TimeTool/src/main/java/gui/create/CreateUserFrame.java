@@ -19,15 +19,17 @@ import javax.swing.WindowConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import org.araneaframework.uilib.core.BaseUIWidget;
+
 import persistency.PersistencyException;
-import persistency.projects.Company;
-import persistency.projects.ProjectSet;
+import persistency.company.Company;
+import persistency.company.ProjectSet;
 import persistency.settings.Settings;
 
 import com.atticlabs.zonelayout.swing.ZoneLayout;
 import com.atticlabs.zonelayout.swing.ZoneLayoutFactory;
 
-public class CreateUserFrame extends JFrame implements ActionListener {
+public class CreateUserFrame extends BaseUIWidget implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private ZoneLayout basePanelLayout;
@@ -59,6 +61,7 @@ public class CreateUserFrame extends JFrame implements ActionListener {
 		this.userSettings = userSettings;
 		initComponents();
 		pack();
+		setVisible(true);
 	}
 
 	public void actionPerformed(final ActionEvent e) {
