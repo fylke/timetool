@@ -6,12 +6,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import persistency.PersistencyException;
 import persistency.PersistencyUtils;
 import persistency.XmlUtils;
 import persistency.projects.Company;
-import persistency.projects.ProjectSet;
 
 public class UserSettings implements Settings {
 	private static final String FILE_NAME = "settings.xml";
@@ -21,7 +22,7 @@ public class UserSettings implements Settings {
 		COMP("comp"),
 		PAID("paid");
 
-		private final String stringRepr;
+		final String stringRepr;
 
 		OvertimeType(final String stringRepr) {
 			this.stringRepr = stringRepr;
@@ -51,18 +52,12 @@ public class UserSettings implements Settings {
 
 	private String ns = "";
 
+	private int employerId;
 	private String userFirstName;
 	private String userLastName;
-	private int employedAt;
-	private int projectSetId;
-	private ProjectSet projectSet;
-	private int lunchBreak;
-	private OvertimeType treatOvertimeAs;
-
-	public UserSettings() {
-		lunchBreak = 40;
-		treatOvertimeAs = OvertimeType.FLEX;
-	}
+	private int lunchBreak = 40;
+	private OvertimeType treatOvertimeAs = OvertimeType.FLEX;
+	private Map<Integer, Company> workplaces = new HashMap<Integer, Company>();
 
 	@Override
 	public void populate() throws PersistencyException, FileNotFoundException {
@@ -107,7 +102,6 @@ public class UserSettings implements Settings {
 		sb.append(indent + "<" + ns + "userName first=\"" + getFirstName() +
 																				"\" last=\"" + getLastName() + "\"/>\n");
 		sb.append(indent + "<" + ns + "employedAt id=\"" + getEmployerId() + "\"/>\n");
-		sb.append(indent + "<" + ns + "projectSet id=\"" + getProjectSetId() + "\"/>\n");
 		sb.append(indent + "<" + ns + "lunchBreak duration=\"" + getLunchBreak() + "\"/>\n");
 		sb.append(indent + "<" + ns + "overtime treatAs=\"" + getTreatOvertimeAs() + "\"/>\n");
 
@@ -123,6 +117,14 @@ public class UserSettings implements Settings {
 
 	public String getNamespace() {
 		return ns;
+	}
+
+	public Company getEmployer() {
+		return workplaces.get(employerId);
+	}
+
+	public int getEmployerId() {
+		return employerId;
 	}
 
 	/* (non-Javadoc)
@@ -154,31 +156,18 @@ public class UserSettings implements Settings {
 	}
 
 	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#getEmployedAt()
-	 */
-	public int getEmployerId() {
-		return employedAt;
-	}
-
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#getEmployedAt()
-	 */
-	public Company getEmployedAt() {
-		return projectSet.getCompany(employedAt);
-	}
-
-	/* (non-Javadoc)
 	 * @see persistency.settings.Settings#getLunchBreak()
 	 */
 	public int getLunchBreak() {
 		return lunchBreak;
 	}
 
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#getProjectSet()
-	 */
-	public ProjectSet getProjectSet() {
-		return projectSet;
+	public Map<Integer, Company> getWorkplaces() {
+		return workplaces;
+	}
+
+	public Company getWorkplaceWithId(final int workplaceId) {
+		return workplaces.get(workplaceId);
 	}
 
 	/* (non-Javadoc)
@@ -188,32 +177,12 @@ public class UserSettings implements Settings {
 		return treatOvertimeAs;
 	}
 
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#setTreatOvertimeAs(java.lang.String)
-	 */
-	public void setTreatOvertimeAs(final String treatOvertimeAs) {
-		this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
+	public void setEmployerId(final int empId) {
+		this.employerId = empId;
 	}
 
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#getProjectSetId()
-	 */
-	public int getProjectSetId() {
-		return projectSetId;
-	}
-
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#setProjectSetId(int)
-	 */
-	public void setProjectSetId(final int projectSetId) {
-		this.projectSetId = projectSetId;
-	}
-
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#setProjectSetId(java.lang.String)
-	 */
-	public void setProjectSetId(final String projectSetId) {
-		this.projectSetId = parseInt(projectSetId);
+	public void setEmployerId(final String empIdAsString) {
+		this.employerId = Integer.parseInt(empIdAsString);
 	}
 
 	/* (non-Javadoc)
@@ -230,11 +199,16 @@ public class UserSettings implements Settings {
 		this.lunchBreak = parseInt(lunchBreak);
 	}
 
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#setProjectSet(persistency.projects.ProjectSet)
-	 */
-	public void setProjectSet(final ProjectSet projectSet) {
-		this.projectSet = projectSet;
+	public void setWorkplaces(final Map<Integer, Company> workplaces) {
+		this.workplaces = workplaces;
+	}
+
+	public void addWorkplace(final Company workplace) {
+		addWorkplaceWithId(workplace, workplace.getId());
+	}
+
+	public void addWorkplaceWithId(final Company workplace, final int id) {
+		workplaces.put(id, workplace);
 	}
 
 	/* (non-Javadoc)
@@ -245,17 +219,10 @@ public class UserSettings implements Settings {
 	}
 
 	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#setEmployedAt(int)
+	 * @see persistency.settings.Settings#setTreatOvertimeAs(java.lang.String)
 	 */
-	public void setEmployerId(final int employedAt) {
-		this.employedAt = employedAt;
-	}
-
-	/* (non-Javadoc)
-	 * @see persistency.settings.Settings#setEmployedAt(java.lang.String)
-	 */
-	public void setEmployerId(final String employedAt) {
-		this.employedAt = parseInt(employedAt);
+	public void setTreatOvertimeAs(final String treatOvertimeAs) {
+		this.treatOvertimeAs = OvertimeType.transOvertimeType(treatOvertimeAs);
 	}
 
 	/* (non-Javadoc)
@@ -264,72 +231,14 @@ public class UserSettings implements Settings {
 	@Override
 	public String toString() {
 		final StringBuilder objRep = new StringBuilder();
+		objRep.append("employerId: " + employerId + "\n");
 		objRep.append("userFirstName: " + (userFirstName != null ?  userFirstName : "not specified") + "\n");
 		objRep.append("userLastName: " + (userLastName != null ?  userLastName : "not specified") + "\n");
-		objRep.append("employedAt: " + employedAt + "\n");
-		objRep.append("projectSetId: " + projectSetId + "\n");
 		objRep.append("lunchBreak: " + lunchBreak + "\n");
 		objRep.append("treatOvertimeAs: " + (treatOvertimeAs != null ?  treatOvertimeAs : "not specified") + "\n");
-		objRep.append("ProjectSet:\n" + (projectSet != null ?  projectSet : "not specified"));
+		objRep.append("Workplaces:\n");
+		objRep.append(workplaces.toString() + "\n");
 
-		return objRep.toString();
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int PRIME = 31;
-		int result = 1;
-		result = PRIME * result + employedAt;
-		result = PRIME * result + lunchBreak;
-		result = PRIME * result + ((projectSet == null) ? 0 : projectSet.hashCode());
-		result = PRIME * result + projectSetId;
-		result = PRIME * result + ((treatOvertimeAs == null) ? 0 : treatOvertimeAs.hashCode());
-		result = PRIME * result + ((userFirstName == null) ? 0 : userFirstName.hashCode());
-		result = PRIME * result + ((userLastName == null) ? 0 : userLastName.hashCode());
-		return result;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final UserSettings other = (UserSettings) obj;
-		if (employedAt != other.employedAt)
-			return false;
-		if (lunchBreak != other.lunchBreak)
-			return false;
-		if (projectSet == null) {
-			if (other.projectSet != null)
-				return false;
-		} else if (!projectSet.equals(other.projectSet))
-			return false;
-		if (projectSetId != other.projectSetId)
-			return false;
-		if (treatOvertimeAs == null) {
-			if (other.treatOvertimeAs != null)
-				return false;
-		} else if (!treatOvertimeAs.equals(other.treatOvertimeAs))
-			return false;
-		if (userFirstName == null) {
-			if (other.userFirstName != null)
-				return false;
-		} else if (!userFirstName.equals(other.userFirstName))
-			return false;
-		if (userLastName == null) {
-			if (other.userLastName != null)
-				return false;
-		} else if (!userLastName.equals(other.userLastName))
-			return false;
-		return true;
+		return objRep.toString().trim();
 	}
 }

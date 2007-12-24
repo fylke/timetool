@@ -9,47 +9,48 @@
 
 package persistency.settings;
 
+import java.util.Map;
+
 import persistency.Persistable;
 import persistency.projects.Company;
-import persistency.projects.ProjectSet;
 
 
 public interface Settings extends Persistable {
-    Company getEmployedAt();
+		Company getEmployer();
 
-    int getEmployerId();
+		int getEmployerId();
 
-    String getFirstName();
+		String getFirstName();
 
-    String getLastName();
+		String getLastName();
 
-    int getLunchBreak();
+		int getLunchBreak();
 
-    ProjectSet getProjectSet();
+		Map<Integer, Company> getWorkplaces();
 
-    int getProjectSetId();
+		Company getWorkplaceWithId(final int workplaceId);
 
-    UserSettings.OvertimeType getTreatOvertimeAs();
+		UserSettings.OvertimeType getTreatOvertimeAs();
 
-    void setEmployerId(final String employedAt);
+		void setEmployerId(final int employedAt);
 
-    void setEmployerId(final int employedAt);
+		void setEmployerId(final String employedAt);
 
-    void setFirstName(final String userFirstName);
+		void setFirstName(final String userFirstName);
 
-    void setLastName(final String userLastName);
+		void setLastName(final String userLastName);
 
-    void setLunchBreak(final String lunchBreak);
+		void setLunchBreak(final String lunchBreak);
 
-    void setLunchBreak(final int lunchBreak);
+		void setLunchBreak(final int lunchBreak);
 
-    void setProjectSet(ProjectSet projectSet);
+		void setWorkplaces(final Map<Integer, Company> workplaces);
 
-    void setProjectSetId(final String projectSetId);
+		void addWorkplace(final Company workplace);
 
-    void setProjectSetId(final int projectSetId);
+		void addWorkplaceWithId(final Company workplace, final int id);
 
-    void setTreatOvertimeAs(UserSettings.OvertimeType treatOvertimeAs);
+		void setTreatOvertimeAs(UserSettings.OvertimeType treatOvertimeAs);
 
-    void setTreatOvertimeAs(String treatOvertimeAs);
+		void setTreatOvertimeAs(String treatOvertimeAs);
 }
